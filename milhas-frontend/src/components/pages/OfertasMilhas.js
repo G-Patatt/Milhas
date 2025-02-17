@@ -65,7 +65,7 @@ function OfertasMilhas() {
       {ofertas.length > 0 ? (
         <ul className="list-group">
           {ofertas.map(oferta => (
-            <li key={oferta.ofertaId} className="list-group-item d-flex justify-content-between align-items-center">
+            <li key={oferta.ofertaId} className="list-group-item d-flex justify-content-between align-items-center"> 
               <div>
                 <h5>{oferta.oferta}</h5>
                 <p>R${oferta.preco}</p>
