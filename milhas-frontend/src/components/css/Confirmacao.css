@@ -1,0 +1,37 @@
+.confirmacao-container {
+    width: 80%;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .confirmacao-container h1 {
+    text-align: center;
+  }
+  
+  .confirmacao-container form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .confirmacao-container form div {
+    margin-bottom: 10px;
+  }
+  
+  .confirmacao-container form input,
+  .confirmacao-container form button {
+    padding: 10px;
+    font-size: 16px;
+    margin: 5px 0;
+  }
+  
+  .confirmacao-container form button {
+    background-color: #4CAF50;
+    color: white;
+    cursor: pointer;
+  }
+  
+  .confirmacao-container form button:hover {
+    background-color: #45a049;
+  }
+  

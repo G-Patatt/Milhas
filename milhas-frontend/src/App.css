@@ -1,0 +1,54 @@
+/* Estilos globais */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  margin: 0;
+  padding: 0;
+}
+
+/* Barra de Navegação fixa */
+.navbar {
+  background-color: #333;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  padding: 10px 20px;
+  z-index: 1000; /* Para garantir que fique sempre no topo */
+}
+
+.navbar-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+}
+
+.navbar-item {
+  color: white;
+  text-decoration: none;
+  padding: 10px 20px;
+  margin: 0 10px;
+  font-weight: bold;
+}
+
+.navbar-item:hover {
+  background-color: #007bff;
+  border-radius: 5px;
+}
+
+/* Estilo para o conteúdo da página para não ser escondido pela barra */
+body {
+  padding-top: 60px; /* Ajuste para o conteúdo não ser escondido pela barra */
+}
+
+/* Estilos gerais para o conteúdo da página */
+h1, h2 {
+  color: #333;
+}
+
+div {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
+}

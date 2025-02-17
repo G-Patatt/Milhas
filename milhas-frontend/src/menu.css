@@ -1,0 +1,56 @@
+/* Barra de navegação com maior especificidade */
+.menu-navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #333;
+    padding: 10px 20px;
+    position: fixed;  /* Fixa a barra de navegação no topo */
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    width: 100%;
+  }
+  
+  /* Estilos para a lista de navegação */
+  .menu-navbar-list {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Estilo para os itens da lista de navegação (links) */
+  .menu-navbar-item {
+    color: white;  /* Cor do texto */
+    margin-right: 20px;
+    text-decoration: none;
+    font-size: 18px;
+    padding: 10px 15px;  /* Espaçamento ao redor do texto */
+    border-radius: 5px;  /* Bordas arredondadas nos links */
+    transition: background-color 0.3s, color 0.3s;  /* Transições suaves */
+  }
+  
+  /* Efeito de hover para os itens da barra de navegação */
+  .menu-navbar-item:hover {
+    background-color: #444;  /* Cor de fundo ao passar o mouse */
+    color: #ddd;  /* Cor do texto ao passar o mouse */
+  }
+  
+  /* Ajustes para o corpo da página, para dar espaço para a navbar fixa */
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+    padding-top: 60px;  /* Espaço para a navbar fixada */
+  }
+  
+  /* Estilo para o título na página */
+  h1 {
+    text-align: center;
+    margin-top: 50px;
+    font-size: 2rem;
+  }
+  

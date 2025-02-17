@@ -1,0 +1,85 @@
+/* Ofertas.css */
+
+/* Container principal da página */
+.ofertas-container {
+  padding: 20px;
+  background-color: #f9f9f9;
+  max-width: 800px;
+  margin: 0 auto;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Título da página */
+.ofertas-title {
+  text-align: center;
+  color: #333;
+  margin-bottom: 20px;
+  font-size: 2rem;
+}
+
+/* Lista de ofertas */
+.ofertas-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+/* Estilo de cada item da oferta */
+.oferta-item {
+  background-color: #fff;
+  margin: 10px 0;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease;
+}
+
+/* Efeito ao passar o mouse sobre a oferta */
+.oferta-item:hover {
+  background-color: #f0f0f0;
+}
+
+/* Nome da oferta */
+.oferta-name {
+  font-weight: bold;
+  color: #333;
+}
+
+/* Preço da oferta */
+.oferta-price {
+  font-weight: bold;
+  color: #e67e22; /* cor laranja */
+  margin-left: 5px;
+}
+
+/* Mensagem de carregamento */
+.loading-message {
+  text-align: center;
+  color: #777;
+}
+.pegar-oferta-btn {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.pegar-oferta-btn:hover {
+  background-color: #45a049;
+}
+
+.feedback-message {
+  margin-top: 20px;
+  padding: 10px;
+  background-color: #f4f4f4;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  color: green;
+  font-weight: bold;
+}
