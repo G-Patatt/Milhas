@@ -9,7 +9,7 @@ function Menu() {
   const negociacoesLink = usuarioId ? `/negociacoes/usuario/${usuarioId}` : '#';
 
   return (
-    <div>
+
       <div className="menu-navbar">
         <ul className="menu-navbar-list">
           <li><a href="/" className="menu-navbar-item">Home</a></li>
@@ -19,7 +19,7 @@ function Menu() {
           <li><a href="/logout" className="menu-navbar-item">Logout</a></li>
         </ul>
       </div>
-    </div>
+
   );
 }
 
