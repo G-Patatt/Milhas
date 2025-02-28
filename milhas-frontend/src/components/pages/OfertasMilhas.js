@@ -77,7 +77,7 @@ function OfertasMilhas() {
               {/* Botão para pegar a oferta */}
               <button 
                 className="btn btn-primary" 
-                onClick={() => pegarOferta(oferta.ofertaId)} 
+                onClick={() => pegarOferta(oferta.ofertaId)}  
               >
                 Pegar Oferta
               </button>
