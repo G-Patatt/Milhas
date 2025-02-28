@@ -19,11 +19,6 @@ function Menu() {
           <li><a href="/logout" className="menu-navbar-item">Logout</a></li>
         </ul>
       </div>
-      <tr className='tabela'>
-        <td className='mx-auto'>
-            tabela
-        </td>
-      </tr>
     </div>
   );
 }
