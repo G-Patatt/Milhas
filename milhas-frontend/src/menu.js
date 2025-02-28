@@ -9,14 +9,21 @@ function Menu() {
   const negociacoesLink = usuarioId ? `/negociacoes/usuario/${usuarioId}` : '#';
 
   return (
-    <div className="menu-navbar">
-      <ul className="menu-navbar-list">
-        <li><a href="/" className="menu-navbar-item">Home</a></li>
-        <li><a href="/ofertas" className="menu-navbar-item">Ofertas</a></li>
-        <li><a href="/contato" className="menu-navbar-item">Contato</a></li>
-        <li><a href={negociacoesLink} className="menu-navbar-item">Negociações</a></li>
-        <li><a href="/logout" className="menu-navbar-item">Logout</a></li>
-      </ul>
+    <div>
+      <div className="menu-navbar">
+        <ul className="menu-navbar-list">
+          <li><a href="/" className="menu-navbar-item">Home</a></li>
+          <li><a href="/ofertas" className="menu-navbar-item">Ofertas</a></li>
+          <li><a href="/contato" className="menu-navbar-item">Contato</a></li>
+          <li><a href={negociacoesLink} className="menu-navbar-item">Negociações</a></li>
+          <li><a href="/logout" className="menu-navbar-item">Logout</a></li>
+        </ul>
+      </div>
+      <tr className='tabela'>
+        <td className='mx-auto'>
+            tabela
+        </td>
+      </tr>
     </div>
   );
 }
