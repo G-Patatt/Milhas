@@ -4,5 +4,5 @@ const usuariosController = require('../controllers/usuariosController');
 
 // Rota de Cadastro de Usuário
 router.post('/cadastrar', usuariosController.cadastrar);
-
+router.get('/:id/notificacoes', usuariosController.obterNotificacoes);
 module.exports = router;

@@ -8,6 +8,8 @@ function Logout() {
 
   const handleLogout = () => {
     logout(); // Limpa o estado e o token
+    localStorage.removeItem('usuarioId'); // Remove o ID do usuário
+    localStorage.removeItem('token'); // Remove o token de autenticação, se houver
     navigate('/login'); // Redireciona para a página de login
   };
 

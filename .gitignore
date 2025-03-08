@@ -1,0 +1,19 @@
+# Ignorar a pasta node_modules, onde dependências são armazenadas
+node_modules/
+
+# Ignorar arquivos de log do npm
+npm-debug.log
+
+# Ignorar a pasta de build ou dist (se houver)
+build/
+dist/
+
+# Ignorar arquivos de configuração do editor (por exemplo, VSCode)
+.vscode/
+
+# Ignorar o arquivo de dependências do Yarn (caso use)
+yarn.lock
+
+# Ignorar arquivos relacionados ao sistema operacional (Windows e macOS)
+.DS_Store
+Thumbs.db
