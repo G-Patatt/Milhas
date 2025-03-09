@@ -9,7 +9,7 @@ const obterNotificacoes = async (req, res) => {
   try {
     const usuarioId = req.params.id; // Obtém o ID do usuário da rota
      // Log para verificar se os dados foram recebidos corretamente
-     console.log('Dados recebidos: testr');
+    
     // Buscar o usuário pelo ID
     const usuario = await Usuario.findByPk(usuarioId);
     

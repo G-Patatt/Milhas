@@ -8,6 +8,7 @@ const milhasRoutes = require('./routes/milhasRoutes');
 const negociacaoRoutes = require('./routes/negociacaoRoutes');
 const loginRoutes = require('./routes/loginRoutes');
 const garantiaRoutes = require('./routes/garantiaRoutes');
+const reservaRoutes = require('./routes/paymentRoutes');
   
 
 const app = express();
@@ -44,4 +45,5 @@ app.use('/api/usuarios', usuariosRoutes);
 app.use('/api', milhasRoutes);
 app.use('/api/negociacao', negociacaoRoutes);
 app.use('/api', loginRoutes);
-app.use('/api/garantias', garantiaRoutes); // Prefixo para as rotas de garantias
+app.use('/api/garantias', garantiaRoutes); 
+app.use('/api', reservaRoutes);
