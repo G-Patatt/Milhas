@@ -1,0 +1,23 @@
+/* Notificacao.css */
+
+/* Estilo para o container do sino */
+.notificacao {
+  position: fixed;  /* Fixa o ícone no lado direito da tela */
+  right: 20px;      /* Coloca o sino na extrema direita */
+  padding: 0 10px;
+  font-size: 24px;  /* Aumenta o tamanho do sino */
+  color: white;       /* Cor do sino */
+  z-index: 1000;    /* Garante que o sino fique acima de outros elementos */
+}
+
+/* Estilo para o número de notificações */
+.notificacao .badge {
+  position: absolute;
+
+  right: -5px;
+  background-color: red;  /* Cor de fundo para o número */
+  color: white;           /* Cor do texto (número) */
+  border-radius: 50%;
+  font-size: 10px;        /* Tamanho reduzido para o número */
+  font-weight: bold;
+}

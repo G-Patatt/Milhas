@@ -11,6 +11,7 @@ import Login from './components/pages/Login.js';
 import PrivateRoute from './components/pages/PrivateRoute'; // Importa o componente de rota privada
 import Logout from './components/pages/Logout.js'; // Importa o componente de rota privada
 import CriarOferta from './components/pages/CriaOferta.js'; // Importa o componente de rota privada
+import CriaUsuario from './components/pages/CriaUsuario.js'; // Importa o componente de rota privada
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
             path="/negociacoes/usuario/:usuarioId"
             element={<PrivateRoute element={<NegociacoesUsuario />} />}
           />
+          <Route path="/cadastro" element={<CriaUsuario />} /> 
         </Routes>
       </Router>
     </AuthProvider>

@@ -24,6 +24,10 @@ const Usuario = sequelize.define('Usuario', {
     type: DataTypes.INTEGER,
     defaultValue: 0,  // Milhas iniciais
   },
+  notificacoes: {
+    type: DataTypes.INTEGER,
+    defaultValue: 0,  // Notificações iniciais
+  },
 }, {
   tableName: 'usuarios',
   timestamps: true,  // Ativa a criação e atualização automáticas de createdAt e updatedAt
