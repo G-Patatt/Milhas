@@ -8,7 +8,7 @@ const milhasRoutes = require('./routes/milhasRoutes');
 const negociacaoRoutes = require('./routes/negociacaoRoutes');
 const loginRoutes = require('./routes/loginRoutes');
 const garantiaRoutes = require('./routes/garantiaRoutes');
-  
+
 
 const app = express();
 const port = 5000;
