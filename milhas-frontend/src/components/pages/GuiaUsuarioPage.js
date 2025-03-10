@@ -51,6 +51,8 @@ const GuiaUsuarioPage = () => {
                         <div className="col-md-12">
                             <h2 className="display-7 fw-bold text-link-body-emphasis">Garantias de Compra e Venda</h2>
                             <p className="lead mb-5">Como funcionam as <strong>garantias</strong> e por que devemos usar no nosso sistema?</p>
+                            <p>Primeiramente, pensamos na segurança dos nossos usuários, sejam eles compradores ou vendedores de milhhas.<br/>
+                            Por isso, as garantias nos ajudam a evitar fraudes e transações falsas.</p>
                         </div>
                     </div>
                 </div>
