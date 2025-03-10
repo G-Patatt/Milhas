@@ -1,7 +1,7 @@
 import React from 'react';
 import './menu.css';  // Caminho correto para importar o CSS
 import NotificacaoIcon from './components/pages/NotificacaoIcone';
-import 'font-awesome/css/font-awesome.min.css';
+
 function Menu() {
   // Obtenha o ID do usuário logado do localStorage
   const usuarioId = localStorage.getItem('usuarioId');

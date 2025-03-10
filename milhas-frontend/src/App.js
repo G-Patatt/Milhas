@@ -12,14 +12,16 @@ import PrivateRoute from './components/pages/PrivateRoute'; // Importa o compone
 import Logout from './components/pages/Logout.js'; // Importa o componente de rota privada
 import CriarOferta from './components/pages/CriaOferta.js'; // Importa o componente de rota privada
 import CriaUsuario from './components/pages/CriaUsuario.js'; // Importa o componente de rota privada
+import GuiaUsuarioPage from './components/pages/GuiaUsuarioPage.jsx';
 
 function App() {
   return (
     <AuthProvider>
       <Router>
         <Menu /> {/* Barra de navegação fixa */}
-        <Routes>
+        <Routes> 
           <Route path="/" element={<h1>Bem-vindo ao Sistema de Milhas!</h1>} />
+          <Route path='/guia-usuario' element={<GuiaUsuarioPage />} />
           <Route path="/ofertas" element={<OfertasMilhas />} /> {/* Página de Ofertas de Milhas */}
           <Route path="/confirmacao/:ofertaId" element={<Confirmacao />} />
           <Route path="/login" element={<Login />} /> {/* Rota de Login */}
