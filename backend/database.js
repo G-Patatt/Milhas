@@ -1,18 +1,18 @@
-const { Sequelize } = require('sequelize');
+const { Sequelize } = require("sequelize");
 
 // Configuração do Sequelize
-const sequelize = new Sequelize('milhas', 'root', '12345', {
-  host: 'localhost',
-  dialect: 'mysql',
-  logging: console.log,  // Habilitar log para ver a SQL gerada
+const sequelize = new Sequelize("milhas", "root", "rubinho123", {
+  host: "localhost",
+  dialect: "mysql",
+  logging: console.log, // Habilitar log para ver a SQL gerada
 });
 
 const testConnection = async () => {
   try {
     await sequelize.authenticate();
-    console.log('Conexão com o banco de dados foi bem-sucedida!');
+    console.log("Conexão com o banco de dados foi bem-sucedida!");
   } catch (error) {
-    console.error('Erro ao conectar-se ao banco de dados:', error);
+    console.error("Erro ao conectar-se ao banco de dados:", error);
   }
 };
 
