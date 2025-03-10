@@ -12,7 +12,7 @@ import PrivateRoute from './components/pages/PrivateRoute'; // Importa o compone
 import Logout from './components/pages/Logout.js'; // Importa o componente de rota privada
 import CriarOferta from './components/pages/CriaOferta.js'; // Importa o componente de rota privada
 import CriaUsuario from './components/pages/CriaUsuario.js'; // Importa o componente de rota privada
-import GuiaUsuarioPage from './components/pages/GuiaUsuarioPage.jsx';
+import GuiaUsuarioPage from './components/pages/GuiaUsuarioPage.js';
 
 function App() {
   return (
