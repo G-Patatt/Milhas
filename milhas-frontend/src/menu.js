@@ -17,6 +17,7 @@ function Menu() {
         <li><a href="/contato" className="menu-navbar-item">Contato</a></li>
         <li><a href={negociacoesLink} className="menu-navbar-item">Negociações</a></li>
         <li><a href="/logout" className="menu-navbar-item">Logout</a></li>
+        <li><a href="/guia-usuario" className="menu-navbar-item">Como Funciona</a></li>
         <NotificacaoIcon />
       </ul>
     </div>
