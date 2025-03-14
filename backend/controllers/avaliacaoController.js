@@ -6,7 +6,7 @@ export async function postAvaliation(req, res) {
     const { userId, rating } = req.body;
 
     if (!userId || !rating) {
-      return res.status(400).json({ error: "Dados inválidos" });
+      return res.status(401).json({ error: "Dados inválidos" });
     }
 
     const user = await Usuario.findByPk(userId);
