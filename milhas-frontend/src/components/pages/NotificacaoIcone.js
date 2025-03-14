@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios'; // Importa axios para fazer requisições
-import '../css/Notificacao.css'; // Importa o arquivo CSS
+import React, { useState, useEffect } from "react";
+import axios from "axios"; // Importa axios para fazer requisições
+import "../css/Notificacao.css"; // Importa o arquivo CSS
 
 function NotificacaoIcon() {
   const [notificacoes, setNotificacoes] = useState(0); // Contador de notificações
@@ -10,20 +10,22 @@ function NotificacaoIcon() {
   const obterNotificacoes = async () => {
     try {
       // Pegue o ID do usuário (aqui você precisa substituir com a lógica de autenticação)
-      const usuarioId = localStorage.getItem('usuarioId'); // Exemplo de pegar ID do localStorage
+      const usuarioId = localStorage.getItem("usuarioId"); // Exemplo de pegar ID do localStorage
 
       if (usuarioId) {
         // Se o usuário estiver logado, busca as notificações
         setUsuarioLogado(true);
-        const response = await axios.get(`http://localhost:5000/api/usuarios/${usuarioId}/notificacoes`);
-        
+        const response = await axios.get(
+          `http://localhost:5001/api/usuarios/${usuarioId}/notificacoes`
+        );
+
         // Atualiza o estado com o número de notificações
         setNotificacoes(response.data.notificacoes);
       } else {
         setUsuarioLogado(false); // Se não houver usuarioId, significa que o usuário não está logado
       }
     } catch (error) {
-      console.error('Erro ao obter notificações:', error);
+      console.error("Erro ao obter notificações:", error);
     }
   };
 
@@ -39,7 +41,8 @@ function NotificacaoIcon() {
   return (
     <div className="notificacao">
       <i className="fa fa-bell"></i> {/* Ícone do sino */}
-      {notificacoes > 0 && <span className="badge">{notificacoes}</span>} {/* Exibe o número de notificações */}
+      {notificacoes > 0 && <span className="badge">{notificacoes}</span>}{" "}
+      {/* Exibe o número de notificações */}
     </div>
   );
 }

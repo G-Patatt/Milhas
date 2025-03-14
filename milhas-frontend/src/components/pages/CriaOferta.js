@@ -1,46 +1,49 @@
-import React, { useState } from 'react';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function CriarOferta() {
-  const [preco, setPreco] = useState('');
-  const [qtdMilhas, setQtdMilhas] = useState('');
-  const [ciaAerea, setCiaAerea] = useState('');
-  const [compraOuVenda, setCompraOuVenda] = useState('compra');
-  const [feedback, setFeedback] = useState('');
+  const [preco, setPreco] = useState("");
+  const [qtdMilhas, setQtdMilhas] = useState("");
+  const [ciaAerea, setCiaAerea] = useState("");
+  const [compraOuVenda, setCompraOuVenda] = useState("compra");
+  const [feedback, setFeedback] = useState("");
   const navigate = useNavigate();
 
   // Recuperar o usuarioId do token armazenado no localStorage
-  const token = localStorage.getItem('token');
-  
+  const token = localStorage.getItem("token");
+
   if (!token) {
-    navigate('/login');  // Se não houver token, redireciona para login
+    navigate("/login"); // Se não houver token, redireciona para login
   }
-  
-  const usuarioId = localStorage.getItem('usuarioId');
+
+  const usuarioId = localStorage.getItem("usuarioId");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!usuarioId) {
-      setFeedback('Usuário não autenticado');
+      setFeedback("Usuário não autenticado");
       return;
     }
 
     try {
-      const response = await axios.post('http://localhost:5000/api/ofertas/criarOferta', {
-        preco,
-        qtdMilhas,
-        ciaAerea,
-        compraOuVenda,
-        usuarioId
-      });
+      const response = await axios.post(
+        "http://localhost:5001/api/ofertas/criarOferta",
+        {
+          preco,
+          qtdMilhas,
+          ciaAerea,
+          compraOuVenda,
+          usuarioId,
+        }
+      );
 
       setFeedback(response.data.message);
-      navigate('/ofertas');  // Redirecionar para a página de ofertas após criar a oferta
+      navigate("/ofertas"); // Redirecionar para a página de ofertas após criar a oferta
     } catch (error) {
-      console.error('Erro ao criar oferta:', error);
-      setFeedback('Erro ao criar oferta. Tente novamente.');
+      console.error("Erro ao criar oferta:", error);
+      setFeedback("Erro ao criar oferta. Tente novamente.");
     }
   };
 
@@ -51,7 +54,9 @@ function CriarOferta() {
 
       <form onSubmit={handleSubmit}>
         <div className="mb-3">
-          <label htmlFor="preco" className="form-label">Preço</label>
+          <label htmlFor="preco" className="form-label">
+            Preço
+          </label>
           <input
             type="number"
             className="form-control"
@@ -63,7 +68,9 @@ function CriarOferta() {
         </div>
 
         <div className="mb-3">
-          <label htmlFor="qtdMilhas" className="form-label">Quantidade de Milhas</label>
+          <label htmlFor="qtdMilhas" className="form-label">
+            Quantidade de Milhas
+          </label>
           <input
             type="number"
             className="form-control"
@@ -75,7 +82,9 @@ function CriarOferta() {
         </div>
 
         <div className="mb-3">
-          <label htmlFor="ciaAerea" className="form-label">Companhia Aérea</label>
+          <label htmlFor="ciaAerea" className="form-label">
+            Companhia Aérea
+          </label>
           <select
             className="form-control"
             id="ciaAerea"
@@ -91,7 +100,9 @@ function CriarOferta() {
         </div>
 
         <div className="mb-3">
-          <label htmlFor="compraOuVenda" className="form-label">Tipo de Oferta</label>
+          <label htmlFor="compraOuVenda" className="form-label">
+            Tipo de Oferta
+          </label>
           <select
             className="form-control"
             id="compraOuVenda"
@@ -104,7 +115,9 @@ function CriarOferta() {
           </select>
         </div>
 
-        <button type="submit" className="btn btn-primary">Criar Oferta</button>
+        <button type="submit" className="btn btn-primary">
+          Criar Oferta
+        </button>
       </form>
     </div>
   );
