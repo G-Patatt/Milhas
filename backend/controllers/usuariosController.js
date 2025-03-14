@@ -3,7 +3,23 @@
 const Usuario = require('../models/Usuario');
 const bcrypt = require('bcryptjs');
 
+const buscarUsuarioPorId = async (req, res) => {
+  try {
+    const usuarioId = req.params.id;
+    const usuario = await Usuario.findByPk(usuarioId, {
+      attributes: ['id', 'nome', 'email'] // Pegando apenas os dados necessários
+    });
 
+    if (!usuario) {
+      return res.status(404).json({ message: 'Usuário não encontrado' });
+    }
+
+    res.json(usuario);
+  } catch (error) {
+    console.error('Erro ao buscar usuário:', error);
+    res.status(500).json({ message: 'Erro no servidor' });
+  }
+};
 // Função para obter notificações do usuário
 const obterNotificacoes = async (req, res) => {
   try {
@@ -58,5 +74,6 @@ const cadastrar = async (req, res) => {
 
 module.exports = {
   cadastrar,
-  obterNotificacoes
+  obterNotificacoes,
+  buscarUsuarioPorId
 };

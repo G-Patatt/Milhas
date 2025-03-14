@@ -23,7 +23,7 @@ function NegociacoesUsuario() {
     })
       .then(response => {
         setNegociacoes(response.data);
-        console.log(response.data);
+  
         setFeedback('');
       })
       .catch((error) => {

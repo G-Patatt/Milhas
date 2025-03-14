@@ -3,41 +3,84 @@ import { useParams, useLocation } from 'react-router-dom';  // Importar useLocat
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
 
+const buscarOfertaPorId = async (id) => {
+  try {
+    const response = await axios.get(`http://localhost:5000/api/ofertas/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error("Erro ao buscar oferta:", error);
+    return null;
+  }
+};
+
+const buscarNegociacaoPorId = async (id,ofertaId) => {
+  try {
+    const response = await axios.get(`http://localhost:5000/api/negociacao/${id}?ofertaId=${ofertaId}`);
+    return response.data;
+  } catch (error) {
+    console.error("Erro ao buscar oferta:", error);
+    return null;
+  }
+};
+
+
+const buscarUsuariosPorId = async (id) => {
+  try {
+    const response = await axios.get(`http://localhost:5000/api/usuarios/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error("Erro ao buscar oferta:", error);
+    return null;
+  }
+};
+
 
 function DetalhesNegociacao() {
   const { id } = useParams();  // Acessando o id da URL
   const location = useLocation();  // Obter o objeto de localização atual
-  const [negociacao, setNegociacao] = useState(null);
-  const [garantia, setGarantia] = useState(null);
-  const [feedback, setFeedback] = useState('');
+  const [negociacao, setNegociacao] = useState([]);
+  const [usuarioVendedor, setUsuariosVendedorInfo] = useState([]);
+  const [usuarioComprador, setUsuariosCompradorInfo] = useState([]);
+  const [feedback] = useState('');
+  const [oferta, setOferta] = useState([]);
+  
 
   // Usar URLSearchParams para acessar o valor de ofertaId
   const queryParams = new URLSearchParams(location.search);
   const ofertaId = queryParams.get('ofertaId');
 
   useEffect(() => {
-    setFeedback('Carregando detalhes da negociação...');
-
+    async function carregarOferta() {
+      const dados = await buscarOfertaPorId(ofertaId);
+      setOferta(dados);
+    }
+    carregarOferta();
     // Fazendo a requisição para obter a negociação com a garantia
-    axios
-      .get(`http://localhost:5000/api/negociacao/${id}?ofertaId=${ofertaId}`) // Passando ofertaId na query string
-      .then((response) => {
-        setNegociacao(response.data.negociacao);
-        setGarantia(response.data.garantia); // Armazenando a garantia
-        setFeedback('');
-      })
-      .catch((error) => {
-        setFeedback('Erro ao carregar os detalhes da negociação.');
-        console.error(error);
-      });
+
+    async function carregarNegociacao() {
+      const dados = await buscarNegociacaoPorId(id,ofertaId);
+      console.log(dados);
+      
+      const comprador = await buscarUsuariosPorId(dados.negociacao.usuarioIdComprador);
+      console.log("Comprador " + comprador.email);
+      
+      
+      const vendedor = await buscarUsuariosPorId(dados.negociacao.usuarioIdVendedor);
+      console.log("Vendedor " + vendedor.email);
+
+      setUsuariosCompradorInfo(comprador);
+      setUsuariosVendedorInfo(vendedor);
+
+      setNegociacao(dados.negociacao);
+   
+  
+    }
+    carregarNegociacao();
+   
   }, [id, ofertaId]);
 
-    const [paymentLink, setPaymentLink] = useState('');
-      console.log(JSON.stringify({
-        title: 'Produto Exemplo', // aqui sera a oferta
-        quantity: 1, //quantity acredito que 1
-        price: 100.00 //preco da oferta
-      }));
+    const [ setPaymentLink] = useState('');
+
       
       const criarPreference = async () => {
         try {
@@ -70,7 +113,7 @@ function DetalhesNegociacao() {
     <h1 className="text-center mb-4">Ofertas de Milhas</h1>
     
     {feedback && <p className="text-danger">{feedback}</p>}
-  
+    
     {negociacao && (
       <div className="card p-4">
         <div className="d-flex justify-content-between align-items-center">
@@ -80,16 +123,30 @@ function DetalhesNegociacao() {
             <strong>ID da Negociação:</strong> {negociacao.negociacaoId}
           </p>
           <p>
-            <strong>ID do Comprador:</strong> {negociacao.usuarioIdComprador}
+            <strong>Email do Comprador:</strong> {usuarioComprador.email}
           </p>
           <p>
-            <strong>ID do Vendedor:</strong> {negociacao.usuarioIdVendedor}
+            <strong>Email do Vendedor:</strong> {usuarioVendedor.email}
           </p>
+
           <p>
-            <strong>ID da Oferta:</strong> {negociacao.ofertaId}
+            <strong>Status:</strong> {negociacao.status}
           </p>
-          
+   
           </div>
+
+          {oferta ? (
+                <div className="card p-3">
+                    <h3 className="text-center">Dados da oferta</h3>
+                    <p><strong>Quantidade de milhas:</strong> {oferta.qtdMilhas}</p>
+                    <p><strong>Preço:</strong> R$ {oferta.preco}</p>
+                    <p><strong>Cia Aérea :</strong> {oferta.ciaAerea}</p>
+                    <p><strong>Oferta confirmada? </strong> {(oferta.confirmada) ? "Confirmada": "Não confirmada"}</p>
+                    <p><strong>Tipo: </strong> {oferta.compraOuVenda}</p>
+                </div>
+            ) : (
+                <p className="text-warning">Nenhuma oferta encontrada.</p>
+            )}
   
      
           <button className="btn btn-primary" onClick={criarPreference}>Alocar Garantias</button>
