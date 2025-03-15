@@ -15,6 +15,6 @@ router.get('/:id', negociacaoController.buscarNegociacaoPorId);
 // Rota para criar uma nova negociação  
 router.post('/', negociacaoController.adicionarNegociacao);
 
-
+router.put('/:id/status', negociacaoController.atualizarStatusNegociacao);
 
 module.exports = router;

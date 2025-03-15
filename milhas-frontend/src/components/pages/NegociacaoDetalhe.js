@@ -34,6 +34,20 @@ const buscarUsuariosPorId = async (id) => {
   }
 };
 
+const atualizarStatusNegociacao = async (negociacaoId, novoStatus) => {
+  try {
+  
+    const response = await axios.put(`http://localhost:5000/api/negociacao/${negociacaoId}/status`, {
+      status: novoStatus
+    });
+ 
+    return response.data;
+  } catch (error) {
+    console.error("Erro ao buscar negociacao:", error);
+    return null;
+  }
+};
+
 
 function DetalhesNegociacao() {
   const { id } = useParams();  // Acessando o id da URL
@@ -59,19 +73,18 @@ function DetalhesNegociacao() {
 
     async function carregarNegociacao() {
       const dados = await buscarNegociacaoPorId(id,ofertaId);
-      console.log(dados);
-      
+ 
       const comprador = await buscarUsuariosPorId(dados.negociacao.usuarioIdComprador);
-      console.log("Comprador " + comprador.email);
-      
+      console.log("Comprador " + comprador.email);      
       
       const vendedor = await buscarUsuariosPorId(dados.negociacao.usuarioIdVendedor);
       console.log("Vendedor " + vendedor.email);
 
       setUsuariosCompradorInfo(comprador);
       setUsuariosVendedorInfo(vendedor);
-
       setNegociacao(dados.negociacao);
+
+      
    
   
     }
@@ -79,7 +92,7 @@ function DetalhesNegociacao() {
    
   }, [id, ofertaId]);
 
-    const [ setPaymentLink] = useState('');
+ 
 
       
       const criarPreference = async () => {
@@ -97,9 +110,10 @@ function DetalhesNegociacao() {
           });
     
           const data = await response.json();
-        
-          setPaymentLink(data.url); // Guarda o link retornado pelo Mercado Pago
-    
+          console.log(data);
+          atualizarStatusNegociacao(negociacao.negociacaoId,'Comprador gerou o link mas ainda não pagou');
+       
+          
           // Redireciona automaticamente o usuário
           window.location.href = data.url;
         } catch (error) {
