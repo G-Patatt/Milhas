@@ -28,9 +28,9 @@ const ModalChoice = () => {
     if(choice === "Vendedor") {
       navigate("/criar-oferta"); //navega para a página de ofertas
     }
-    if (choice === "Comprador") {
-      navigate("/consultar-ofertas"); //navega para a página de logout
-    }
+if(choice === "Comprador") {
+  navigate("/ofertas"); //navega para a página de ofertas
+}
   };
 
   if (!itsOpen) {
