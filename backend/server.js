@@ -1,6 +1,7 @@
 // server.js
 const express = require('express');
 const cors = require('cors');
+
 const sequelize = require('./database');  // Conexão com o banco de dados
 const ofertasRoutes = require('./routes/ofertasRoutes');
 const usuariosRoutes = require('./routes/usuariosRoutes');
@@ -8,7 +9,12 @@ const milhasRoutes = require('./routes/milhasRoutes');
 const negociacaoRoutes = require('./routes/negociacaoRoutes');
 const loginRoutes = require('./routes/loginRoutes');
 const garantiaRoutes = require('./routes/garantiaRoutes');
+<<<<<<< HEAD
 
+=======
+const reservaRoutes = require('./routes/paymentRoutes');
+  
+>>>>>>> origin/main
 
 const app = express();
 const port = 5000;
@@ -16,6 +22,7 @@ const port = 5000;
 // Middleware
 app.use(cors());
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 // Teste de Conexão com o Banco de Dados
 sequelize.authenticate()
@@ -44,4 +51,5 @@ app.use('/api/usuarios', usuariosRoutes);
 app.use('/api', milhasRoutes);
 app.use('/api/negociacao', negociacaoRoutes);
 app.use('/api', loginRoutes);
-app.use('/api/garantias', garantiaRoutes); // Prefixo para as rotas de garantias
+app.use('/api/garantias', garantiaRoutes); 
+app.use('/api', reservaRoutes);

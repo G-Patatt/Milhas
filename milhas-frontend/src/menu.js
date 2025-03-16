@@ -18,6 +18,8 @@ function Menu() {
         <li><a href={negociacoesLink} className="menu-navbar-item">Negociações</a></li>
         <li><a href="/logout" className="menu-navbar-item">Logout</a></li>
         <li><a href="/guia-usuario" className="menu-navbar-item">Como Funciona</a></li>
+          <li><a href="/logout" className="menu-navbar-item">Logout</a></li>
+        <li><a href="/reserva" className="menu-navbar-item">Reserva Limite</a></li>
         <NotificacaoIcon />
       </ul>
     </div>

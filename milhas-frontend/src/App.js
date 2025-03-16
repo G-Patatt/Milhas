@@ -13,11 +13,14 @@ import Logout from './components/pages/Logout.js'; // Importa o componente de ro
 import CriarOferta from './components/pages/CriaOferta.js'; // Importa o componente de rota privada
 import CriaUsuario from './components/pages/CriaUsuario.js'; // Importa o componente de rota privada
 import GuiaUsuarioPage from './components/pages/GuiaUsuarioPage.js';
+import ModalChoice from './components/pages/ModalEscolha.js';
+import ReservaLimite from './components/pages/ReservaLimite.js'; // Importa o componente de rota privada
 
 function App() {
   return (
     <AuthProvider>
       <Router>
+        <ModalChoice /> 
         <Menu /> {/* Barra de navegação fixa */}
         <Routes> 
           <Route path="/" element={<h1>Bem-vindo ao Sistema de Milhas!</h1>} />
@@ -36,6 +39,7 @@ function App() {
             element={<PrivateRoute element={<NegociacoesUsuario />} />}
           />
           <Route path="/cadastro" element={<CriaUsuario />} /> 
+          <Route path="/reserva" element={<ReservaLimite />} />
         </Routes>
       </Router>
     </AuthProvider>
