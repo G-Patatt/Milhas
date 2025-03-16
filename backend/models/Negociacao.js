@@ -54,7 +54,7 @@ const Negociacao = sequelize.define('Negociacao', {
       'Comprador gerou o link mas ainda não pagou',
       'Vendedor gerou o link mas ainda não pagou'
     ),
-    allowNull: false  // Garantir que o status seja sempre fornecido
+    allowNull: true  // Garantir que o status seja sempre fornecido
 
   }
 }, {
