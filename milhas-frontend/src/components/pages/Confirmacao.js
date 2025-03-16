@@ -11,6 +11,14 @@ function Confirmacao() {
   const [aceito, setAceito] = useState(false);
   const [feedback, setFeedback] = useState('');  
   const navigate = useNavigate();
+  // Verifique se há um token armazenado
+  const token = localStorage.getItem('token');
+
+  const usuario = JSON.parse(localStorage.getItem('usuario'));
+  // Se não houver token, redireciona para a página de login
+  if (!token) {
+    navigate('/login');
+  }
 
   // Carregar a oferta com base no ID
   useEffect(() => {
@@ -45,13 +53,31 @@ function Confirmacao() {
       return;
     }
 
+    const negociacaoData = {}; // Criando um objeto simples
+    console.log(oferta);
+    if (oferta.compraOuVenda === "Venda") {
+      negociacaoData.usuarioIdComprador = usuario.id;
+      negociacaoData.usuarioIdVendedor = oferta.usuarioId;
+    } else {      
+      negociacaoData.usuarioIdComprador = oferta.usuarioId;
+      negociacaoData.usuarioIdVendedor = usuario.id;    
+    }
 
+    if(negociacaoData.usuarioIdComprador == negociacaoData.usuarioIdVendedor){
+      setFeedback('Você não pode comprar e vender para si mesmo');  
+      return;
+    }
 
-      const negociacaoData = {
-        usuarioIdComprador: 2,
-        usuarioIdVendedor: 3,
-        ofertaId: ofertaId,
-      };
+    if(negociacaoData.usuarioIdComprador == undefined || negociacaoData.usuarioIdComprador == null || negociacaoData.usuarioIdVendedor == undefined || negociacaoData.usuarioIdVendedor == null){
+      setFeedback('Houve um problema com a geração da negociação, entre em contato com o suporte.');  
+      return;
+    }
+
+    negociacaoData.ofertaId = ofertaId; // Atribuindo diretamente 
+
+    console.log(negociacaoData);
+     
+
   
       // Envia a negociação ao backend
       axios.post('http://localhost:5000/api/negociacao', negociacaoData)

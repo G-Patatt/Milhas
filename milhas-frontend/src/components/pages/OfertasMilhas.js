@@ -18,6 +18,7 @@ function OfertasMilhas() {
           setFeedback(''); // Limpa a mensagem de feedback se ofertas forem encontradas
         }
         setOfertas(response.data);  
+   
       })
       .catch(error => {
         console.error('Erro ao buscar ofertas:', error);

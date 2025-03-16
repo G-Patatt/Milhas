@@ -22,9 +22,13 @@ function NegociacoesUsuario() {
       headers: { Authorization: `Bearer ${token}` }  // Envia o token com a requisição
     })
       .then(response => {
-        setNegociacoes(response.data);
+       
+        if(response.status === 200){
+          setNegociacoes(response.data);
+          return;
+        }
   
-        setFeedback('');
+        setFeedback('Nenhuma negociação encontrada');
       })
       .catch((error) => {
         if (error.response && error.response.status === 401) {

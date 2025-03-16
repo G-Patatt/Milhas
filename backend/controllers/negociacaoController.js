@@ -80,7 +80,7 @@ const getNegociacoesPorUsuario = async (req, res) => {
     });
 
     if (negociacoes.length === 0) {
-      return res.status(404).json({ message: 'Nenhuma negociação encontrada para este usuário.' });
+      return res.status(208).json({ message: 'Nenhuma negociação encontrada para este usuário.' });
     }
 
     // Buscar as ofertas correspondentes

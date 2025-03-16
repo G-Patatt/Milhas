@@ -25,6 +25,10 @@ const login = async (req, res) => {
     console.log("Senha válida:", senhaValida);
     
     
+    if(!senhaValida){
+      console.error('Senha inválida', error);
+      return ;
+    }
 
     // Gerar um token JWT
     const token = jwt.sign({ id: usuario.id, email: usuario.email }, 'secret-key', {
