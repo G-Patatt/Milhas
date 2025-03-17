@@ -3,7 +3,7 @@ const {
   postAvaliation,
   getAllAvaliation,
   getAvaliationById,
-} = require("../controllers/avaliacaoController");
+} = require("../controllers/avaliacoes");
 const router = express.Router();
 
 router.post("/:id", postAvaliation);

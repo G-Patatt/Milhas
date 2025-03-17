@@ -3,7 +3,8 @@ import Usuario from "../models/Usuario";
 
 export async function postAvaliation(req, res) {
   try {
-    const { userId, rating } = req.body;
+    const { userId } = req.params;
+    const { rating } = req.body;
 
     if (!userId || !rating) {
       return res.status(401).json({ error: "Dados inválidos" });
@@ -26,7 +27,7 @@ export async function postAvaliation(req, res) {
   }
 }
 
-export async function getAvaliationById(req, res) {
+export async function getAllAvaliation(req, res) {
   try {
     const avalicaoes = await Usuario.findAll({
       include: [
@@ -41,7 +42,7 @@ export async function getAvaliationById(req, res) {
   } catch (error) {}
 }
 
-export async function getAllAvaliation(req, res) {
+export async function getAvaliationById(req, res) {
   try {
     const { userId } = req.params;
     const usersAvaliation = await Usuario.findByPk(userId, {
