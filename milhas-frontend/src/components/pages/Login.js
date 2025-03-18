@@ -5,6 +5,7 @@
 
   function Login() {
     const auth = useAuth();
+    console.log(auth); // Verifique se está retornando { login, logout, usuario }
     const { login } = auth; // Acessa a função de login do contexto
     const navigate = useNavigate();
     
@@ -16,7 +17,7 @@
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-  
+      console.log('Enviando dados de login:', { email, senha });
 
       const response = await axios.post('http://localhost:5000/api/login', { email, senha });
 
@@ -24,6 +25,7 @@
         // Após o login bem-sucedido
         localStorage.setItem('usuario', JSON.stringify(response.data.usuario));
         console.log(localStorage.getItem('usuario'));
+        console.log(console.log(localStorage.getItem('usuario')))
         console.log('Token:', response.data.token);
         localStorage.setItem('token', response.data.token); // Armazena o token no localStorage
         login(response.data.usuario); // Atualiza o estado do contexto

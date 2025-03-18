@@ -26,7 +26,7 @@ const login = async (req, res) => {
     
     
     if(!senhaValida){
-      console.error('Senha inválida', error);
+      res.status(401).json({ message: 'Usuário ou senha invalidos.' });
       return ;
     }
 

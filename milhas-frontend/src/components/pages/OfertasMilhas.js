@@ -8,6 +8,7 @@ function OfertasMilhas() {
   const [feedback, setFeedback] = useState('');
   const navigate = useNavigate();
 
+
   useEffect(() => {
     // Buscar ofertas (com ou sem filtro)
     axios.get('http://localhost:5000/api/ofertas')  
@@ -26,14 +27,9 @@ function OfertasMilhas() {
       });
   }, []);  
 
-  const pegarOferta = async (ofertaId) => {
+  const confirmaOferta = async (ofertaId) => {
     try {
-      console.log(ofertaId);
-      const response = await axios.post('http://localhost:5000/api/ofertas/pegarOferta', { ofertaId });
-      setFeedback(response.data.message);  // Mensagem de sucesso ou erro
 
-      // Atualizar a lista de ofertas removendo a oferta confirmada
-      setOfertas(ofertas.filter(oferta => oferta.ofertaId !== ofertaId));  // Filtrando corretamente
 
       // Redireciona para a página de confirmação
       navigate(`/confirmacao/${ofertaId}`);
@@ -78,7 +74,7 @@ function OfertasMilhas() {
               {/* Botão para pegar a oferta */}
               <button 
                 className="btn btn-primary" 
-                onClick={() => pegarOferta(oferta.ofertaId)}  
+                onClick={() => confirmaOferta(oferta.ofertaId)}  
               >
                 Pegar Oferta
               </button>
