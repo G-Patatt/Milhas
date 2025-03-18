@@ -4,8 +4,8 @@ import NotificacaoIcon from './components/pages/NotificacaoIcone';
 
 function Menu() {
   // Obtenha o ID do usuário logado do localStorage
-  const usuarioId = localStorage.getItem('usuarioId');
-
+  const usuarioId = JSON.parse(localStorage.getItem('usuario')).id;
+  console.log(usuarioId);
   // Se o usuário estiver logado, mostra o link de negociações
   const negociacoesLink = usuarioId ? `/negociacoes/usuario/${usuarioId}` : '#';
 

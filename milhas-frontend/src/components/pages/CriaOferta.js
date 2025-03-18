@@ -6,9 +6,13 @@ function CriarOferta() {
   const [preco, setPreco] = useState('');
   const [qtdMilhas, setQtdMilhas] = useState('');
   const [ciaAerea, setCiaAerea] = useState('');
-  const [compraOuVenda, setCompraOuVenda] = useState('compra');
+  const [compraOuVenda, setCompraOuVenda] = useState('');
   const [feedback, setFeedback] = useState('');
   const navigate = useNavigate();
+
+  const [origem, setOrigem] = useState('');
+  const [destino, setDestino] = useState('');
+  const [aceito, setAceito] = useState(false);
 
   // Recuperar o usuarioId do token armazenado no localStorage
   const token = localStorage.getItem('token');
@@ -17,7 +21,8 @@ function CriarOferta() {
     navigate('/login');  // Se não houver token, redireciona para login
   }
   
-  const usuarioId = localStorage.getItem('usuarioId');
+  const usuarioId = JSON.parse(localStorage.getItem('usuario')).id;
+  console.log(JSON.stringify(usuarioId));
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -103,7 +108,47 @@ function CriarOferta() {
             <option value="venda">Venda</option>
           </select>
         </div>
+        {compraOuVenda === 'compra'  && (
+        <div>
+          <div className="mb-3">
+            <label htmlFor="origem" className="form-label">Origem:</label>
+            <input
+              type="text"
+              id="origem"
+              className="form-control"
+              value={origem}
+              onChange={(e) => setOrigem(e.target.value)}
+              placeholder="Ex: São Paulo"
+              required
+            />
+          </div>
+          <div className="mb-3">
+            <label htmlFor="destino" className="form-label">Destino:</label>
+            <input
+              type="text"
+              id="destino"
+              className="form-control"
+              value={destino}
+              onChange={(e) => setDestino(e.target.value)}
+              placeholder="Ex: Rio de Janeiro"
+              required
+            />
+          </div>
+          <div className="mb-3">
+            <div className="form-check">
+              <input
+                type="checkbox"
+                className="form-check-input"
+                id="aceito"
+                checked={aceito}
+                onChange={() => setAceito(!aceito)}
+              />
+              <label htmlFor="aceito" className="form-check-label">Aceito os termos e condições</label>
+            </div>
+          </div>
+        </div>) }
 
+        
         <button type="submit" className="btn btn-primary">Criar Oferta</button>
       </form>
     </div>

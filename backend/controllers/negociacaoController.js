@@ -17,7 +17,7 @@ const buscarNegociacoes = async (req, res) => {
 
 // Função para adicionar uma negociação
 const adicionarNegociacao = async (req, res) => {
-  const { usuarioIdComprador, usuarioIdVendedor, ofertaId } = req.body;
+  const { usuarioIdComprador, usuarioIdVendedor, ofertaId, status } = req.body;
 
   try {
     // Adiciona a nova negociação no banco
@@ -25,13 +25,15 @@ const adicionarNegociacao = async (req, res) => {
       usuarioIdComprador,  // ID do comprador
       usuarioIdVendedor,   // ID do vendedor
       ofertaId,            // ID da oferta associada à negociação
+      status,
     });
     
+   
     // Resposta de sucesso
-    res.status(201).json({
-      message: 'Negociação criada com sucesso!',
-      negociacao: novaNegociacao
-    });
+    return novaNegociacao;
+
+  
+   
   } catch (error) {
     // Caso ocorra um erro
     res.status(500).json({ error: 'Erro ao adicionar negociação', details: error.message });
@@ -80,7 +82,7 @@ const getNegociacoesPorUsuario = async (req, res) => {
     });
 
     if (negociacoes.length === 0) {
-      return res.status(404).json({ message: 'Nenhuma negociação encontrada para este usuário.' });
+      return res.status(208).json({ message: 'Nenhuma negociação encontrada para este usuário.' });
     }
 
     // Buscar as ofertas correspondentes
