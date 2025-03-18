@@ -39,6 +39,11 @@ const Usuario = sequelize.define(
         max: 5,
       },
     },
+    qtdAvaliacoes: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0,
+      allowNull: true,
+    },
   },
   {
     tableName: "usuarios",
