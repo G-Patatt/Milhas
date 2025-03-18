@@ -1,62 +1,69 @@
-import { create } from "form";
-import Usuario from "../models/Usuario";
+const Usuario = require("../models/Usuario");
+const Avaliacoes = require("../models/Avaliacoes");
+const { where } = require("sequelize");
 
-export async function postAvaliation(req, res) {
+const postAvaliation = async (req, res) => {
   try {
-    const { userId } = req.params;
+    const { ratedUser } = req.params;
     const { rating } = req.body;
 
-    if (!userId || !rating) {
+    if (!ratedUser || !rating) {
       return res.status(401).json({ error: "Dados inválidos" });
     }
 
-    const user = await Usuario.findByPk(userId);
-    if (!user) {
-      return res.status(404).json({ error: "Usuário não encontrado" });
-    }
-
-    const response = await create({
-      userId,
-      rating,
-    });
+    const response = await Usuario.update();
 
     return res.status(201).json(response);
   } catch (error) {
     console.error("Erro ao criar avaliação:", error);
     return res.status(500).json({ error: "Erro ao criar avaliação" });
   }
-}
+};
 
-export async function getAllAvaliation(req, res) {
+const getAllAvaliations = async (_, res) => {
   try {
-    const avalicaoes = await Usuario.findAll({
-      include: [
-        {
-          model: Usuario,
-          as: "user",
-        },
-      ],
-    });
+    const avalicaoes = await Avaliacoes.findAll();
 
-    res.status(200).json(avalicaoes);
+    const avaliacoesGroup = avalicaoes.reduce((acc, avaliation) => {
+      if (!acc[avaliation.ratedUser]) {
+        acc[avaliation.ratedUser] = [];
+      }
+      acc[avaliation.ratedUser].push(avaliation);
+
+      return acc;
+    }, {});
+
+    const totalRating =
+      avaliacoesGroup.reduce((acc, avaliation) => {
+        return acc + avaliation.rating;
+      }, 0) / ava.length;
+
+    res.status(200).json(avaliacoesGroup);
   } catch (error) {}
-}
+};
 
-export async function getAvaliationById(req, res) {
+const getAvaliationById = async (req, res) => {
   try {
-    const { userId } = req.params;
-    const usersAvaliation = await Usuario.findByPk(userId, {
-      include: [
-        {
-          model: Usuario,
-          as: "user",
-        },
-      ],
+    const { ratedUser } = req.params;
+    const usersAvaliation = await Avaliacoes.findAll({
+      where: { ratedUser: ratedUser },
     });
 
-    if (!usersAvaliation) {
+    if (usersAvaliation.length === 0) {
       return res.status(404).json({ error: "Usuário nao encontrado" });
     }
-    res.status(200).json(usersAvaliation);
+
+    const totalRating =
+      usersAvaliation.reduce((acc, avaliation) => {
+        return acc + avaliation.rating;
+      }, 0) / usersAvaliation.length;
+
+    res.status(200).json({ usersAvaliation, totalRating });
   } catch (error) {}
-}
+};
+
+module.exports = {
+  postAvaliation,
+  getAllAvaliations,
+  getAvaliationById,
+};
