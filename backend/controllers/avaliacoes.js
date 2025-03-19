@@ -5,13 +5,17 @@ const { where } = require("sequelize");
 const postAvaliation = async (req, res) => {
   try {
     const { ratedUser } = req.params;
-    const { rating } = req.body;
+    const { rating, createdAt } = req.body;
 
     if (!ratedUser || !rating) {
       return res.status(401).json({ error: "Dados inválidos" });
     }
 
-    const response = await Usuario.update();
+    const response = await Avaliacoes.create({
+      ratedUser,
+      rating,
+      createdAt,
+    });
 
     return res.status(201).json(response);
   } catch (error) {
