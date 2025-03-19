@@ -10,7 +10,7 @@ const negociacaoRoutes = require('./routes/negociacaoRoutes');
 const loginRoutes = require('./routes/loginRoutes');
 const garantiaRoutes = require('./routes/garantiaRoutes');
 const reservaRoutes = require('./routes/paymentRoutes');
-  
+const cleanIndexes = require("./cleanIndexes.js");
 
 const app = express();
 const port = 5000;
@@ -20,25 +20,30 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Teste de Conexão com o Banco de Dados
-sequelize.authenticate()
+// Executar a limpeza de índices antes de iniciar o servidor
+cleanIndexes()
   .then(() => {
-    console.log('Conexão com o banco de dados bem-sucedida!');
+    console.log("🔍 Índices verificados e limpos!");
+    
+    // Teste de Conexão com o Banco de Dados
+    return sequelize.authenticate();
   })
-  .catch((error) => {
-    console.error('Erro ao conectar com o banco de dados:', error);
-  });
-
-// Sincronização do Banco de Dados
-sequelize.sync({ alter: true })
   .then(() => {
-    console.log('Banco de dados sincronizado');
+    console.log('✅ Conexão com o banco de dados bem-sucedida!');
+    
+    // Sincronização do Banco de Dados
+    return sequelize.sync({ alter: true });
+  })
+  .then(() => {
+    console.log('✅ Banco de dados sincronizado');
+    
+    // Iniciar o servidor após tudo estar pronto
     app.listen(port, () => {
-      console.log(`Servidor rodando na porta ${port}`);
+      console.log(`🚀 Servidor rodando na porta ${port}`);
     });
   })
   .catch((error) => {
-    console.error('Erro ao sincronizar banco de dados:', error);
+    console.error('❌ Erro ao iniciar o servidor:', error);
   });
 
 // Usar as rotas
