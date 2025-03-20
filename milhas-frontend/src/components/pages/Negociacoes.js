@@ -27,7 +27,7 @@ function NegociacoesUsuario() {
        
         if(response.status === 200){
           setNegociacoes(response.data);
-          
+          setFeedback('');
           return;
         }
   
