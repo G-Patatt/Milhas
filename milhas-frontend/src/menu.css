@@ -9,6 +9,8 @@
   --muted: #f3f4f6;
   --muted-foreground: #6b7280;
   --border: #e5e7eb;
+  --danger: #ef4444;
+  --danger-hover: #dc2626;
 }
 
 .menu-navbar {
@@ -90,8 +92,12 @@
   gap: 1rem;
 }
 
-.logout-button {
-  display: none;
+.auth-button-container {
+  display: flex;
+}
+
+.auth-button {
+  display: flex;
   align-items: center;
   gap: 0.5rem;
   padding: 0.5rem 1rem;
@@ -104,7 +110,7 @@
   transition: background-color 0.2s ease;
 }
 
-.logout-button:hover {
+.auth-button:hover {
   background-color: var(--secondary-hover);
 }
 
@@ -140,6 +146,10 @@
   border-bottom: 1px solid var(--border);
 }
 
+.mobile-menu-item .fa {
+  margin-right: 0.5rem;
+}
+
 .mobile-menu-item.active {
   color: var(--primary);
   font-weight: 500;
@@ -155,7 +165,7 @@
     display: flex;
   }
 
-  .logout-button {
+  .auth-button-container {
     display: flex;
   }
 
@@ -168,7 +178,9 @@
   }
 }
 
-/* Notification Icon Styling */
-/* Nota: Isso depende da implementação do seu componente NotificacaoIcon */
-/* Você pode precisar ajustar isso com base na sua implementação específica */
+@media (max-width: 767px) {
+  .auth-button-container {
+    display: none;
+  }
+}
 

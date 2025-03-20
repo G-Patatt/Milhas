@@ -1,21 +1,25 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { useLocation } from "react-router-dom"
+import { useLocation, useNavigate } from "react-router-dom"
 import "./menu.css"
 import NotificacaoIcon from "./components/pages/NotificacaoIcone"
+import LogoutModal from "./components/pages/LogoutModal"
 import "font-awesome/css/font-awesome.min.css"
 
 function Menu() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const [showLogoutModal, setShowLogoutModal] = useState(false)
   const location = useLocation()
+  const navigate = useNavigate()
 
   // Obtenha o ID do usuário logado do localStorage
-  const usuario = JSON.parse(localStorage.getItem("usuario") || '{"id": null}')
-  const usuarioId = usuario?.id
-
+  const usuario = JSON.parse(localStorage.getItem("usuario") || "null")
+  // Verificar se o usuário está logado
+  const isLoggedIn = !!usuario && usuario?.id !== null
   // Se o usuário estiver logado, mostra o link de negociações
+  const usuarioId = usuario?.id
   const negociacoesLink = usuarioId ? `/negociacoes/usuario/${usuarioId}` : "#"
 
   // Detecta o scroll para mudar o estilo do menu
@@ -37,6 +41,34 @@ function Menu() {
   // Verifica se o link está ativo
   const isActive = (path) => {
     return location.pathname === path
+  }
+
+  // Funções para o modal de logout
+  const handleLogoutClick = (e) => {
+    e.preventDefault() // Previne o comportamento padrão do link
+    setShowLogoutModal(true)
+  }
+
+  const handleConfirmLogout = () => {
+    // Limpa os dados do usuário
+    localStorage.removeItem("usuario")
+    localStorage.removeItem("token")
+
+    // Fecha o modal e redireciona para login
+    setShowLogoutModal(false)
+    navigate("/login")
+  }
+
+  const handleCancelLogout = () => {
+    // Fecha o modal e redireciona para ofertas
+    setShowLogoutModal(false)
+    navigate("/ofertas")
+  }
+
+  // Função para lidar com o clique no botão de login
+  const handleLoginClick = (e) => {
+    e.preventDefault()
+    navigate("/login")
   }
 
   return (
@@ -75,24 +107,37 @@ function Menu() {
               Contato
             </a>
           </li>
-          <li>
-            <a href={negociacoesLink} className={`menu-item ${isActive(negociacoesLink) ? "active" : ""}`}>
-              Negociações
-            </a>
-          </li>
-          <li>
-            <a href="/reserva" className={`menu-item ${isActive("/reserva") ? "active" : ""}`}>
-              Reserva Limite
-            </a>
-          </li>
+          {isLoggedIn && (
+            <>
+              <li>
+                <a href={negociacoesLink} className={`menu-item ${isActive(negociacoesLink) ? "active" : ""}`}>
+                  Negociações
+                </a>
+              </li>
+              <li>
+                <a href="/reserva" className={`menu-item ${isActive("/reserva") ? "active" : ""}`}>
+                  Reserva Limite
+                </a>
+              </li>
+            </>
+          )}
         </ul>
 
         <div className="menu-actions">
-          <NotificacaoIcon />
-          <a href="/logout" className="logout-button">
-            <i className="fa fa-sign-out"></i>
-            <span>Logout</span>
-          </a>
+          {isLoggedIn && <NotificacaoIcon />}
+          <div className="auth-button-container">
+            {isLoggedIn ? (
+              <a href="#" onClick={handleLogoutClick} className="auth-button">
+                <i className="fa fa-sign-out"></i>
+                <span>Logout</span>
+              </a>
+            ) : (
+              <a href="#" onClick={handleLoginClick} className="auth-button">
+                <i className="fa fa-sign-in"></i>
+                <span>Login</span>
+              </a>
+            )}
+          </div>
 
           {/* Mobile menu toggle */}
           <button
@@ -153,24 +198,45 @@ function Menu() {
                 Contato
               </a>
             </li>
+            {isLoggedIn && (
+              <>
+                <li>
+                  <a href={negociacoesLink} className={`mobile-menu-item ${isActive(negociacoesLink) ? "active" : ""}`}>
+                    Negociações
+                  </a>
+                </li>
+                <li>
+                  <a href="/reserva" className={`mobile-menu-item ${isActive("/reserva") ? "active" : ""}`}>
+                    Reserva Limite
+                  </a>
+                </li>
+              </>
+            )}
             <li>
-              <a href={negociacoesLink} className={`mobile-menu-item ${isActive(negociacoesLink) ? "active" : ""}`}>
-                Negociações
-              </a>
-            </li>
-            <li>
-              <a href="/reserva" className={`mobile-menu-item ${isActive("/reserva") ? "active" : ""}`}>
-                Reserva Limite
-              </a>
-            </li>
-            <li>
-              <a href="/logout" className={`mobile-menu-item ${isActive("/logout") ? "active" : ""}`}>
-                <i className="fa fa-sign-out"></i> Logout
-              </a>
+              {isLoggedIn ? (
+                <a
+                  href="#"
+                  onClick={handleLogoutClick}
+                  className={`mobile-menu-item ${isActive("/logout") ? "active" : ""}`}
+                >
+                  <i className="fa fa-sign-out"></i> Logout
+                </a>
+              ) : (
+                <a
+                  href="#"
+                  onClick={handleLoginClick}
+                  className={`mobile-menu-item ${isActive("/login") ? "active" : ""}`}
+                >
+                  <i className="fa fa-sign-in"></i> Login
+                </a>
+              )}
             </li>
           </ul>
         </div>
       )}
+
+      {/* Modal de logout (agora como componente separado) */}
+      <LogoutModal isOpen={showLogoutModal} onConfirm={handleConfirmLogout} onCancel={handleCancelLogout} />
     </nav>
   )
 }
