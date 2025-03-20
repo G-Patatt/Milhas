@@ -34,7 +34,7 @@ const criarPreference = async (req, res) => {
         });
 
         const responseData = await response.json();
-        console.log(responseData.init_point);
+       
         if (responseData.init_point) {
           console.log(responseData.init_point);
             res.json({ url: responseData.init_point });
@@ -169,13 +169,16 @@ const cancelarPagamento = async (paymentId) => {
   }
 };
 
+
 const capturarPagamento = async (req, res) => {
   console.log("🔔 Webhook recebido:", JSON.stringify(req.body, null, 2));
 
   const { action, data } = req.body;
 
   if (action === "payment.created" && data && data.id) {
+
       console.log("🔴 Iniciando cancelamento do pagamento:", data.id);
+        
       await cancelarPagamento(data.id);
   }
 

@@ -23,7 +23,9 @@
 
       if (response.status === 200) {
         // Após o login bem-sucedido
-        localStorage.setItem('usuarioId', response.data.usuario.id);
+        localStorage.setItem('usuario', JSON.stringify(response.data.usuario));
+        console.log(localStorage.getItem('usuario'));
+        console.log(console.log(localStorage.getItem('usuario')))
         console.log('Token:', response.data.token);
         localStorage.setItem('token', response.data.token); // Armazena o token no localStorage
         login(response.data.usuario); // Atualiza o estado do contexto

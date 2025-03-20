@@ -13,6 +13,7 @@ import Logout from './components/pages/Logout.js'; // Importa o componente de ro
 import CriarOferta from './components/pages/CriaOferta.js'; // Importa o componente de rota privada
 import CriaUsuario from './components/pages/CriaUsuario.js'; // Importa o componente de rota privada
 import ReservaLimite from './components/pages/ReservaLimite.js'; // Importa o componente de rota privada
+import Home from './components/pages/Home.js';
 
 function App() {
   return (
@@ -20,7 +21,7 @@ function App() {
       <Router>
         <Menu /> {/* Barra de navegação fixa */}
         <Routes>
-          <Route path="/" element={<h1>Bem-vindo ao Sistema de Milhas!</h1>} />
+          <Route path="/" element={<Home/>} />
           <Route path="/ofertas" element={<OfertasMilhas />} /> {/* Página de Ofertas de Milhas */}
           <Route path="/confirmacao/:ofertaId" element={<Confirmacao />} />
           <Route path="/login" element={<Login />} /> {/* Rota de Login */}

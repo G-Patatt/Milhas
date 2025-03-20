@@ -34,10 +34,24 @@ const buscarUsuariosPorId = async (id) => {
   }
 };
 
+const atualizarStatusNegociacao = async (negociacaoId, novoStatus) => {
+  try {
+  
+    const response = await axios.put(`http://localhost:5000/api/negociacao/${negociacaoId}/status`, {
+      status: novoStatus
+    });
+ 
+    return response.data;
+  } catch (error) {
+    console.error("Erro ao buscar negociacao:", error);
+    return null;
+  }
+};
+
 
 function DetalhesNegociacao() {
   const { id } = useParams();  // Acessando o id da URL
-  const location = useLocation();  // Obter o objeto de localização atual
+
   const [negociacao, setNegociacao] = useState([]);
   const [usuarioVendedor, setUsuariosVendedorInfo] = useState([]);
   const [usuarioComprador, setUsuariosCompradorInfo] = useState([]);
@@ -45,41 +59,35 @@ function DetalhesNegociacao() {
   const [oferta, setOferta] = useState([]);
   
 
-  // Usar URLSearchParams para acessar o valor de ofertaId
-  const queryParams = new URLSearchParams(location.search);
-  const ofertaId = queryParams.get('ofertaId');
 
   useEffect(() => {
-    async function carregarOferta() {
-      const dados = await buscarOfertaPorId(ofertaId);
-      setOferta(dados);
-    }
-    carregarOferta();
+
     // Fazendo a requisição para obter a negociação com a garantia
 
     async function carregarNegociacao() {
-      const dados = await buscarNegociacaoPorId(id,ofertaId);
-      console.log(dados);
-      
+      const dados = await buscarNegociacaoPorId(id);
+ 
       const comprador = await buscarUsuariosPorId(dados.negociacao.usuarioIdComprador);
-      console.log("Comprador " + comprador.email);
-      
+      console.log("Comprador " + comprador.email);      
       
       const vendedor = await buscarUsuariosPorId(dados.negociacao.usuarioIdVendedor);
       console.log("Vendedor " + vendedor.email);
 
       setUsuariosCompradorInfo(comprador);
       setUsuariosVendedorInfo(vendedor);
-
       setNegociacao(dados.negociacao);
+      const oferta = await buscarOfertaPorId(dados.negociacao.ofertaId);
+      setOferta(oferta);
+
+      
    
   
     }
     carregarNegociacao();
    
-  }, [id, ofertaId]);
+  }, [id]);
 
-    const [ setPaymentLink] = useState('');
+ 
 
       
       const criarPreference = async () => {
@@ -97,9 +105,10 @@ function DetalhesNegociacao() {
           });
     
           const data = await response.json();
-        
-          setPaymentLink(data.url); // Guarda o link retornado pelo Mercado Pago
-    
+          console.log(data);
+          atualizarStatusNegociacao(negociacao.negociacaoId,'Comprador gerou o link mas ainda não pagou');
+       
+          
           // Redireciona automaticamente o usuário
           window.location.href = data.url;
         } catch (error) {
@@ -110,7 +119,7 @@ function DetalhesNegociacao() {
 
   return (
     <div className="container mt-5">
-    <h1 className="text-center mb-4">Ofertas de Milhas</h1>
+    <h1 className="text-center mb-4">Negociações</h1>
     
     {feedback && <p className="text-danger">{feedback}</p>}
     

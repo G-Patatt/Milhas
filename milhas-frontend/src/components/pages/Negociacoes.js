@@ -10,6 +10,8 @@ function NegociacoesUsuario() {
   // Verifique se há um token armazenado
   const token = localStorage.getItem('token');
 
+
+
   // Se não houver token, redireciona para a página de login
   if (!token) {
     navigate('/login');
@@ -22,9 +24,14 @@ function NegociacoesUsuario() {
       headers: { Authorization: `Bearer ${token}` }  // Envia o token com a requisição
     })
       .then(response => {
-        setNegociacoes(response.data);
+       
+        if(response.status === 200){
+          setNegociacoes(response.data);
+          
+          return;
+        }
   
-        setFeedback('');
+        setFeedback('Nenhuma negociação encontrada');
       })
       .catch((error) => {
         if (error.response && error.response.status === 401) {

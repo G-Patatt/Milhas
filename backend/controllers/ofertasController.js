@@ -1,6 +1,9 @@
 // controllers/ofertasController.js
 
 const Oferta = require('../models/Oferta');  // Supondo que você esteja usando Sequelize
+const Usuario = require('../models/Usuario');  // Supondo que você esteja usando Sequelize
+const NegociacaoController = require('../controllers/negociacaoController');  // Supondo que você esteja usando Sequelize
+
 
 // Controlador para buscar todas as ofertas
 exports.buscarOfertas = async (req, res) => {
@@ -17,35 +20,54 @@ exports.buscarOfertas = async (req, res) => {
 };
 
 // Controlador para pegar uma oferta
-exports.pegarOferta = async (req, res) => {
-  const { ofertaId } = req.body;  // Recebe o ID da oferta
+exports.confirmarOferta = async (req, res) => {
+  const { ofertaId, usuarioId } = req.body;  // Recebe o ID da oferta
 
   try {
     const oferta = await Oferta.findByPk(ofertaId);  // Buscar a oferta pelo ID
+    console.log(oferta)
 
     if (!oferta) {
       return res.status(404).send({ message: 'Oferta não encontrada!' });
     }
 
     // Simulação de um usuário (substitua isso por um sistema real de usuários)
-    let usuario = {
-      id: 1,
-      nome: 'Usuário Exemplo',
-      milhas: 10000,  // Milhas iniciais do usuário
-    };
 
+    const usuario = await Usuario.findByPk(usuarioId);
     // Verificar se o usuário tem milhas suficientes
-    if (usuario.milhas < oferta.preco) {
+    if (usuario.qtdMilhas < oferta.preco && oferta.compraOuVenda == "compra") {
       return res.status(400).send({ message: 'Milhas insuficientes!' });
     }
 
     // Subtrair as milhas do usuário
     usuario.milhas -= oferta.preco;
-
-    // Marcar a oferta como "Pegada"
-    oferta.status = 'Pegada';
+    await usuario.save();
+  
+    await Oferta.update({ confirmada: true }, { where: { ofertaId } });
+   
+    
     await oferta.save();  // Salva a alteração
-    res.send({ message: 'Oferta pegada com sucesso!' });
+    
+    
+    const req = {
+      body: {
+        usuarioIdComprador: (oferta.compraOuVenda == "compra") ? oferta.usuarioId : usuario.id,
+        usuarioIdVendedor: (oferta.compraOuVenda == "venda") ? oferta.usuarioId : usuario.id,
+        ofertaId: oferta.ofertaId,
+        status : 'Aguardando garantias por parte comprador'
+      }
+    };
+ 
+    const negociacao =  await NegociacaoController.adicionarNegociacao(req, res);  
+    
+    console.log("Negociação criada com ID:", negociacao.dataValues.negociacaoId);
+
+    res.status(201).json({
+      message: 'Negociação criada com sucesso!',
+      negociacaoId: negociacao.dataValues.negociacaoId
+    });
+
+
 
   } catch (error) {
     console.error('Erro ao pegar oferta:', error);
@@ -56,7 +78,6 @@ exports.pegarOferta = async (req, res) => {
 // Função para buscar uma oferta específica pelo ID
 exports.buscarOfertaEspecifica = async (req, res) => {
   const { ofertaId } = req.params;  // Pega o ID da oferta da URL
-
   try {
     const oferta = await Oferta.findOne({ where: { ofertaId } });  // Supondo que você esteja usando Sequelize
 
@@ -72,7 +93,7 @@ exports.buscarOfertaEspecifica = async (req, res) => {
 };
 
 // Função para confirmar uma oferta
-exports.confirmarOferta = async (req, res) => {
+exports.pegarOferta = async (req, res) => {
   const { ofertaId } = req.body;  // Recebe o ID da oferta para confirmar
 
   try {

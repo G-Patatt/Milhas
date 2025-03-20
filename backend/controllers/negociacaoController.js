@@ -17,7 +17,7 @@ const buscarNegociacoes = async (req, res) => {
 
 // Função para adicionar uma negociação
 const adicionarNegociacao = async (req, res) => {
-  const { usuarioIdComprador, usuarioIdVendedor, ofertaId } = req.body;
+  const { usuarioIdComprador, usuarioIdVendedor, ofertaId, status } = req.body;
 
   try {
     // Adiciona a nova negociação no banco
@@ -25,13 +25,15 @@ const adicionarNegociacao = async (req, res) => {
       usuarioIdComprador,  // ID do comprador
       usuarioIdVendedor,   // ID do vendedor
       ofertaId,            // ID da oferta associada à negociação
+      status,
     });
     
+   
     // Resposta de sucesso
-    res.status(201).json({
-      message: 'Negociação criada com sucesso!',
-      negociacao: novaNegociacao
-    });
+    return novaNegociacao;
+
+  
+   
   } catch (error) {
     // Caso ocorra um erro
     res.status(500).json({ error: 'Erro ao adicionar negociação', details: error.message });
@@ -80,7 +82,7 @@ const getNegociacoesPorUsuario = async (req, res) => {
     });
 
     if (negociacoes.length === 0) {
-      return res.status(404).json({ message: 'Nenhuma negociação encontrada para este usuário.' });
+      return res.status(208).json({ message: 'Nenhuma negociação encontrada para este usuário.' });
     }
 
     // Buscar as ofertas correspondentes
@@ -98,10 +100,57 @@ const getNegociacoesPorUsuario = async (req, res) => {
   }
 };
 
+const atualizarStatusNegociacao = async (req, res) => {
+  try {
+    const { id } = req.params;  // Obtém o ID da negociação pela URL
+    const { status } = req.body; // Obtém o novo status do corpo da requisição
+    console.log("Cheguei no back, id: " + id + "Status: " + status);
+    // Verifica se o status enviado é um dos valores permitidos no ENUM
+    const statusPermitidos = [
+      'Aguardando garantias por parte comprador',
+      'Aguardando garantias por parte vendedor',
+      'Comprador Notificado',
+      'Vendedor Notificado',
+      'Verificando Interesse Vendedor',
+      'Aguardando Emissão da Passagem',
+      'Aguardando Anexo do Comprovante da Passagem',
+      'Validando o comprovante da passagem',
+      'Aguardando o prazo de 24h após a emissão',
+      'Passagem Emitida',
+      'Negociação Finalizada',
+      'Comprador Alocou Garantias',
+      'Vendedor Alocou Garantias',
+      'Comprador gerou o link mas ainda não pagou',
+      'Vendedor gerou o link mas ainda não pagou'
+    ];
+
+    if (!statusPermitidos.includes(status)) {
+      return res.status(400).json({ error: 'Status inválido' });
+    }
+    console.log("Buscando negociação: " + id + "Status: " + status);
+    // Busca a negociação pelo ID
+    const negociacao = await Negociacao.findByPk(id);
+    if (!negociacao) {
+      return res.status(404).json({ error: 'Negociação não encontrada' });
+    }
+    console.log("Atualizando");
+    // Atualiza o status
+    negociacao.status = status;
+    await negociacao.save();
+
+    return res.status(200).json({ message: 'Status atualizado com sucesso', negociacao });
+
+  } catch (error) {
+    console.error('Erro ao atualizar status da negociação:', error);
+    return res.status(500).json({ error: 'Erro interno do servidor' });
+  }
+};
+
 
 module.exports = {
   buscarNegociacoes,
   adicionarNegociacao,
   buscarNegociacaoPorId,
-  getNegociacoesPorUsuario
+  getNegociacoesPorUsuario,
+  atualizarStatusNegociacao
 };
