@@ -1,13 +1,13 @@
 const express = require("express");
 const {
   postAvaliation,
-  getAllAvaliation,
   getAvaliationById,
-} = require("../controllers/avaliacaoController");
-const router = express.Router();
+  getAllAvaliations,
+} = require("../controllers/avaliacoes");
+const avaliationRouter = express.Router();
 
-router.post("/:id", postAvaliation);
-router.get("/", getAllAvaliation);
-router.get("/:id", getAvaliationById);
+avaliationRouter.post("/:ratedUser", postAvaliation);
+avaliationRouter.get("/", getAllAvaliations);
+avaliationRouter.get("/:ratedUser", getAvaliationById);
 
-module.exports = router;
+module.exports = avaliationRouter;
