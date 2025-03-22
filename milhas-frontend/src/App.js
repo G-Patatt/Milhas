@@ -14,6 +14,7 @@ import CriarOferta from './components/pages/CriaOferta.js'; // Importa o compone
 import CriaUsuario from './components/pages/CriaUsuario.js'; // Importa o componente de rota privada
 import ReservaLimite from './components/pages/ReservaLimite.js'; // Importa o componente de rota privada
 import Home from './components/pages/Home.js';
+import Contato from './components/pages/Contato.js';
 
 function App() {
   return (
@@ -37,6 +38,7 @@ function App() {
           />
           <Route path="/cadastro" element={<CriaUsuario />} /> 
           <Route path="/reserva" element={<ReservaLimite />} />
+          <Route path="/contato" element={<Contato />} />
         </Routes>
       </Router>
     </AuthProvider>

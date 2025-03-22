@@ -75,18 +75,7 @@ function Menu() {
     <nav className={`menu-navbar ${scrolled ? "scrolled" : ""}`}>
       <div className="menu-container">
         <div className="menu-logo">
-          <svg
-            viewBox="0 0 24 24"
-            width="24"
-            height="24"
-            stroke="currentColor"
-            strokeWidth="2"
-            fill="none"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <path d="M7 17l10-10M7 7l10 10"></path>
-          </svg>
+        <i className="fa fa-plane negociacao-icon"></i>
           <span>MilesExchange</span>
         </div>
 
@@ -111,13 +100,13 @@ function Menu() {
             <>
               <li>
                 <a href={negociacoesLink} className={`menu-item ${isActive(negociacoesLink) ? "active" : ""}`}>
-                  Negociações
+                  Minhas Negociações
                 </a>
               </li>
               <li>
-                <a href="/reserva" className={`menu-item ${isActive("/reserva") ? "active" : ""}`}>
+                {/* <a href="/reserva" className={`menu-item ${isActive("/reserva") ? "active" : ""}`}>
                   Reserva Limite
-                </a>
+                </a> */}
               </li>
             </>
           )}

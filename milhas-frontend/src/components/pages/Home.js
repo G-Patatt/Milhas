@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react"
 import "../css/Home.css"
+import { useNavigate } from 'react-router-dom'; 
 
 export default function Home() {
   const [trendingMiles, setTrendingMiles] = useState([
@@ -11,6 +12,11 @@ export default function Home() {
     { program: "GlobeMiles", price: 0.0276, change: 2.1 },
     { program: "StarAlliance", price: 0.0298, change: -0.8 },
   ])
+  const navigate = useNavigate();
+
+  const criarNovaOferta = () => {
+    navigate('/ofertas');
+  };
 
   // Simulate price changes
   useEffect(() => {
@@ -44,7 +50,7 @@ export default function Home() {
                   programas de fidelidade.
                 </p>
                 <div className="hero-buttons">
-                  <button className="btn btn-primary btn-lg">Começar a negociar</button>
+                  <button className="btn btn-primary btn-lg" onClick={(criarNovaOferta)}>Começar a negociar</button>
                   <button className="btn btn-outline btn-lg">Ver cotações</button>
                 </div>
               </div>

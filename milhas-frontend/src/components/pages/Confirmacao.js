@@ -13,37 +13,30 @@ function Confirmacao() {
   const [error, setError] = useState(null);
   const usuarioId = JSON.parse(localStorage.getItem('usuario')).id;
 
-
-
   useEffect(() => {
     const buscarOferta = async () => {
       try {
         const response = await axios.get(`http://localhost:5000/api/ofertas/${ofertaId}`);
         setOferta(response.data);
-       
 
-        const comprador = await buscarUsuariosPorId((response.data.compraOuVenda == "compra") ? response.data.usuarioId : usuarioId);
-        debugger;
-        
-        const vendedor = await buscarUsuariosPorId((response.data.compraOuVenda == "venda") ? response.data.usuarioId : usuarioId);
-        console.log(comprador);
+        const comprador = await buscarUsuariosPorId(
+          response.data.compraOuVenda === "compra" ? response.data.usuarioId : usuarioId
+        );
 
-        
+        const vendedor = await buscarUsuariosPorId(
+          response.data.compraOuVenda === "venda" ? response.data.usuarioId : usuarioId
+        );
+
         setUsuarioComprador(comprador);
         setUsuarioVendedor(vendedor);
-
-  
       } catch (err) {
         setError("Erro ao carregar a oferta.");
       } finally {
         setLoading(false);
       }
     };
-    
     buscarOferta();
-
   }, [ofertaId]);
-
 
   const buscarUsuariosPorId = async (id) => {
     try {
@@ -54,18 +47,17 @@ function Confirmacao() {
       return null;
     }
   };
-  
+
   const confirmarOferta = async () => {
+    if (usuarioComprador.id === usuarioVendedor.id) {
+      setError("Você não pode comprar/vender para si mesmo.");
+      return;
+    }
+
     try {
-      // if(oferta.usuarioId === usuarioId){
-      //   alert("Você não pode comprar/vender para você mesmo.");
-      //   navigate("/ofertas"); // Redireciona após recusa
-      //   return;
-      // }
-      const response = await axios.post('http://localhost:5000/api/ofertas/confirmarOferta', { ofertaId,usuarioId });
+      const response = await axios.post('http://localhost:5000/api/ofertas/confirmarOferta', { ofertaId, usuarioId });
       if (response.data && response.data.negociacaoId) {
-        alert("Oferta confirmada com sucesso!");
-        navigate(`/negociacoes/${response.data.negociacaoId}`); // Redireciona para a negociação específica
+        navigate(`/negociacoes/${response.data.negociacaoId}`);
       } else {
         setError("Erro ao confirmar a oferta. Negociação não encontrada.");
       }
@@ -74,30 +66,27 @@ function Confirmacao() {
     }
   };
 
-  const recusarOferta = async () => {
-    try {
-      alert("Oferta recusada.");
-      navigate("/ofertas"); // Redireciona após recusa
-    } catch (err) {
-      setError("Erro ao recusar a oferta.");
-    }
+  const recusarOferta = () => {
+    navigate("/ofertas");
   };
 
   if (loading) return <p>Carregando...</p>;
-  if (error) return <p className="text-danger">{error}</p>;
 
   return (
     <div className="container mt-4">
       <h2>Confirmação da Oferta</h2>
+
+      {/* Exibe a mensagem de erro acima da oferta */}
+      {error && <p className="text-danger fw-bold">{error}</p>}
+
       {oferta ? (
         <div className="card p-4">
-    
-          <p><strong>Usuário Vendedor:</strong> {usuarioVendedor.nome}</p>
-          <p><strong>Usuário Comprador:</strong> {usuarioComprador.nome}</p>
+          <p><strong>Usuário Vendedor:</strong> {usuarioVendedor?.nome}</p>
+          <p><strong>Usuário Comprador:</strong> {usuarioComprador?.nome}</p>
           <p><strong>Valor:</strong> R$ {oferta.preco}</p>
           <p><strong>Quantidade de Milhas:</strong> {oferta.qtdMilhas}</p>
           <div className="mt-3">
-            <button className="btn btn-success me-2" onClick={confirmarOferta}>
+            <button className="btn btn-success me-2" onClick={confirmarOferta} disabled={!!error}>
               Confirmar
             </button>
             <button className="btn btn-danger" onClick={recusarOferta}>

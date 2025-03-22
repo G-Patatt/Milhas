@@ -20,6 +20,8 @@ function CriarOferta() {
   if (!token) {
     navigate('/login');  // Se não houver token, redireciona para login
   }
+
+  console.log(compraOuVenda);
   
   const usuarioId = JSON.parse(localStorage.getItem('usuario')).id;
   console.log(JSON.stringify(usuarioId));
@@ -104,6 +106,7 @@ function CriarOferta() {
             onChange={(e) => setCompraOuVenda(e.target.value)}
             required
           >
+            <option value="">Selecione</option>
             <option value="compra">Compra</option>
             <option value="venda">Venda</option>
           </select>

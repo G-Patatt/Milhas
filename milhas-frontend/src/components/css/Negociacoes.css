@@ -1,0 +1,419 @@
+/* Variáveis de cores - usando as mesmas do projeto */
+:root {
+    --primary: #2563eb;
+    --primary-hover: #1d4ed8;
+    --secondary: #f3f4f6;
+    --secondary-hover: #e5e7eb;
+    --background: #ffffff;
+    --foreground: #111827;
+    --muted: #f3f4f6;
+    --muted-foreground: #6b7280;
+    --border: #e5e7eb;
+    --positive: #10b981;
+    --negative: #ef4444;
+    --warning: #f59e0b;
+    --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  }
+  
+  /* Container principal */
+  .negociacoes-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+  
+  /* Cabeçalho da página */
+  .negociacoes-header {
+    text-align: center;
+    margin-bottom: 2rem;
+    position: relative;
+  }
+  
+  .negociacoes-header h1 {
+    font-size: 2.25rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: var(--foreground);
+  }
+  
+  .negociacoes-subtitle {
+    font-size: 1.125rem;
+    color: var(--muted-foreground);
+    margin-bottom: 1rem;
+  }
+  
+  .icon-margin-right {
+    margin-right: 0.5rem;
+  }
+  
+  .icon-margin-left {
+    margin-left: 0.5rem;
+  }
+  
+  /* Seção de filtros */
+  .filtros-container {
+    background-color: var(--background);
+    border-radius: 0.75rem;
+    box-shadow: var(--card-shadow);
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+  }
+  
+  .filtros-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.25rem;
+  }
+  
+  .filtros-header h2 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--foreground);
+    margin: 0;
+  }
+  
+  .btn-limpar-filtros {
+    display: inline-flex;
+    align-items: center;
+    background: none;
+    border: none;
+    color: var(--primary);
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.375rem;
+    transition: background-color 0.2s ease;
+  }
+  
+  .btn-limpar-filtros:hover {
+    background-color: var(--secondary);
+  }
+  
+  .filtros-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  .filtro-grupo {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .filtro-label {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--foreground);
+  }
+  
+  .filtro-opcoes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  
+  .filtro-opcao {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.5rem 0.75rem;
+    border: 1px solid var(--border);
+    border-radius: 0.375rem;
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  
+  .filtro-opcao input {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  
+  .filtro-opcao span {
+    margin-left: 0.25rem;
+  }
+  
+  .filtro-opcao:hover {
+    background-color: var(--secondary);
+  }
+  
+  .filtro-opcao.ativo {
+    background-color: var(--primary);
+    color: white;
+    border-color: var(--primary);
+  }
+  
+  /* Resultados da filtragem */
+  .resultados-info {
+    margin-bottom: 1.5rem;
+    color: var(--muted-foreground);
+    font-size: 0.875rem;
+  }
+  
+  .sem-resultados {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem 0;
+    text-align: center;
+    color: var(--muted-foreground);
+  }
+  
+  .sem-resultados i {
+    margin-bottom: 1rem;
+    color: var(--muted-foreground);
+  }
+  
+  .sem-resultados p {
+    margin-bottom: 1.5rem;
+    font-size: 1.125rem;
+  }
+  
+  /* Feedback e loading */
+  .negociacoes-feedback {
+    background-color: #e0f2fe;
+    color: #0369a1;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+  
+  .negociacoes-loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem 0;
+  }
+  
+  .spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid rgba(37, 99, 235, 0.2);
+    border-radius: 50%;
+    border-top-color: var(--primary);
+    animation: spin 1s ease-in-out infinite;
+    margin-bottom: 1rem;
+  }
+  
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  
+  /* Grid de negociações */
+  .negociacoes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+  }
+  
+  /* Card de negociação */
+  .negociacao-card {
+    background-color: var(--background);
+    border-radius: 0.75rem;
+    overflow: hidden;
+    box-shadow: var(--card-shadow);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+  
+  .negociacao-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  }
+  
+  /* Cabeçalho do card */
+  .negociacao-card-header {
+    padding: 1.25rem;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+  }
+  
+  .negociacao-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+  }
+  
+  .negociacao-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+  }
+  
+  .status-confirmada {
+    background-color: rgba(16, 185, 129, 0.1);
+    color: var(--positive);
+  }
+  
+  .status-pendente {
+    background-color: rgba(245, 158, 11, 0.1);
+    color: var(--warning);
+  }
+  
+  .tipo-comprador {
+    background-color: rgba(37, 99, 235, 0.1);
+    color: var(--primary);
+  }
+  
+  .tipo-vendedor {
+    background-color: rgba(239, 68, 68, 0.1);
+    color: var(--negative);
+  }
+  
+  .negociacao-titulo {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin: 0;
+    color: var(--foreground);
+  }
+  
+  /* Corpo do card */
+  .negociacao-card-body {
+    padding: 1.25rem;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+  
+  .negociacao-info {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .negociacao-info-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  
+  .negociacao-icon {
+    width: 1.25rem;
+    height: 1.25rem;
+    color: var(--primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+  }
+  
+  .milhas-icon {
+    width: 1.5rem;
+    height: 1.5rem;
+    background-color: var(--primary);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.75rem;
+  }
+  
+  .negociacao-label {
+    display: block;
+    font-size: 0.75rem;
+    color: var(--muted-foreground);
+    margin-bottom: 0.25rem;
+  }
+  
+  .negociacao-valor {
+    font-weight: 500;
+    color: var(--foreground);
+  }
+  
+  .negociacao-preco-unitario {
+    margin-top: auto;
+    padding-top: 1rem;
+    border-top: 1px dashed var(--border);
+  }
+  
+  .negociacao-valor-destaque {
+    display: block;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--primary);
+  }
+  
+  /* Rodapé do card */
+  .negociacao-card-footer {
+    padding: 1.25rem;
+    border-top: 1px solid var(--border);
+    background-color: var(--muted);
+    background-opacity: 0.5;
+  }
+  
+  .btn-ver-detalhes {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem 1rem;
+    background-color: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 0.375rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  
+  .btn-ver-detalhes:hover {
+    background-color: var(--primary-hover);
+  }
+  
+  /* Responsividade */
+  @media (max-width: 768px) {
+    .negociacoes-grid {
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    }
+  
+    .negociacoes-header h1 {
+      font-size: 1.75rem;
+    }
+  
+    .negociacoes-subtitle {
+      font-size: 1rem;
+    }
+  
+    .filtros-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .negociacoes-grid {
+      grid-template-columns: 1fr;
+    }
+  
+    .filtro-opcoes {
+      flex-direction: column;
+      width: 100%;
+    }
+  
+    .filtro-opcao {
+      width: 100%;
+    }
+  }
+  
+  
