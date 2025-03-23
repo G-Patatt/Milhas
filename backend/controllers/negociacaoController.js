@@ -118,7 +118,7 @@ const atualizarStatusNegociacao = async (req, res) => {
       'Aguardando o prazo de 24h após a emissão',
       'Passagem Emitida',
       'Negociação Finalizada',
-      'Comprador Alocou Garantias',
+      'Comprador Alocou Garantias, aguardando vendedor alocar garantias',
       'Vendedor Alocou Garantias',
       'Comprador gerou o link mas ainda não pagou',
       'Vendedor gerou o link mas ainda não pagou'

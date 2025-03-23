@@ -17,3 +17,6 @@ yarn.lock
 # Ignorar arquivos relacionados ao sistema operacional (Windows e macOS)
 .DS_Store
 Thumbs.db
+node_modules/.package-lock.json
+node_modules/.bin/node-pre-gyp
+node_modules/bcrypt/lib/binding/napi-v3/bcrypt_lib.node

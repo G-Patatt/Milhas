@@ -16,7 +16,7 @@ const avaliationRouter = require("./routes/avaliacoes");
 
 
 const app = express();
-const port = 5005;
+const port = 5000;
 
 // Middleware
 app.use(cors());

@@ -105,6 +105,12 @@ function DetalhesNegociacao() {
 
   // Função para criar preferência de pagamento
   const criarPreference = async () => {
+    // Verificar se o usuário atual é o comprador
+    const isComprador = usuarioAtual && negociacao && usuarioAtual.id === negociacao.usuarioIdComprador
+    // Verificar se o usuário atual é o vendedor
+    const isVendedor = usuarioAtual && negociacao && usuarioAtual.id === negociacao.usuarioIdVendedor
+
+    console.log(oferta)
     if (!oferta || !negociacao) return
 
     setProcessandoPagamento(true)
@@ -114,22 +120,44 @@ function DetalhesNegociacao() {
         {
           title: `Milhas ${oferta.ciaAerea}`,
           quantity: oferta.qtdMilhas,
-          price: oferta.preco,
+          price: 1.0,
+          usuarioId: usuarioAtual.id,
+          role: isComprador ? "comprador" : "vendedor",
+          negociacaoId: negociacao.negociacaoId,
         },
         { headers: { Authorization: `Bearer ${token}` } },
       )
 
-      // Atualizar status da negociação
-      await atualizarStatusNegociacao(negociacao.negociacaoId, "Comprador gerou o link mas ainda não pagou")
+      console.log(response)
+
+      // Atualizar status da negociação com base em quem está realizando a ação
+      let novoStatus
+      if (isComprador) {
+        // Verificar se o vendedor já alocou garantias
+        if (negociacao.status && negociacao.status.toLowerCase().includes("vendedor alocou garantias")) {
+          novoStatus = "Comprador gerou o link para pagamento final mas ainda não pagou"
+        } else {
+          novoStatus = "Comprador gerou o link mas ainda não pagou"
+        }
+      } else if (isVendedor) {
+        if (negociacao.status && negociacao.status.toLowerCase().includes("vendedor gerou o link")) {
+          novoStatus = "Comprador Alocou Garantias, vendedor gerou o link mas ainda não pagou"
+        } else {
+          // Quando o vendedor aloca garantias com sucesso (simulando o retorno do pagamento)
+          novoStatus = "Vendedor Alocou Garantias"
+        }
+      }
+
+      await atualizarStatusNegociacao(negociacao.negociacaoId, novoStatus)
 
       // Atualizar o estado local da negociação
       setNegociacao({
         ...negociacao,
-        status: "Comprador gerou o link mas ainda não pagou",
+        status: novoStatus,
       })
 
       // Redirecionar para a página de pagamento
-      window.location.href = response.data.url
+      window.open(response.data.url, "_blank")
     } catch (error) {
       console.error("Erro ao criar preferência de pagamento:", error)
       setFeedback("Erro ao processar pagamento. Tente novamente.")
@@ -319,47 +347,64 @@ function DetalhesNegociacao() {
                 <div className="negociacao-detalhe-actions">
                   <h3 className="negociacao-detalhe-section-title">Ações Disponíveis</h3>
 
-                  <p className="negociacao-detalhe-info-text">
-                    Para prosseguir com esta negociação, você precisa realizar o pagamento através do MercadoPago. Após
-                    a confirmação do pagamento, o vendedor será notificado para transferir as milhas.
-                  </p>
-
-                  {negociacao.status && negociacao.status.toLowerCase().includes("gerou o link") && (
-                    <div className="negociacao-detalhe-warning">
-                      <i className="fa fa-exclamation-triangle icon-margin-right"></i>
-                      <span>Você já gerou um link de pagamento, mas ainda não concluiu o pagamento.</span>
+                  {negociacao.status && negociacao.status.toLowerCase().includes("vendedor alocou garantias") ? (
+                    <div className="negociacao-detalhe-status-info">
+                      <i className="fa fa-check-circle icon-margin-right"></i>
+                      <span>O vendedor já alocou as garantias. A negociação foi concluída com sucesso!</span>
                     </div>
-                  )}
-
-                  <div className="negociacao-detalhe-buttons">
-                    <button
-                      className={`btn-pagar ${negociacao.status && negociacao.status.toLowerCase().includes("gerou o link") ? "btn-secondary" : ""}`}
-                      onClick={criarPreference}
-                      disabled={processandoPagamento}
-                    >
-                      {processandoPagamento ? (
-                        <>
-                          <div className="spinner-small"></div>
-                          <span>Processando...</span>
-                        </>
-                      ) : (
-                        <>
-                          <i
-                            className={`fa ${negociacao.status && negociacao.status.toLowerCase().includes("gerou o link") ? "fa-refresh" : "fa-credit-card"} icon-margin-right`}
-                          ></i>
-                          {negociacao.status && negociacao.status.toLowerCase().includes("gerou o link")
-                            ? "Gerar Link Novamente"
-                            : "Realizar Pagamento"}
-                        </>
-                      )}
-                    </button>
-
-                    {negociacao.status && negociacao.status.toLowerCase().includes("gerou o link") && (
-                      <p className="negociacao-detalhe-help-text">
-                        Se você perdeu o link de pagamento anterior, clique no botão acima para gerar um novo link.
+                  ) : negociacao.status && negociacao.status.toLowerCase().includes("aguardando vendedor") ? (
+                    <div className="negociacao-detalhe-status-info">
+                      <i className="fa fa-check-circle icon-margin-right"></i>
+                      <span>
+                        Você já realizou o pagamento. Aguardando o vendedor alocar as garantias para prosseguir com a
+                        negociação.
+                      </span>
+                    </div>
+                  ) : (
+                    <>
+                      <p className="negociacao-detalhe-info-text">
+                        Para prosseguir com esta negociação, você precisa realizar o pagamento através do MercadoPago.
+                        Após a confirmação do pagamento, o vendedor será notificado para transferir as milhas.
                       </p>
-                    )}
-                  </div>
+
+                      {negociacao.status && negociacao.status.toLowerCase().includes("gerou o link") && (
+                        <div className="negociacao-detalhe-warning">
+                          <i className="fa fa-exclamation-triangle icon-margin-right"></i>
+                          <span>Você já gerou um link de pagamento, mas ainda não concluiu o pagamento.</span>
+                        </div>
+                      )}
+
+                      <div className="negociacao-detalhe-buttons">
+                        <button
+                          className={`btn-pagar ${negociacao.status && negociacao.status.toLowerCase().includes("gerou o link") ? "btn-secondary" : ""}`}
+                          onClick={criarPreference}
+                          disabled={processandoPagamento}
+                        >
+                          {processandoPagamento ? (
+                            <>
+                              <div className="spinner-small"></div>
+                              <span>Processando...</span>
+                            </>
+                          ) : (
+                            <>
+                              <i
+                                className={`fa ${negociacao.status && negociacao.status.toLowerCase().includes("gerou o link") ? "fa-refresh" : "fa-credit-card"} icon-margin-right`}
+                              ></i>
+                              {negociacao.status && negociacao.status.toLowerCase().includes("gerou o link")
+                                ? "Gerar Link Novamente"
+                                : "Realizar Pagamento"}
+                            </>
+                          )}
+                        </button>
+
+                        {negociacao.status && negociacao.status.toLowerCase().includes("gerou o link") && (
+                          <p className="negociacao-detalhe-help-text">
+                            Se você perdeu o link de pagamento anterior, clique no botão acima para gerar um novo link.
+                          </p>
+                        )}
+                      </div>
+                    </>
+                  )}
                 </div>
               )}
 
@@ -367,21 +412,81 @@ function DetalhesNegociacao() {
                 <div className="negociacao-detalhe-actions">
                   <h3 className="negociacao-detalhe-section-title">Ações Disponíveis</h3>
 
-                  <p className="negociacao-detalhe-info-text">
-                    Aguarde o comprador realizar o pagamento. Você será notificado quando o pagamento for confirmado
-                    para que possa transferir as milhas.
-                  </p>
+                  {negociacao.status && negociacao.status.toLowerCase().includes("vendedor alocou garantias") ? (
+                    <div className="negociacao-detalhe-status-info">
+                      <i className="fa fa-check-circle icon-margin-right"></i>
+                      <span>Você já alocou as garantias. A negociação foi concluída com sucesso!</span>
+                    </div>
+                  ) : negociacao.status &&
+                    (negociacao.status.toLowerCase().includes("comprador alocou garantias") ||
+                      negociacao.status.toLowerCase().includes("aguardando vendedor")) ? (
+                    <>
+                      <p className="negociacao-detalhe-info-text">
+                        O comprador já alocou as garantias. Agora é sua vez de alocar as garantias para prosseguir com a
+                        negociação.
+                      </p>
 
-                  <div className="negociacao-detalhe-status-info">
-                    <i className="fa fa-info-circle icon-margin-right"></i>
-                    <span>
-                      {negociacao.status && negociacao.status.toLowerCase().includes("gerou o link")
-                        ? "O comprador gerou o link de pagamento, mas ainda não concluiu o pagamento."
-                        : negociacao.status && negociacao.status.toLowerCase().includes("pag")
-                          ? "Pagamento em processamento. Aguarde a confirmação."
-                          : "Aguardando o comprador iniciar o pagamento."}
-                    </span>
-                  </div>
+                      {negociacao.status && negociacao.status.toLowerCase().includes("vendedor gerou o link") ? (
+                        <div className="negociacao-detalhe-warning">
+                          <i className="fa fa-exclamation-triangle icon-margin-right"></i>
+                          <span>Você já gerou um link para alocar garantias, mas ainda não concluiu o processo.</span>
+                        </div>
+                      ) : (
+                        <div className="negociacao-detalhe-warning">
+                          <i className="fa fa-exclamation-triangle icon-margin-right"></i>
+                          <span>Você precisa alocar as garantias para concluir esta etapa da negociação.</span>
+                        </div>
+                      )}
+
+                      <div className="negociacao-detalhe-buttons">
+                        <button
+                          className={`btn-pagar ${negociacao.status && negociacao.status.toLowerCase().includes("vendedor gerou o link") ? "btn-secondary" : ""}`}
+                          onClick={criarPreference}
+                          disabled={processandoPagamento}
+                        >
+                          {processandoPagamento ? (
+                            <>
+                              <div className="spinner-small"></div>
+                              <span>Processando...</span>
+                            </>
+                          ) : (
+                            <>
+                              <i
+                                className={`fa ${negociacao.status && negociacao.status.toLowerCase().includes("vendedor gerou o link") ? "fa-refresh" : "fa-shield-alt"} icon-margin-right`}
+                              ></i>
+                              {negociacao.status && negociacao.status.toLowerCase().includes("vendedor gerou o link")
+                                ? "Gerar Link Novamente"
+                                : "Alocar Garantias"}
+                            </>
+                          )}
+                        </button>
+
+                        {negociacao.status && negociacao.status.toLowerCase().includes("vendedor gerou o link") && (
+                          <p className="negociacao-detalhe-help-text">
+                            Se você perdeu o link de pagamento anterior, clique no botão acima para gerar um novo link.
+                          </p>
+                        )}
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <p className="negociacao-detalhe-info-text">
+                        Aguarde o comprador realizar o pagamento. Você será notificado quando o pagamento for confirmado
+                        para que possa transferir as milhas.
+                      </p>
+
+                      <div className="negociacao-detalhe-status-info">
+                        <i className="fa fa-info-circle icon-margin-right"></i>
+                        <span>
+                          {negociacao.status && negociacao.status.toLowerCase().includes("gerou o link")
+                            ? "O comprador gerou o link de pagamento, mas ainda não concluiu o pagamento."
+                            : negociacao.status && negociacao.status.toLowerCase().includes("pag")
+                              ? "Pagamento em processamento. Aguarde a confirmação."
+                              : "Aguardando o comprador iniciar o pagamento."}
+                        </span>
+                      </div>
+                    </>
+                  )}
                 </div>
               )}
             </div>

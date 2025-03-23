@@ -1,7 +1,7 @@
 const { Sequelize } = require("sequelize");
 
 // Configuração do Sequelize
-const sequelize = new Sequelize("milhas", "root", "rubinho123", {
+const sequelize = new Sequelize("milhas", "root", "Sheldon@12", {
   host: "localhost",
   dialect: "mysql",
   logging: console.log, // Habilitar log para ver a SQL gerada
