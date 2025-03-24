@@ -1,21 +1,37 @@
-const Usuario = require("../models/Usuario");
 const Avaliacoes = require("../models/Avaliacoes");
-const { where } = require("sequelize");
+const Usuario = require("../models/Usuario");
 
 const postAvaliation = async (req, res) => {
   try {
     const { ratedUser } = req.params;
-    const { rating, createdAt } = req.body;
+    const { rating } = req.body;
 
     if (!ratedUser || !rating) {
       return res.status(401).json({ error: "Dados inválidos" });
     }
 
+    const user = await Usuario.findOne({ where: { id: ratedUser } });
+
+    if (!user) {
+      return res.status(404).json({ error: "Usuário nao encontrado" });
+    }
+
     const response = await Avaliacoes.create({
       ratedUser,
       rating,
-      createdAt,
     });
+
+    if (!response) {
+      return res.status(500).json({ error: "Erro ao criar avaliação" });
+    }
+
+    const totalRating =
+      (user.avaliacao * user.qtdAvaliacoes + rating) / (user.qtdAvaliacoes + 1);
+
+    await Usuario.update(
+      { avaliacao: totalRating, qtdAvaliacoes: user.qtdAvaliacoes + 1 },
+      { where: { id: ratedUser } }
+    );
 
     return res.status(201).json(response);
   } catch (error) {
