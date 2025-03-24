@@ -103,6 +103,18 @@ function DetalhesNegociacao() {
     }
   }
 
+  // Verificar se o usuário atual é o comprador
+  const isComprador = usuarioAtual && negociacao && usuarioAtual.id === negociacao.usuarioIdComprador
+
+  // Verificar se o usuário atual é o vendedor
+  const isVendedor = usuarioAtual && negociacao && usuarioAtual.id === negociacao.usuarioIdVendedor
+
+  // Função para redirecionar para a página de avaliação
+  const redirecionarParaAvaliacao = () => {
+    const usuarioParaAvaliar = isComprador ? negociacao.usuarioIdVendedor : negociacao.usuarioIdComprador
+    navigate(`/avaliacao/${negociacao.negociacaoId}/${usuarioParaAvaliar}`)
+  }
+
   // Função para criar preferência de pagamento
   const criarPreference = async () => {
     // Verificar se o usuário atual é o comprador
@@ -192,12 +204,6 @@ function DetalhesNegociacao() {
       return "status-pendente"
     }
   }
-
-  // Verificar se o usuário atual é o comprador
-  const isComprador = usuarioAtual && negociacao && usuarioAtual.id === negociacao.usuarioIdComprador
-
-  // Verificar se o usuário atual é o vendedor
-  const isVendedor = usuarioAtual && negociacao && usuarioAtual.id === negociacao.usuarioIdVendedor
 
   return (
     <div className="negociacao-detalhe-container">
@@ -348,10 +354,18 @@ function DetalhesNegociacao() {
                   <h3 className="negociacao-detalhe-section-title">Ações Disponíveis</h3>
 
                   {negociacao.status && negociacao.status.toLowerCase().includes("vendedor alocou garantias") ? (
-                    <div className="negociacao-detalhe-status-info">
-                      <i className="fa fa-check-circle icon-margin-right"></i>
-                      <span>O vendedor já alocou as garantias. A negociação foi concluída com sucesso!</span>
-                    </div>
+                    <>
+                      <div className="negociacao-detalhe-status-info">
+                        <i className="fa fa-check-circle icon-margin-right"></i>
+                        <span>O vendedor já alocou as garantias. A negociação foi concluída com sucesso!</span>
+                      </div>
+                      <div className="negociacao-detalhe-buttons" style={{ marginTop: "1rem" }}>
+                        <button className="btn-pagar" onClick={redirecionarParaAvaliacao}>
+                          <i className="fa fa-star icon-margin-right"></i>
+                          Avaliar Vendedor
+                        </button>
+                      </div>
+                    </>
                   ) : negociacao.status && negociacao.status.toLowerCase().includes("aguardando vendedor") ? (
                     <div className="negociacao-detalhe-status-info">
                       <i className="fa fa-check-circle icon-margin-right"></i>
@@ -413,10 +427,18 @@ function DetalhesNegociacao() {
                   <h3 className="negociacao-detalhe-section-title">Ações Disponíveis</h3>
 
                   {negociacao.status && negociacao.status.toLowerCase().includes("vendedor alocou garantias") ? (
-                    <div className="negociacao-detalhe-status-info">
-                      <i className="fa fa-check-circle icon-margin-right"></i>
-                      <span>Você já alocou as garantias. A negociação foi concluída com sucesso!</span>
-                    </div>
+                    <>
+                      <div className="negociacao-detalhe-status-info">
+                        <i className="fa fa-check-circle icon-margin-right"></i>
+                        <span>Você já alocou as garantias. A negociação foi concluída com sucesso!</span>
+                      </div>
+                      <div className="negociacao-detalhe-buttons" style={{ marginTop: "1rem" }}>
+                        <button className="btn-pagar" onClick={redirecionarParaAvaliacao}>
+                          <i className="fa fa-star icon-margin-right"></i>
+                          Avaliar Comprador
+                        </button>
+                      </div>
+                    </>
                   ) : negociacao.status &&
                     (negociacao.status.toLowerCase().includes("comprador alocou garantias") ||
                       negociacao.status.toLowerCase().includes("aguardando vendedor")) ? (
@@ -510,4 +532,3 @@ function DetalhesNegociacao() {
 }
 
 export default DetalhesNegociacao
-
