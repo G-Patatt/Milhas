@@ -1,0 +1,272 @@
+/* Estilos para a página completa de FAQ */
+.faq-page {
+    padding: 2rem 0;
+    background-color: #ffffff;
+  }
+  
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+  
+  .voltar-link {
+    display: inline-flex;
+    align-items: center;
+    color: #2563eb;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s ease;
+    margin-bottom: 1.5rem;
+  }
+  
+  .voltar-link:hover {
+    color: #1d4ed8;
+    text-decoration: underline;
+  }
+  
+  .mr-2 {
+    margin-right: 0.5rem;
+  }
+  
+  .inline {
+    display: inline;
+  }
+  
+  .page-header {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+  
+  .text-3xl {
+    font-size: 1.875rem;
+  }
+  
+  .font-bold {
+    font-weight: 700;
+  }
+  
+  .text-muted-foreground {
+    color: #6b7280;
+  }
+  
+  .mt-2 {
+    margin-top: 0.5rem;
+  }
+  
+  .mb-8 {
+    margin-bottom: 2rem;
+  }
+  
+  /* Container de FAQ */
+  .faq-container {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  /* Item de FAQ */
+  .faq-item {
+    background-color: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.5rem;
+    margin-bottom: 1rem;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    cursor: pointer;
+  }
+  
+  .faq-item:hover {
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    transform: translateY(-2px);
+  }
+  
+  .faq-item.active {
+    border-color: #2563eb;
+    background-color: rgba(37, 99, 235, 0.03);
+  }
+  
+  /* Pergunta do FAQ */
+  .faq-question {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.25rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  
+  .faq-question:hover {
+    background-color: #f3f4f6;
+  }
+  
+  .faq-question h3 {
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin: 0;
+    color: #111827;
+  }
+  
+  .faq-item.active .faq-question h3 {
+    color: #2563eb;
+  }
+  
+  .faq-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: #2563eb;
+    color: white;
+    transition: all 0.3s ease;
+  }
+  
+  .arrow-icon {
+    transition: transform 0.3s ease;
+  }
+  
+  .faq-item.active .arrow-icon {
+    transform: rotate(180deg);
+  }
+  
+  /* Resposta do FAQ */
+  .faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease, padding 0.3s ease;
+    opacity: 0;
+  }
+  
+  .faq-item.active .faq-answer {
+    max-height: 1000px;
+    padding: 0 1.25rem 1.25rem;
+    opacity: 1;
+    transition: max-height 0.5s ease, padding 0.3s ease, opacity 0.5s ease;
+  }
+  
+  .faq-answer p {
+    margin: 0;
+    color: #6b7280;
+    line-height: 1.6;
+  }
+  
+  /* Seção de botões */
+  .mt-12 {
+    margin-top: 3rem;
+  }
+  
+  .text-center {
+    text-align: center;
+  }
+  
+  .text-xl {
+    font-size: 1.25rem;
+  }
+  
+  .font-semibold {
+    font-weight: 600;
+  }
+  
+  .mb-4 {
+    margin-bottom: 1rem;
+  }
+  
+  .flex {
+    display: flex;
+  }
+  
+  .flex-col {
+    flex-direction: column;
+  }
+  
+  .gap-4 {
+    gap: 1rem;
+  }
+  
+  .justify-center {
+    justify-content: center;
+  }
+  
+  /* Botões */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.375rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-decoration: none;
+  }
+  
+  .btn-outline {
+    background-color: transparent;
+    border: 1px solid #2563eb;
+    color: #2563eb;
+  }
+  
+  .btn-outline:hover {
+    background-color: #2563eb;
+    color: white;
+  }
+  
+  .btn-primary {
+    background-color: #2563eb;
+    color: white;
+    border: 1px solid #2563eb;
+  }
+  
+  .btn-primary:hover {
+    background-color: #1d4ed8;
+    border-color: #1d4ed8;
+  }
+  
+  /* Responsividade */
+  @media (min-width: 640px) {
+    .sm\:flex-row {
+      flex-direction: row;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .page-header h1 {
+      font-size: 1.75rem;
+    }
+  
+    .page-header p {
+      font-size: 1rem;
+    }
+  
+    .faq-question h3 {
+      font-size: 1rem;
+    }
+  }
+  
+  /* Classe para animação de fade in */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
+  .py-8 {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+  }
+  
+  .mb-6 {
+    margin-bottom: 1.5rem;
+  }
+  
+  .inline-block {
+    display: inline-block;
+  }
+  
+  

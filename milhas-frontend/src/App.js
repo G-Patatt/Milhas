@@ -15,6 +15,9 @@ import CriaUsuario from './components/pages/CriaUsuario.js'; // Importa o compon
 import ReservaLimite from './components/pages/ReservaLimite.js'; // Importa o componente de rota privada
 import Home from './components/pages/Home.js';
 import Contato from './components/pages/Contato.js';
+import Pipeline from './components/pages/PipelineSection.js';
+import Processo from './components/pages//processo-detalhado/page.js';
+import Faq from './components/pages/faq/page.js';
 
 function App() {
   return (
@@ -39,6 +42,10 @@ function App() {
           <Route path="/cadastro" element={<CriaUsuario />} /> 
           <Route path="/reserva" element={<ReservaLimite />} />
           <Route path="/contato" element={<Contato />} />
+          <Route path="/pipeline-section" element={<Pipeline />} />
+          <Route path="/processo-detalhado" element={<Processo />} />
+          <Route path="/faq" element={<Faq />} />
+    
         </Routes>
       </Router>
     </AuthProvider>

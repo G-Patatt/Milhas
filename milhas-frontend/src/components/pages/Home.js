@@ -2,7 +2,10 @@
 
 import { useState, useEffect } from "react"
 import "../css/Home.css"
-import { useNavigate } from 'react-router-dom'; 
+
+import FaqSection from "../pages/FaqSection"
+
+import PipelineSection from "../pages/PipelineSection.js"
 
 export default function Home() {
   const [trendingMiles, setTrendingMiles] = useState([
@@ -12,11 +15,6 @@ export default function Home() {
     { program: "GlobeMiles", price: 0.0276, change: 2.1 },
     { program: "StarAlliance", price: 0.0298, change: -0.8 },
   ])
-  const navigate = useNavigate();
-
-  const criarNovaOferta = () => {
-    navigate('/ofertas');
-  };
 
   // Simulate price changes
   useEffect(() => {
@@ -33,8 +31,6 @@ export default function Home() {
     return () => clearInterval(interval)
   }, [])
 
-  const [activeTab, setActiveTab] = useState("trending")
-
   return (
     <div className="miles-exchange">
       <main>
@@ -50,7 +46,7 @@ export default function Home() {
                   programas de fidelidade.
                 </p>
                 <div className="hero-buttons">
-                  <button className="btn btn-primary btn-lg" onClick={(criarNovaOferta)}>Começar a negociar</button>
+                  <button className="btn btn-primary btn-lg">Começar a negociar</button>
                   <button className="btn btn-outline btn-lg">Ver cotações</button>
                 </div>
               </div>
@@ -100,6 +96,12 @@ export default function Home() {
             </div>
           </div>
         </section>
+
+        {/* Pipeline Section - Atualizada com o novo fluxo */}
+        <PipelineSection />
+
+        {/* FAQ Section - Nova seção adicionada logo após o Pipeline */}
+        <FaqSection />
 
         {/* Features Section */}
         <section className="features-section">
@@ -177,173 +179,6 @@ export default function Home() {
                 <p className="feature-description">
                   Todas as negociações são protegidas e garantidas pela nossa plataforma certificada.
                 </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* How It Works */}
-        <section className="how-it-works-section">
-          <div className="container">
-            <div className="section-header">
-              <h2 className="section-title">Como funciona</h2>
-              <p className="section-description">Negociar milhas nunca foi tão simples e transparente</p>
-            </div>
-
-            <div className="steps-grid">
-              <div className="step-item">
-                <div className="step-number">1</div>
-                <h3 className="step-title">Cadastre-se</h3>
-                <p className="step-description">
-                  Crie sua conta gratuitamente e verifique seus dados para começar a negociar.
-                </p>
-              </div>
-
-              <div className="step-item">
-                <div className="step-number">2</div>
-                <h3 className="step-title">Deposite ou Oferte</h3>
-                <p className="step-description">
-                  Adicione saldo à sua conta ou cadastre suas milhas para venda no marketplace.
-                </p>
-              </div>
-
-              <div className="step-item">
-                <div className="step-number">3</div>
-                <h3 className="step-title">Negocie</h3>
-                <p className="step-description">
-                  Compre e venda milhas em tempo real, aproveitando as melhores oportunidades do mercado.
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Live Market */}
-        <section className="live-market-section">
-          <div className="container">
-            <div className="market-header-flex">
-              <div>
-                <h2 className="section-title">Mercado ao vivo</h2>
-                <p className="section-description">Veja as últimas cotações e tendências do mercado de milhas</p>
-              </div>
-              <div className="search-container">
-                <div className="search-input-wrapper">
-                  <svg
-                    viewBox="0 0 24 24"
-                    width="16"
-                    height="16"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    fill="none"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className="search-icon"
-                  >
-                    <circle cx="11" cy="11" r="8"></circle>
-                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                  </svg>
-                  <input type="search" placeholder="Buscar programa..." className="search-input" />
-                </div>
-              </div>
-            </div>
-
-            <div className="tabs">
-              <div className="tabs-list">
-                <button
-                  className={`tab-button ${activeTab === "trending" ? "active" : ""}`}
-                  onClick={() => setActiveTab("trending")}
-                >
-                  Em alta
-                </button>
-                <button
-                  className={`tab-button ${activeTab === "airlines" ? "active" : ""}`}
-                  onClick={() => setActiveTab("airlines")}
-                >
-                  Companhias aéreas
-                </button>
-                <button
-                  className={`tab-button ${activeTab === "hotels" ? "active" : ""}`}
-                  onClick={() => setActiveTab("hotels")}
-                >
-                  Hotéis
-                </button>
-                <button
-                  className={`tab-button ${activeTab === "credit-cards" ? "active" : ""}`}
-                  onClick={() => setActiveTab("credit-cards")}
-                >
-                  Cartões de crédito
-                </button>
-              </div>
-
-              <div className="tab-content">
-                {activeTab === "trending" && (
-                  <div className="market-table-container">
-                    <div className="market-table">
-                      <div className="table-header">
-                        <div className="col-program">Programa</div>
-                        <div className="col-price">Preço</div>
-                        <div className="col-change">Variação 24h</div>
-                        <div className="col-volume">Volume</div>
-                      </div>
-
-                      {trendingMiles.map((item, index) => (
-                        <div key={index} className="table-row">
-                          <div className="col-program">
-                            <div className="program-avatar">{item.program.charAt(0)}</div>
-                            <div>
-                              <div className="program-name">{item.program}</div>
-                              <div className="program-type">MILES</div>
-                            </div>
-                          </div>
-                          <div className="col-price">R$ {item.price.toFixed(4)}</div>
-                          <div className={`col-change ${item.change >= 0 ? "positive" : "negative"}`}>
-                            {item.change >= 0 ? "+" : ""}
-                            {item.change}%
-                          </div>
-                          <div className="col-volume">{Math.floor(Math.random() * 10000).toLocaleString()} mil</div>
-                        </div>
-                      ))}
-                    </div>
-
-                    <div className="view-all-container">
-                      <button className="btn btn-outline">
-                        Ver todos os programas
-                        <svg
-                          viewBox="0 0 24 24"
-                          width="16"
-                          height="16"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                          fill="none"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          className="arrow-icon"
-                        >
-                          <line x1="5" y1="12" x2="19" y2="12"></line>
-                          <polyline points="12 5 19 12 12 19"></polyline>
-                        </svg>
-                      </button>
-                    </div>
-                  </div>
-                )}
-
-                {activeTab === "airlines" && (
-                  <div className="empty-tab-content">
-                    <p>Conteúdo das companhias aéreas será carregado aqui</p>
-                  </div>
-                )}
-
-                {activeTab === "hotels" && (
-                  <div className="empty-tab-content">
-                    <p>Conteúdo dos hotéis será carregado aqui</p>
-                  </div>
-                )}
-
-                {activeTab === "credit-cards" && (
-                  <div className="empty-tab-content">
-                    <p>Conteúdo dos cartões de crédito será carregado aqui</p>
-                  </div>
-                )}
               </div>
             </div>
           </div>
