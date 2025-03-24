@@ -13,16 +13,13 @@ const Avaliacoes = sequelize.define(
       type: DataTypes.INTEGER,
       allowNull: false,
     },
+
     comment: {
       type: DataTypes.STRING,
       allowNull: true,
     },
     rating: {
       type: DataTypes.INTEGER,
-      allowNull: false,
-    },
-    createdAt: {
-      type: DataTypes.DATE,
       allowNull: false,
     },
   },
