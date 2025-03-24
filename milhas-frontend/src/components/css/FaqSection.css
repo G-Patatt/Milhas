@@ -1,0 +1,190 @@
+/* Variáveis de cores - usando as mesmas do projeto */
+:root {
+    --primary: #2563eb;
+    --primary-hover: #1d4ed8;
+    --secondary: #f3f4f6;
+    --secondary-hover: #e5e7eb;
+    --background: #ffffff;
+    --foreground: #111827;
+    --muted: #f3f4f6;
+    --muted-foreground: #6b7280;
+    --border: #e5e7eb;
+    --positive: #10b981;
+    --negative: #ef4444;
+    --warning: #f59e0b;
+    --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  }
+  
+  /* Seção de FAQ */
+  .faq-section {
+    padding: 5rem 0;
+    background-color: var(--background);
+  }
+  
+  .faq-header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+  
+  .faq-header h2 {
+    font-size: 2.25rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: var(--foreground);
+  }
+  
+  .faq-header p {
+    font-size: 1.125rem;
+    color: var(--muted-foreground);
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  /* Container de FAQ */
+  .faq-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+  
+  /* Item de FAQ */
+  .faq-item {
+    background-color: var(--background);
+    border: 1px solid var(--border);
+    border-radius: 0.5rem;
+    margin-bottom: 1rem;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    box-shadow: var(--card-shadow);
+    cursor: pointer; /* Adicione cursor pointer para indicar que é clicável */
+  }
+  
+  .faq-item:hover {
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    transform: translateY(-2px); /* Leve efeito de elevação ao passar o mouse */
+  }
+  
+  .faq-item.active {
+    border-color: var(--primary);
+    background-color: rgba(37, 99, 235, 0.03); /* Leve tom de azul no background quando ativo */
+  }
+  
+  /* Pergunta do FAQ */
+  .faq-question {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.25rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  
+  .faq-question:hover {
+    background-color: var(--secondary);
+  }
+  
+  .faq-question h3 {
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin: 0;
+    color: var(--foreground);
+  }
+  
+  .faq-item.active .faq-question h3 {
+    color: var(--primary);
+  }
+  
+  .faq-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: var(--primary);
+    color: white;
+    transition: all 0.3s ease;
+  }
+  
+  .arrow-icon {
+    transition: transform 0.3s ease;
+  }
+  
+  .faq-item.active .arrow-icon {
+    transform: rotate(180deg);
+  }
+  
+  /* Resposta do FAQ */
+  .faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease, padding 0.3s ease;
+    opacity: 0;
+  }
+  
+  .faq-item.active .faq-answer {
+    max-height: 1000px; /* Aumentado para acomodar respostas mais longas */
+    padding: 0 1.25rem 1.25rem;
+    opacity: 1;
+    transition: max-height 0.5s ease, padding 0.3s ease, opacity 0.5s ease;
+    animation: fadeIn 0.5s ease;
+  }
+  
+  .faq-answer p {
+    margin: 0;
+    color: var(--muted-foreground);
+    line-height: 1.6;
+  }
+  
+  /* Rodapé do FAQ */
+  .faq-footer {
+    text-align: center;
+    margin-top: 3rem;
+  }
+  
+  .faq-footer p {
+    font-size: 1.125rem;
+    margin-bottom: 1rem;
+    color: var(--foreground);
+  }
+  
+  .btn-contato {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem 1.5rem;
+    background-color: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 0.375rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  
+  .btn-contato:hover {
+    background-color: var(--primary-hover);
+  }
+  
+  /* Responsividade */
+  @media (max-width: 768px) {
+    .faq-header h2 {
+      font-size: 1.75rem;
+    }
+  
+    .faq-header p {
+      font-size: 1rem;
+    }
+  
+    .faq-question h3 {
+      font-size: 1rem;
+    }
+  }
+  
+  /* Adicione uma animação sutil para a transição */
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  

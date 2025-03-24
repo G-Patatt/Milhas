@@ -3,6 +3,12 @@
 import { useState, useEffect } from "react";
 import "../css/Home.css";
 import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react"
+import "../css/Home.css"
+
+import FaqSection from "../pages/FaqSection"
+
+import PipelineSection from "../pages/PipelineSection.js"
 
 export default function Home() {
   const [trendingMiles, setTrendingMiles] = useState([
@@ -17,6 +23,7 @@ export default function Home() {
   const criarNovaOferta = () => {
     navigate("/ofertas");
   };
+  ])
 
   // Simulate price changes
   useEffect(() => {
@@ -65,6 +72,8 @@ export default function Home() {
                   <button className="btn btn-outline btn-lg">
                     Ver cotações
                   </button>
+                  <button className="btn btn-primary btn-lg">Começar a negociar</button>
+                  <button className="btn btn-outline btn-lg">Ver cotações</button>
                 </div>
               </div>
               <div className="market-preview">
@@ -125,6 +134,12 @@ export default function Home() {
             </div>
           </div>
         </section>
+
+        {/* Pipeline Section - Atualizada com o novo fluxo */}
+        <PipelineSection />
+
+        {/* FAQ Section - Nova seção adicionada logo após o Pipeline */}
+        <FaqSection />
 
         {/* Features Section */}
         <section className="features-section">
@@ -409,6 +424,7 @@ export default function Home() {
             </div>
           </div>
         </section>
+
 
         {/* Testimonials */}
         <section className="testimonials-section">

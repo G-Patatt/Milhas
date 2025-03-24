@@ -93,7 +93,7 @@
 }
 
 .auth-button-container {
-  display: flex;
+  display: none;
 }
 
 .auth-button {
@@ -146,10 +146,6 @@
   border-bottom: 1px solid var(--border);
 }
 
-.mobile-menu-item .fa {
-  margin-right: 0.5rem;
-}
-
 .mobile-menu-item.active {
   color: var(--primary);
   font-weight: 500;
@@ -159,6 +155,109 @@
   border-bottom: none;
 }
 
+/* User Menu Styles */
+.user-menu-container {
+  position: relative;
+}
+
+.user-icon-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--foreground);
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.25rem;
+  border-radius: 50%;
+  transition: background-color 0.2s ease;
+}
+
+.user-icon-button:hover {
+  background-color: var(--secondary);
+}
+
+.user-dropdown-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  width: 240px;
+  background-color: var(--background);
+  border-radius: 0.375rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  z-index: 1000;
+  margin-top: 0.5rem;
+  overflow: hidden;
+  animation: fadeIn 0.2s ease;
+}
+
+.user-info {
+  padding: 1rem;
+  border-bottom: 1px solid var(--border);
+  background-color: var(--secondary);
+}
+
+.user-name {
+  display: block;
+  font-weight: 600;
+  color: var(--foreground);
+  margin-bottom: 0.25rem;
+}
+
+.user-email {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--muted-foreground);
+}
+
+.user-menu-items {
+  list-style: none;
+  margin: 0;
+  padding: 0.5rem 0;
+}
+
+.user-menu-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  color: var(--foreground);
+  text-decoration: none;
+  font-size: 0.875rem;
+  transition: background-color 0.2s ease;
+}
+
+.user-menu-item:hover {
+  background-color: var(--secondary);
+}
+
+.menu-divider {
+  height: 1px;
+  background-color: var(--border);
+  margin: 0.5rem 0;
+}
+
+.logout-item {
+  color: var(--danger);
+}
+
+.logout-item:hover {
+  background-color: var(--danger);
+  color: white;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 /* Media Queries */
 @media (min-width: 768px) {
   .menu-items {
@@ -166,7 +265,7 @@
   }
 
   .auth-button-container {
-    display: flex;
+    display: block;
   }
 
   .mobile-menu-toggle {
@@ -174,12 +273,6 @@
   }
 
   .mobile-menu {
-    display: none;
-  }
-}
-
-@media (max-width: 767px) {
-  .auth-button-container {
     display: none;
   }
 }

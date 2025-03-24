@@ -1,7 +1,7 @@
 "use client"
 
-import { useState, useEffect } from "react"
-import { useLocation, useNavigate } from "react-router-dom"
+import { useState, useEffect, useRef } from "react"
+import { useLocation, useNavigate, Link } from "react-router-dom"
 import "./menu.css"
 import NotificacaoIcon from "./components/pages/NotificacaoIcone"
 import LogoutModal from "./components/pages/LogoutModal"
@@ -11,8 +11,10 @@ function Menu() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const [showLogoutModal, setShowLogoutModal] = useState(false)
+  const [userMenuOpen, setUserMenuOpen] = useState(false)
   const location = useLocation()
   const navigate = useNavigate()
+  const userMenuRef = useRef(null)
 
   // Obtenha o ID do usuário logado do localStorage
   const usuario = JSON.parse(localStorage.getItem("usuario") || "null")
@@ -21,6 +23,7 @@ function Menu() {
   // Se o usuário estiver logado, mostra o link de negociações
   const usuarioId = usuario?.id
   const negociacoesLink = usuarioId ? `/negociacoes/usuario/${usuarioId}` : "#"
+  const perfilLink = usuarioId ? `/perfil/${usuarioId}` : "#"
 
   // Detecta o scroll para mudar o estilo do menu
   useEffect(() => {
@@ -35,6 +38,20 @@ function Menu() {
     window.addEventListener("scroll", handleScroll)
     return () => {
       window.removeEventListener("scroll", handleScroll)
+    }
+  }, [])
+
+  // Fecha o menu do usuário quando clicar fora dele
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (userMenuRef.current && !userMenuRef.current.contains(event.target)) {
+        setUserMenuOpen(false)
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside)
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside)
     }
   }, [])
 
@@ -71,11 +88,28 @@ function Menu() {
     navigate("/login")
   }
 
+  // Função para alternar o menu do usuário
+  const toggleUserMenu = (e) => {
+    e.preventDefault()
+    setUserMenuOpen(!userMenuOpen)
+  }
+
   return (
     <nav className={`menu-navbar ${scrolled ? "scrolled" : ""}`}>
       <div className="menu-container">
         <div className="menu-logo">
-        <i className="fa fa-plane negociacao-icon"></i>
+          <svg
+            viewBox="0 0 24 24"
+            width="24"
+            height="24"
+            stroke="currentColor"
+            strokeWidth="2"
+            fill="none"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path d="M7 17l10-10M7 7l10 10"></path>
+          </svg>
           <span>MilesExchange</span>
         </div>
 
@@ -100,27 +134,52 @@ function Menu() {
             <>
               <li>
                 <a href={negociacoesLink} className={`menu-item ${isActive(negociacoesLink) ? "active" : ""}`}>
-                  Minhas Negociações
+                  Negociações
                 </a>
               </li>
               <li>
-                {/* <a href="/reserva" className={`menu-item ${isActive("/reserva") ? "active" : ""}`}>
+                <a href="/reserva" className={`menu-item ${isActive("/reserva") ? "active" : ""}`}>
                   Reserva Limite
-                </a> */}
+                </a>
               </li>
             </>
           )}
         </ul>
 
         <div className="menu-actions">
-          {isLoggedIn && <NotificacaoIcon />}
+          {isLoggedIn && (
+            <>
+              <NotificacaoIcon />
+              <div className="user-menu-container" ref={userMenuRef}>
+                <button onClick={toggleUserMenu} className="user-icon-button">
+                  <i className="fa fa-user-circle-o"></i>
+                </button>
+                {userMenuOpen && (
+                  <div className="user-dropdown-menu">
+                    <div className="user-info">
+                      <span className="user-name">{usuario.nome || "Usuário"}</span>
+                      <span className="user-email">{usuario.email || ""}</span>
+                    </div>
+                    <ul className="user-menu-items">
+                      <li>
+                        <Link to={perfilLink} className="user-menu-item">
+                          <i className="fa fa-user"></i> Meu Perfil
+                        </Link>
+                      </li>
+                      <li className="menu-divider"></li>
+                      <li>
+                        <a href="#" onClick={handleLogoutClick} className="user-menu-item logout-item">
+                          <i className="fa fa-sign-out"></i> Logout
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                )}
+              </div>
+            </>
+          )}
           <div className="auth-button-container">
-            {isLoggedIn ? (
-              <a href="#" onClick={handleLogoutClick} className="auth-button">
-                <i className="fa fa-sign-out"></i>
-                <span>Logout</span>
-              </a>
-            ) : (
+            {!isLoggedIn && (
               <a href="#" onClick={handleLoginClick} className="auth-button">
                 <i className="fa fa-sign-in"></i>
                 <span>Login</span>
@@ -190,13 +249,18 @@ function Menu() {
             {isLoggedIn && (
               <>
                 <li>
+                  <a href={perfilLink} className={`mobile-menu-item ${isActive(perfilLink) ? "active" : ""}`}>
+                    <i className="fa fa-user"></i> Meu Perfil
+                  </a>
+                </li>
+                <li>
                   <a href={negociacoesLink} className={`mobile-menu-item ${isActive(negociacoesLink) ? "active" : ""}`}>
-                    Negociações
+                    <i className="fa fa-exchange"></i> Negociações
                   </a>
                 </li>
                 <li>
                   <a href="/reserva" className={`mobile-menu-item ${isActive("/reserva") ? "active" : ""}`}>
-                    Reserva Limite
+                    <i className="fa fa-credit-card"></i> Reserva Limite
                   </a>
                 </li>
               </>
