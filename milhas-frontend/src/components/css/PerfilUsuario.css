@@ -1,0 +1,509 @@
+/* Estilos gerais do perfil */
+.perfil-container {
+  display: flex;
+  min-height: calc(100vh - 60px);
+  background-color: #f8f9fa;
+  padding: 20px;
+  gap: 20px;
+}
+
+/* Sidebar */
+.perfil-sidebar {
+  width: 280px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  padding: 20px;
+  height: fit-content;
+  position: sticky;
+  top: 80px;
+}
+
+.perfil-user-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #eee;
+  margin-bottom: 20px;
+}
+
+.perfil-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background-color: #f0f0f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 15px;
+  color: #666;
+  font-size: 40px;
+}
+
+.perfil-user-info h3 {
+  margin: 0 0 5px 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+}
+
+.perfil-user-info p {
+  margin: 0;
+  font-size: 14px;
+  color: #666;
+}
+
+.perfil-menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.perfil-menu li {
+  margin-bottom: 10px;
+}
+
+.perfil-menu li button,
+.perfil-menu li a {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 12px 15px;
+  border-radius: 6px;
+  text-decoration: none;
+  color: #555;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  border: none;
+  background: none;
+  cursor: pointer;
+  text-align: left;
+}
+
+.perfil-menu li button:hover,
+.perfil-menu li a:hover {
+  background-color: #f5f5f5;
+  color: #0056b3;
+}
+
+.perfil-menu li.active button {
+  background-color: #e6f7ff;
+  color: #0056b3;
+  font-weight: 600;
+}
+
+.perfil-menu li i {
+  margin-right: 10px;
+  font-size: 18px;
+  width: 24px;
+  text-align: center;
+}
+
+/* Conteúdo principal */
+.perfil-content {
+  flex: 1;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  padding: 25px;
+  overflow: hidden;
+}
+
+/* Seção de informações pessoais */
+.perfil-info-section h2 {
+  margin-top: 0;
+  margin-bottom: 20px;
+  font-size: 22px;
+  color: #333;
+}
+
+.perfil-info-card {
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 25px;
+}
+
+.perfil-info-item {
+  display: flex;
+  margin-bottom: 15px;
+}
+
+.perfil-info-item:last-child {
+  margin-bottom: 0;
+}
+
+.info-label {
+  width: 150px;
+  font-weight: 600;
+  color: #555;
+}
+
+.info-value {
+  flex: 1;
+  color: #333;
+}
+
+.perfil-actions {
+  display: flex;
+  gap: 15px;
+}
+
+.btn-editar-perfil,
+.btn-alterar-senha {
+  padding: 10px 20px;
+  border-radius: 6px;
+  border: none;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  transition: all 0.2s ease;
+}
+
+.btn-editar-perfil {
+  background-color: #0056b3;
+  color: white;
+}
+
+.btn-editar-perfil:hover {
+  background-color: #004494;
+}
+
+.btn-alterar-senha {
+  background-color: #f0f0f0;
+  color: #333;
+}
+
+.btn-alterar-senha:hover {
+  background-color: #e0e0e0;
+}
+
+.perfil-actions i {
+  margin-right: 8px;
+}
+
+/* Seção de negociações */
+.perfil-negociacoes-section {
+  height: 100%;
+}
+
+.negociacoes-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.negociacoes-header h2 {
+  margin: 0;
+  font-size: 22px;
+  color: #333;
+}
+
+.negociacoes-filtros {
+  display: flex;
+  gap: 15px;
+}
+
+.filtro-grupo {
+  display: flex;
+  align-items: center;
+}
+
+.filtro-grupo label {
+  margin-right: 8px;
+  font-weight: 500;
+  color: #555;
+}
+
+.filtro-select {
+  padding: 8px 12px;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+  background-color: white;
+  color: #333;
+  font-size: 14px;
+}
+
+.negociacoes-contador {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 15px;
+}
+
+/* Lista de negociações compacta */
+.negociacoes-compact-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.negociacao-compact-card {
+  background-color: white;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.negociacao-compact-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.negociacao-compact-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 15px;
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #eee;
+}
+
+.negociacao-compact-id {
+  font-weight: 600;
+  color: #333;
+  font-size: 14px;
+}
+
+.negociacao-compact-badges {
+  display: flex;
+  gap: 8px;
+}
+
+.negociacao-badge-small {
+  font-size: 12px;
+  padding: 3px 8px;
+  border-radius: 12px;
+  font-weight: 500;
+}
+
+.status-confirmada {
+  background-color: #e6f7e6;
+  color: #28a745;
+}
+
+.status-pendente {
+  background-color: #fff3cd;
+  color: #856404;
+}
+
+.tipo-comprador {
+  background-color: #e6f7ff;
+  color: #0056b3;
+}
+
+.tipo-vendedor {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+.negociacao-compact-info {
+  padding: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.negociacao-compact-col {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.negociacao-compact-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: #555;
+}
+
+.negociacao-compact-item i {
+  width: 16px;
+  text-align: center;
+  color: #666;
+}
+
+.milhas-icon-small {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  background-color: #0056b3;
+  color: white;
+  border-radius: 50%;
+  font-size: 10px;
+  font-weight: bold;
+}
+
+.btn-compact-detalhes {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background-color: #f0f0f0;
+  color: #333;
+  transition: all 0.2s ease;
+}
+
+.btn-compact-detalhes:hover {
+  background-color: #0056b3;
+  color: white;
+}
+
+/* Estados de carregamento e erro */
+.negociacoes-loading,
+.negociacoes-feedback,
+.sem-resultados {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  text-align: center;
+  color: #666;
+}
+
+.spinner {
+  border: 3px solid #f3f3f3;
+  border-top: 3px solid #0056b3;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  animation: spin 1s linear infinite;
+  margin-bottom: 15px;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.sem-resultados i {
+  margin-bottom: 15px;
+  color: #999;
+}
+
+.btn-ver-ofertas {
+  margin-top: 15px;
+  padding: 10px 20px;
+  background-color: #0056b3;
+  color: white;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.btn-ver-ofertas:hover {
+  background-color: #004494;
+}
+
+/* Responsividade */
+@media (max-width: 992px) {
+  .perfil-container {
+    flex-direction: column;
+  }
+
+  .perfil-sidebar {
+    width: 100%;
+    position: static;
+  }
+
+  .negociacoes-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+
+  .negociacoes-filtros {
+    width: 100%;
+    justify-content: space-between;
+  }
+}
+
+@media (max-width: 768px) {
+  .negociacoes-compact-list {
+    grid-template-columns: 1fr;
+  }
+
+  .negociacoes-filtros {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .filtro-grupo {
+    width: 100%;
+  }
+
+  .filtro-select {
+    flex: 1;
+  }
+}
+
+/* Adicione estes estilos para a paginação no final do arquivo */
+.negociacoes-paginacao {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin-top: 20px;
+}
+
+.btn-pagina {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+  background-color: white;
+  color: #555;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-pagina:hover:not(:disabled) {
+  background-color: #f0f0f0;
+  border-color: #ccc;
+}
+
+.btn-pagina.ativo {
+  background-color: #0056b3;
+  color: white;
+  border-color: #0056b3;
+}
+
+.btn-pagina:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Ajuste responsivo para a paginação */
+@media (max-width: 576px) {
+  .negociacoes-paginacao {
+    flex-wrap: wrap;
+  }
+
+  .btn-pagina {
+    width: 32px;
+    height: 32px;
+    font-size: 14px;
+  }
+}
+
