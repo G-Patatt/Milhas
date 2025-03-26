@@ -234,41 +234,47 @@
   text-align: center;
 }
 
+/* Ajuste para a seção de features (Por que negociar na MilesExchange?) */
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
 .feature-card.hover-lift {
-  padding: 2rem;
-  border-radius: 1rem;
+  padding: 1.5rem;
+  border-radius: 0.75rem;
   background-color: white;
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
   transition: all 0.3s ease;
-}
-
-.feature-card.hover-lift:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .feature-icon {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 60px;
-  height: 60px;
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
   background: var(--primary-gradient);
   color: white;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
 }
 
 .feature-title {
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   font-weight: 700;
-  margin-bottom: 1rem;
+  margin-bottom: 0.75rem;
   color: var(--text-color);
 }
 
 .feature-description {
-  font-size: 1rem;
-  line-height: 1.6;
+  font-size: 0.9rem;
+  line-height: 1.5;
   color: var(--text-muted);
 }
 
@@ -303,51 +309,58 @@
   z-index: 1;
 }
 
+/* Ajuste para a seção de testimonials (feedback) */
+.testimonials-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
 .testimonial-card.enhanced {
-  padding: 2rem;
-  border-radius: 1rem;
+  padding: 1.5rem;
+  border-radius: 0.75rem;
   background-color: white;
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
   transition: all 0.3s ease;
-  border-top: 4px solid var(--primary-color);
-}
-
-.testimonial-card.enhanced:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  border-top: 3px solid var(--primary-color);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .testimonial-avatar {
-  width: 60px;
-  height: 60px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   background: var(--light-gradient);
-  margin-right: 1rem;
+  margin-right: 0.75rem;
 }
 
 .testimonial-name {
-  font-size: 1.25rem;
+  font-size: 1rem;
   font-weight: 700;
   color: var(--text-color);
 }
 
 .testimonial-role {
-  font-size: 0.875rem;
+  font-size: 0.75rem;
   color: var(--text-muted);
 }
 
 .testimonial-text {
-  font-size: 1rem;
-  line-height: 1.6;
+  font-size: 0.9rem;
+  line-height: 1.5;
   color: var(--text-color);
-  margin: 1.5rem 0;
+  margin: 1rem 0;
   font-style: italic;
 }
 
 .testimonial-rating {
   color: #ffc107;
-  font-size: 1.25rem;
-  letter-spacing: 2px;
+  font-size: 1rem;
+  letter-spacing: 1px;
+  margin-top: auto;
 }
 
 /* CTA Section Enhancements */
@@ -477,7 +490,7 @@
   }
 }
 
-/* Responsive Adjustments */
+/* Ajustes responsivos */
 @media (max-width: 768px) {
   .hero-section.enhanced .hero-title {
     font-size: 2.5rem;
@@ -503,6 +516,18 @@
 
   .cta-section.enhanced .cta-buttons {
     flex-direction: column;
+  }
+
+  .features-grid,
+  .testimonials-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .features-grid,
+  .testimonials-grid {
+    grid-template-columns: 1fr;
   }
 }
 
