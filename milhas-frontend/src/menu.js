@@ -94,22 +94,17 @@ function Menu() {
     setUserMenuOpen(!userMenuOpen)
   }
 
+  // Função para navegar para a home
+  const navigateToHome = (e) => {
+    e.preventDefault()
+    navigate("/")
+  }
+
   return (
     <nav className={`menu-navbar ${scrolled ? "scrolled" : ""}`}>
       <div className="menu-container">
-        <div className="menu-logo">
-          <svg
-            viewBox="0 0 24 24"
-            width="24"
-            height="24"
-            stroke="currentColor"
-            strokeWidth="2"
-            fill="none"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <path d="M7 17l10-10M7 7l10 10"></path>
-          </svg>
+        <div className="menu-logo" onClick={navigateToHome} style={{ cursor: "pointer" }}>
+          <i className="fa fa-plane" style={{ marginRight: "8px", fontSize: "20px" }}></i>
           <span>MilesExchange</span>
         </div>
 
@@ -135,11 +130,6 @@ function Menu() {
               <li>
                 <a href={negociacoesLink} className={`menu-item ${isActive(negociacoesLink) ? "active" : ""}`}>
                   Negociações
-                </a>
-              </li>
-              <li>
-                <a href="/reserva" className={`menu-item ${isActive("/reserva") ? "active" : ""}`}>
-                  Reserva Limite
                 </a>
               </li>
             </>
@@ -256,11 +246,6 @@ function Menu() {
                 <li>
                   <a href={negociacoesLink} className={`mobile-menu-item ${isActive(negociacoesLink) ? "active" : ""}`}>
                     <i className="fa fa-exchange"></i> Negociações
-                  </a>
-                </li>
-                <li>
-                  <a href="/reserva" className={`mobile-menu-item ${isActive("/reserva") ? "active" : ""}`}>
-                    <i className="fa fa-credit-card"></i> Reserva Limite
                   </a>
                 </li>
               </>

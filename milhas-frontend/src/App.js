@@ -18,6 +18,7 @@ import Pipeline from "./components/pages/PipelineSection.js"
 import Processo from "./components/pages/ProcessoDetalhado.js"
 import PerfilUsuario from "./components/pages/PerfilUsuario.js" // Nova página de perfil do usuário
 import Avaliacao from "./components/pages/Avaliacao"
+import FaqPage from "./components/pages/faq/page.js" // Importando a página de FAQ
 
 function App() {
   return (
@@ -40,6 +41,7 @@ function App() {
           <Route path="/pipeline-section" element={<Pipeline />} />
           <Route path="/processo-detalhado" element={<Processo />} />
           <Route path="/avaliacao/:negociacaoId/:usuarioId" element={<Avaliacao />} />
+          <Route path="/faq" element={<FaqPage />} /> {/* Adicionando a rota para a página de FAQ */}
         </Routes>
       </Router>
     </AuthProvider>
