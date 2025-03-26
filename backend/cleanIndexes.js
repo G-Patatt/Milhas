@@ -23,7 +23,7 @@ async function cleanIndexes() {
       // Se o índice não estiver na lista dos importantes, removemos
       if (!indicesImportantes.includes(indexName)) {
         console.log(`❌ Removendo índice: ${indexName}`);
-        await sequelize.query(`ALTER TABLE usuarios DROP INDEX  asd ${indexName}`);
+        await sequelize.query(`ALTER TABLE usuarios DROP INDEX ${indexName}`);
       }
     }
 

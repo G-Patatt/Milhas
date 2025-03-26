@@ -11,7 +11,11 @@ function Confirmacao() {
   const [usuarioVendedor, setUsuarioVendedor] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const usuarioId = JSON.parse(localStorage.getItem("usuario")).id;
+  const currentUsuarioId = JSON.parse(localStorage.getItem("usuario"))?.id;
+
+  if (!currentUsuarioId) {
+    navigate("/login");
+  }
 
   useEffect(() => {
     const buscarOferta = async () => {
@@ -19,19 +23,20 @@ function Confirmacao() {
         const response = await axios.get(
           `http://localhost:5000/api/ofertas/${ofertaId}`
         );
-        setOferta(response.data);
+        const ofertaData = response.data;
+        setOferta(ofertaData);
 
-        const comprador = await buscarUsuariosPorId(
-          response.data.compraOuVenda === "compra"
-            ? response.data.usuarioId
-            : usuarioId
-        );
+        const compradorId =
+          ofertaData.compraOuVenda === "venda"
+            ? currentUsuarioId
+            : ofertaData.usuarioId;
+        const vendedorId =
+          ofertaData.compraOuVenda === "venda"
+            ? ofertaData.usuarioId
+            : currentUsuarioId;
 
-        const vendedor = await buscarUsuariosPorId(
-          response.data.compraOuVenda === "venda"
-            ? response.data.usuarioId
-            : usuarioId
-        );
+        const comprador = await buscarUsuariosPorId(compradorId);
+        const vendedor = await buscarUsuariosPorId(vendedorId);
 
         setUsuarioComprador(comprador);
         setUsuarioVendedor(vendedor);
@@ -41,8 +46,9 @@ function Confirmacao() {
         setLoading(false);
       }
     };
+
     buscarOferta();
-  }, [ofertaId]);
+  }, [ofertaId, currentUsuarioId]);
 
   const buscarUsuariosPorId = async (id) => {
     try {
@@ -51,7 +57,7 @@ function Confirmacao() {
       );
       return response.data;
     } catch (error) {
-      console.error("Erro ao buscar oferta:", error);
+      console.error("Erro ao buscar usuário:", error);
       return null;
     }
   };
@@ -65,7 +71,7 @@ function Confirmacao() {
     try {
       const response = await axios.post(
         "http://localhost:5000/api/ofertas/confirmarOferta",
-        { ofertaId, usuarioId }
+        { ofertaId, currentUsuarioId }
       );
       if (response.data && response.data.negociacaoId) {
         navigate(`/negociacoes/${response.data.negociacaoId}`);
@@ -87,7 +93,6 @@ function Confirmacao() {
     <div className="container mt-4">
       <h2>Confirmação da Oferta</h2>
 
-      {/* Exibe a mensagem de erro acima da oferta */}
       {error && <p className="text-danger fw-bold">{error}</p>}
 
       {oferta ? (

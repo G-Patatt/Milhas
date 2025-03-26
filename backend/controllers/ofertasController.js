@@ -32,11 +32,13 @@ exports.buscarOfertas = async (req, res) => {
 
 // Controlador para pegar uma oferta
 exports.confirmarOferta = async (req, res) => {
-  const { ofertaId, usuarioId } = req.body; // Recebe o ID da oferta
+  const { ofertaId, currentUsuarioId } = req.body; // Recebe o ID da oferta
 
   try {
     const oferta = await Oferta.findByPk(ofertaId); // Buscar a oferta pelo ID
-    console.log(oferta);
+    console.log("Userid"  + currentUsuarioId);
+
+   
 
     if (!oferta) {
       return res.status(404).send({ message: "Oferta não encontrada!" });
@@ -44,14 +46,8 @@ exports.confirmarOferta = async (req, res) => {
 
     // Simulação de um usuário (substitua isso por um sistema real de usuários)
 
-    const usuario = await Usuario.findByPk(usuarioId);
-    // Verificar se o usuário tem milhas suficientes
-    if (usuario.qtdMilhas < oferta.preco && oferta.compraOuVenda == "compra") {
-      return res.status(400).send({ message: "Milhas insuficientes!" });
-    }
+    const usuario = await Usuario.findByPk(currentUsuarioId);
 
-    // Subtrair as milhas do usuário
-    usuario.milhas -= oferta.preco;
     await usuario.save();
 
     await Oferta.update({ confirmada: true }, { where: { ofertaId } });
