@@ -107,16 +107,24 @@ function DetalhesNegociacao() {
   };
 
   // Verificar se o usuário atual é o comprador
-  const isComprador = usuarioAtual && negociacao && usuarioAtual.id === negociacao.usuarioIdComprador
+  const isComprador =
+    usuarioAtual &&
+    negociacao &&
+    usuarioAtual.id === negociacao.usuarioIdComprador;
 
   // Verificar se o usuário atual é o vendedor
-  const isVendedor = usuarioAtual && negociacao && usuarioAtual.id === negociacao.usuarioIdVendedor
+  const isVendedor =
+    usuarioAtual &&
+    negociacao &&
+    usuarioAtual.id === negociacao.usuarioIdVendedor;
 
   // Função para redirecionar para a página de avaliação
   const redirecionarParaAvaliacao = () => {
-    const usuarioParaAvaliar = isComprador ? negociacao.usuarioIdVendedor : negociacao.usuarioIdComprador
-    navigate(`/avaliacao/${negociacao.negociacaoId}/${usuarioParaAvaliar}`)
-  }
+    const usuarioParaAvaliar = isComprador
+      ? negociacao.usuarioIdVendedor
+      : negociacao.usuarioIdComprador;
+    navigate(`/avaliacao/${negociacao.negociacaoId}/${usuarioParaAvaliar}`);
+  };
 
   // Função para criar preferência de pagamento
   const criarPreference = async () => {
@@ -221,18 +229,6 @@ function DetalhesNegociacao() {
       return "status-pendente";
     }
   };
-
-  // Verificar se o usuário atual é o comprador
-  const isComprador =
-    usuarioAtual &&
-    negociacao &&
-    usuarioAtual.id === negociacao.usuarioIdComprador;
-
-  // Verificar se o usuário atual é o vendedor
-  const isVendedor =
-    usuarioAtual &&
-    negociacao &&
-    usuarioAtual.id === negociacao.usuarioIdVendedor;
 
   return (
     <div className="negociacao-detalhe-container">
@@ -434,37 +430,33 @@ function DetalhesNegociacao() {
                     Ações Disponíveis
                   </h3>
 
-                  {negociacao.status &&
-                  negociacao.status
-                    .toLowerCase()
+                  {negociacao.status
+                    ?.toLowerCase()
                     .includes("vendedor alocou garantias") ? (
-                    <div className="negociacao-detalhe-status-info">
-                      <i className="fa fa-check-circle icon-margin-right"></i>
-                      <span>
-                        O vendedor já alocou as garantias. A negociação foi
-                        concluída com sucesso!
-                      </span>
-                    </div>
-                  ) : negociacao.status &&
-                    negociacao.status
-                      .toLowerCase()
-                      .includes("aguardando vendedor") ? (
-                  <h3 className="negociacao-detalhe-section-title">Ações Disponíveis</h3>
-
-                  {negociacao.status && negociacao.status.toLowerCase().includes("vendedor alocou garantias") ? (
                     <>
                       <div className="negociacao-detalhe-status-info">
                         <i className="fa fa-check-circle icon-margin-right"></i>
-                        <span>O vendedor já alocou as garantias. A negociação foi concluída com sucesso!</span>
+                        <span>
+                          O vendedor já alocou as garantias. A negociação foi
+                          concluída com sucesso!
+                        </span>
                       </div>
-                      <div className="negociacao-detalhe-buttons" style={{ marginTop: "1rem" }}>
-                        <button className="btn-pagar" onClick={redirecionarParaAvaliacao}>
+                      <div
+                        className="negociacao-detalhe-buttons"
+                        style={{ marginTop: "1rem" }}
+                      >
+                        <button
+                          className="btn-pagar"
+                          onClick={redirecionarParaAvaliacao}
+                        >
                           <i className="fa fa-star icon-margin-right"></i>
                           Avaliar Vendedor
                         </button>
                       </div>
                     </>
-                  ) : negociacao.status && negociacao.status.toLowerCase().includes("aguardando vendedor") ? (
+                  ) : negociacao.status
+                      ?.toLowerCase()
+                      .includes("aguardando vendedor") ? (
                     <div className="negociacao-detalhe-status-info">
                       <i className="fa fa-check-circle icon-margin-right"></i>
                       <span>
@@ -481,25 +473,23 @@ function DetalhesNegociacao() {
                         para transferir as milhas.
                       </p>
 
-                      {negociacao.status &&
-                        negociacao.status
-                          .toLowerCase()
-                          .includes("gerou o link") && (
-                          <div className="negociacao-detalhe-warning">
-                            <i className="fa fa-exclamation-triangle icon-margin-right"></i>
-                            <span>
-                              Você já gerou um link de pagamento, mas ainda não
-                              concluiu o pagamento.
-                            </span>
-                          </div>
-                        )}
+                      {negociacao.status
+                        ?.toLowerCase()
+                        .includes("gerou o link") && (
+                        <div className="negociacao-detalhe-warning">
+                          <i className="fa fa-exclamation-triangle icon-margin-right"></i>
+                          <span>
+                            Você já gerou um link de pagamento, mas ainda não
+                            concluiu o pagamento.
+                          </span>
+                        </div>
+                      )}
 
                       <div className="negociacao-detalhe-buttons">
                         <button
                           className={`btn-pagar ${
-                            negociacao.status &&
                             negociacao.status
-                              .toLowerCase()
+                              ?.toLowerCase()
                               .includes("gerou o link")
                               ? "btn-secondary"
                               : ""
@@ -516,33 +506,21 @@ function DetalhesNegociacao() {
                             <>
                               <i
                                 className={`fa ${
-                                  negociacao.status &&
                                   negociacao.status
-                                    .toLowerCase()
+                                    ?.toLowerCase()
                                     .includes("gerou o link")
                                     ? "fa-refresh"
                                     : "fa-credit-card"
                                 } icon-margin-right`}
                               ></i>
-                              {negociacao.status &&
-                              negociacao.status
-                                .toLowerCase()
+                              {negociacao.status
+                                ?.toLowerCase()
                                 .includes("gerou o link")
                                 ? "Gerar Link Novamente"
                                 : "Realizar Pagamento"}
                             </>
                           )}
                         </button>
-
-                        {negociacao.status &&
-                          negociacao.status
-                            .toLowerCase()
-                            .includes("gerou o link") && (
-                            <p className="negociacao-detalhe-help-text">
-                              Se você perdeu o link de pagamento anterior,
-                              clique no botão acima para gerar um novo link.
-                            </p>
-                          )}
                       </div>
                     </>
                   )}
@@ -555,48 +533,44 @@ function DetalhesNegociacao() {
                     Ações Disponíveis
                   </h3>
 
-                  {negociacao.status &&
-                  negociacao.status
-                    .toLowerCase()
+                  {negociacao.status
+                    ?.toLowerCase()
                     .includes("vendedor alocou garantias") ? (
-                    <div className="negociacao-detalhe-status-info">
-                      <i className="fa fa-check-circle icon-margin-right"></i>
-                      <span>
-                        Você já alocou as garantias. A negociação foi concluída
-                        com sucesso!
-                      </span>
-                    </div>
-                  <h3 className="negociacao-detalhe-section-title">Ações Disponíveis</h3>
-
-                  {negociacao.status && negociacao.status.toLowerCase().includes("vendedor alocou garantias") ? (
                     <>
                       <div className="negociacao-detalhe-status-info">
                         <i className="fa fa-check-circle icon-margin-right"></i>
-                        <span>Você já alocou as garantias. A negociação foi concluída com sucesso!</span>
+                        <span>
+                          Você já alocou as garantias. A negociação foi
+                          concluída com sucesso!
+                        </span>
                       </div>
-                      <div className="negociacao-detalhe-buttons" style={{ marginTop: "1rem" }}>
-                        <button className="btn-pagar" onClick={redirecionarParaAvaliacao}>
+                      <div
+                        className="negociacao-detalhe-buttons"
+                        style={{ marginTop: "1rem" }}
+                      >
+                        <button
+                          className="btn-pagar"
+                          onClick={redirecionarParaAvaliacao}
+                        >
                           <i className="fa fa-star icon-margin-right"></i>
                           Avaliar Comprador
                         </button>
                       </div>
                     </>
-                  ) : negociacao.status &&
-                    (negociacao.status
-                      .toLowerCase()
+                  ) : negociacao.status
+                      ?.toLowerCase()
                       .includes("comprador alocou garantias") ||
-                      negociacao.status
-                        .toLowerCase()
-                        .includes("aguardando vendedor")) ? (
+                    negociacao.status
+                      ?.toLowerCase()
+                      .includes("aguardando vendedor") ? (
                     <>
                       <p className="negociacao-detalhe-info-text">
                         O comprador já alocou as garantias. Agora é sua vez de
                         alocar as garantias para prosseguir com a negociação.
                       </p>
 
-                      {negociacao.status &&
-                      negociacao.status
-                        .toLowerCase()
+                      {negociacao.status
+                        ?.toLowerCase()
                         .includes("vendedor gerou o link") ? (
                         <div className="negociacao-detalhe-warning">
                           <i className="fa fa-exclamation-triangle icon-margin-right"></i>
@@ -618,9 +592,8 @@ function DetalhesNegociacao() {
                       <div className="negociacao-detalhe-buttons">
                         <button
                           className={`btn-pagar ${
-                            negociacao.status &&
                             negociacao.status
-                              .toLowerCase()
+                              ?.toLowerCase()
                               .includes("vendedor gerou o link")
                               ? "btn-secondary"
                               : ""
@@ -637,33 +610,21 @@ function DetalhesNegociacao() {
                             <>
                               <i
                                 className={`fa ${
-                                  negociacao.status &&
                                   negociacao.status
-                                    .toLowerCase()
+                                    ?.toLowerCase()
                                     .includes("vendedor gerou o link")
                                     ? "fa-refresh"
                                     : "fa-shield-alt"
                                 } icon-margin-right`}
                               ></i>
-                              {negociacao.status &&
-                              negociacao.status
-                                .toLowerCase()
+                              {negociacao.status
+                                ?.toLowerCase()
                                 .includes("vendedor gerou o link")
                                 ? "Gerar Link Novamente"
                                 : "Alocar Garantias"}
                             </>
                           )}
                         </button>
-
-                        {negociacao.status &&
-                          negociacao.status
-                            .toLowerCase()
-                            .includes("vendedor gerou o link") && (
-                            <p className="negociacao-detalhe-help-text">
-                              Se você perdeu o link de pagamento anterior,
-                              clique no botão acima para gerar um novo link.
-                            </p>
-                          )}
                       </div>
                     </>
                   ) : (
@@ -677,13 +638,11 @@ function DetalhesNegociacao() {
                       <div className="negociacao-detalhe-status-info">
                         <i className="fa fa-info-circle icon-margin-right"></i>
                         <span>
-                          {negociacao.status &&
-                          negociacao.status
-                            .toLowerCase()
+                          {negociacao.status
+                            ?.toLowerCase()
                             .includes("gerou o link")
                             ? "O comprador gerou o link de pagamento, mas ainda não concluiu o pagamento."
-                            : negociacao.status &&
-                              negociacao.status.toLowerCase().includes("pag")
+                            : negociacao.status?.toLowerCase().includes("pag")
                             ? "Pagamento em processamento. Aguarde a confirmação."
                             : "Aguardando o comprador iniciar o pagamento."}
                         </span>
