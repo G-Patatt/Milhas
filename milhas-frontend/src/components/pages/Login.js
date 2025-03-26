@@ -42,7 +42,7 @@ function Login() {
     try {
       console.log("Enviando dados de login:", { email, senha });
 
-      const response = await axios.post("http://localhost:5003/api/login", {
+      const response = await axios.post("http://localhost:5000/api/login", {
         email,
         senha,
       });

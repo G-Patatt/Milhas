@@ -17,7 +17,7 @@ function Confirmacao() {
     const buscarOferta = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5003/api/ofertas/${ofertaId}`
+          `http://localhost:5000/api/ofertas/${ofertaId}`
         );
         setOferta(response.data);
 
@@ -47,7 +47,7 @@ function Confirmacao() {
   const buscarUsuariosPorId = async (id) => {
     try {
       const response = await axios.get(
-        `http://localhost:5003/api/usuarios/${id}`
+        `http://localhost:5000/api/usuarios/${id}`
       );
       return response.data;
     } catch (error) {
@@ -64,7 +64,7 @@ function Confirmacao() {
 
     try {
       const response = await axios.post(
-        "http://localhost:5003/api/ofertas/confirmarOferta",
+        "http://localhost:5000/api/ofertas/confirmarOferta",
         { ofertaId, usuarioId }
       );
       if (response.data && response.data.negociacaoId) {

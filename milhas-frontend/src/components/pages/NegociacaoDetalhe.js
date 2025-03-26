@@ -35,7 +35,7 @@ function DetalhesNegociacao() {
       try {
         // Buscar dados da negociação
         const negociacaoResponse = await axios.get(
-          `http://localhost:5003/api/negociacao/${id}?ofertaId=${ofertaId}`,
+          `http://localhost:5000/api/negociacao/${id}?ofertaId=${ofertaId}`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -51,7 +51,7 @@ function DetalhesNegociacao() {
 
         // Buscar dados da oferta
         const ofertaResponse = await axios.get(
-          `http://localhost:5003/api/ofertas/${dadosNegociacao.negociacao.ofertaId}`,
+          `http://localhost:5000/api/ofertas/${dadosNegociacao.negociacao.ofertaId}`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -59,12 +59,12 @@ function DetalhesNegociacao() {
 
         // Buscar dados dos usuários
         const compradorResponse = await axios.get(
-          `http://localhost:5003/api/usuarios/${dadosNegociacao.negociacao.usuarioIdComprador}`,
+          `http://localhost:5000/api/usuarios/${dadosNegociacao.negociacao.usuarioIdComprador}`,
           { headers: { Authorization: `Bearer ${token}` } }
         );
 
         const vendedorResponse = await axios.get(
-          `http://localhost:5003/api/usuarios/${dadosNegociacao.negociacao.usuarioIdVendedor}`,
+          `http://localhost:5000/api/usuarios/${dadosNegociacao.negociacao.usuarioIdVendedor}`,
           { headers: { Authorization: `Bearer ${token}` } }
         );
 
@@ -95,7 +95,7 @@ function DetalhesNegociacao() {
   const atualizarStatusNegociacao = async (negociacaoId, novoStatus) => {
     try {
       const response = await axios.put(
-        `http://localhost:5003/api/negociacao/${negociacaoId}/status`,
+        `http://localhost:5000/api/negociacao/${negociacaoId}/status`,
         { status: novoStatus },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -137,7 +137,7 @@ function DetalhesNegociacao() {
     setProcessandoPagamento(true);
     try {
       const response = await axios.post(
-        "http://localhost:5003/api/mercadopago/preference",
+        "http://localhost:5000/api/mercadopago/preference",
         {
           title: `Milhas ${oferta.ciaAerea}`,
           quantity: oferta.qtdMilhas,

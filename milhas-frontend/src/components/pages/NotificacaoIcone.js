@@ -19,7 +19,7 @@ function NotificacaoIcon() {
         // Se o usuário estiver logado, busca as notificações
         setUsuarioLogado(true);
         const response = await axios.get(
-          `http://localhost:5003/api/usuarios/${usuarioId}/notificacoes`
+          `http://localhost:5000/api/usuarios/${usuarioId}/notificacoes`
         );
 
         // Atualiza o estado com o número de notificações

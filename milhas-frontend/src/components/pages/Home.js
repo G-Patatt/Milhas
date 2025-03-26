@@ -39,7 +39,7 @@ export default function Home() {
           ),
         }))
       );
-    }, 5003);
+    }, 5000);
 
     return () => clearInterval(interval);
   }, []);

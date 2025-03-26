@@ -24,7 +24,7 @@ function Cadastro() {
 
     try {
       const response = await axios.post(
-        "http://localhost:5003/api/usuarios/cadastrar",
+        "http://localhost:5000/api/usuarios/cadastrar",
         {
           nome,
           email,
