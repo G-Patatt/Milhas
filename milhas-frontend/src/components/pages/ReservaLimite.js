@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 function ReservaLimite() {
   //card test
@@ -9,41 +9,43 @@ function ReservaLimite() {
   // const [loading, setLoading] = useState(false);
   // const [message, setMessage] = useState('');
 
-
-    const [paymentLink, setPaymentLink] = useState('');
-    console.log(JSON.stringify({
-      title: 'Produto Exemplo', // aqui sera a oferta
+  const [paymentLink, setPaymentLink] = useState("");
+  console.log(
+    JSON.stringify({
+      title: "Produto Exemplo", // aqui sera a oferta
       quantity: 1, //quantity acredito que 1
-      price: 100.00 //preco da oferta
-    }));
-    
-    const criarPreference = async () => {
-      try {
-        const response = await fetch('http://localhost:5000/api/mercadopago/preference', {
-          method: 'POST',
+      price: 100.0, //preco da oferta
+    })
+  );
+
+  const criarPreference = async () => {
+    try {
+      const response = await fetch(
+        "http://localhost:5000/api/mercadopago/preference",
+        {
+          method: "POST",
           headers: {
-            'Content-Type': 'application/json'
+            "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            title: 'Produto Exemplo',
+            title: "Produto Exemplo",
             quantity: 1,
-            price: 100.00
-          })
-        });
-  
-        const data = await response.json();
-      
-        setPaymentLink(data.url); // Guarda o link retornado pelo Mercado Pago
-  
-        // Redireciona automaticamente o usuário
-        window.location.href = data.url;
-      } catch (error) {
-        console.error('Erro ao criar a preference:', error);
-      }
-    };
-  
+            price: 100.0,
+          }),
+        }
+      );
 
-  
+      const data = await response.json();
+
+      setPaymentLink(data.url); // Guarda o link retornado pelo Mercado Pago
+
+      // Redireciona automaticamente o usuário
+      window.location.href = data.url;
+    } catch (error) {
+      console.error("Erro ao criar a preference:", error);
+    }
+  };
+
   // const handleReserve = async () => {
   //   setLoading(true);
   //   setMessage('');
@@ -75,14 +77,13 @@ function ReservaLimite() {
   //   } catch (error) {
   //     setMessage('Erro ao conectar com o servidor.');
   //   }
-  
+
   //   setLoading(false);
   // };
 
-
   return (
     // <div>
-    
+
     //   <h2>Reserva de Limite</h2>
     //   <input
     //     type="text"
@@ -112,16 +113,21 @@ function ReservaLimite() {
     //     {loading ? 'Processando...' : 'Reservar Limite'}
     //   </button>
     //   {message && <p>{message}</p>}
-  
-      <div>
-        <h1>Pagamento</h1>
-        <button onClick={criarPreference}>Pagar</button>
-        {paymentLink && <p>Ou acesse: <a href={paymentLink} target="_blank" rel="noopener noreferrer">Link de Pagamento</a></p>}
-      </div>
-   
-   // </div>
 
-    
+    <div>
+      <h1>Pagamento</h1>
+      <button onClick={criarPreference}>Pagar</button>
+      {paymentLink && (
+        <p>
+          Ou acesse:{" "}
+          <a href={paymentLink} target="_blank" rel="noopener noreferrer">
+            Link de Pagamento
+          </a>
+        </p>
+      )}
+    </div>
+
+    // </div>
   );
 }
 

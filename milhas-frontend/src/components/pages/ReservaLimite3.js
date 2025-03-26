@@ -1,30 +1,33 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 function ReservaLimite() {
-  const [amount, setAmount] = useState('');
+  const [amount, setAmount] = useState("");
   const [loading, setLoading] = useState(false);
 
   const handlePayment = async () => {
     setLoading(true);
     try {
-      const response = await fetch('http://localhost:5000/api/mercadopago/preference', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ amount }),
-      });
+      const response = await fetch(
+        "http://localhost:5000/api/mercadopago/preference",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ amount }),
+        }
+      );
 
       const data = await response.json();
-      
+
       if (data.url) {
         window.location.href = data.url; // Redireciona automaticamente para o pagamento
       } else {
-        alert('Erro ao gerar link de pagamento.');
+        alert("Erro ao gerar link de pagamento.");
       }
     } catch (error) {
-      console.error('Erro ao processar pagamento:', error);
-      alert('Erro ao processar pagamento. Tente novamente.');
+      console.error("Erro ao processar pagamento:", error);
+      alert("Erro ao processar pagamento. Tente novamente.");
     } finally {
       setLoading(false);
     }
@@ -41,7 +44,7 @@ function ReservaLimite() {
         disabled={loading}
       />
       <button onClick={handlePayment} disabled={loading}>
-        {loading ? 'Processando...' : 'Gerar Pagamento'}
+        {loading ? "Processando..." : "Gerar Pagamento"}
       </button>
     </div>
   );

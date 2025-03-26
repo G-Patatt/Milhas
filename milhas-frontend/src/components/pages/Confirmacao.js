@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';  
-import 'bootstrap/dist/css/bootstrap.min.css';  
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import "bootstrap/dist/css/bootstrap.min.css";
+import axios from "axios";
 
 function Confirmacao() {
   const { ofertaId } = useParams();
@@ -11,20 +11,26 @@ function Confirmacao() {
   const [usuarioVendedor, setUsuarioVendedor] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const usuarioId = JSON.parse(localStorage.getItem('usuario')).id;
+  const usuarioId = JSON.parse(localStorage.getItem("usuario")).id;
 
   useEffect(() => {
     const buscarOferta = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/api/ofertas/${ofertaId}`);
+        const response = await axios.get(
+          `http://localhost:5000/api/ofertas/${ofertaId}`
+        );
         setOferta(response.data);
 
         const comprador = await buscarUsuariosPorId(
-          response.data.compraOuVenda === "compra" ? response.data.usuarioId : usuarioId
+          response.data.compraOuVenda === "compra"
+            ? response.data.usuarioId
+            : usuarioId
         );
 
         const vendedor = await buscarUsuariosPorId(
-          response.data.compraOuVenda === "venda" ? response.data.usuarioId : usuarioId
+          response.data.compraOuVenda === "venda"
+            ? response.data.usuarioId
+            : usuarioId
         );
 
         setUsuarioComprador(comprador);
@@ -40,7 +46,9 @@ function Confirmacao() {
 
   const buscarUsuariosPorId = async (id) => {
     try {
-      const response = await axios.get(`http://localhost:5000/api/usuarios/${id}`);
+      const response = await axios.get(
+        `http://localhost:5000/api/usuarios/${id}`
+      );
       return response.data;
     } catch (error) {
       console.error("Erro ao buscar oferta:", error);
@@ -55,7 +63,10 @@ function Confirmacao() {
     }
 
     try {
-      const response = await axios.post('http://localhost:5000/api/ofertas/confirmarOferta', { ofertaId, usuarioId });
+      const response = await axios.post(
+        "http://localhost:5000/api/ofertas/confirmarOferta",
+        { ofertaId, usuarioId }
+      );
       if (response.data && response.data.negociacaoId) {
         navigate(`/negociacoes/${response.data.negociacaoId}`);
       } else {
@@ -81,12 +92,24 @@ function Confirmacao() {
 
       {oferta ? (
         <div className="card p-4">
-          <p><strong>Usuário Vendedor:</strong> {usuarioVendedor?.nome}</p>
-          <p><strong>Usuário Comprador:</strong> {usuarioComprador?.nome}</p>
-          <p><strong>Valor:</strong> R$ {oferta.preco}</p>
-          <p><strong>Quantidade de Milhas:</strong> {oferta.qtdMilhas}</p>
+          <p>
+            <strong>Usuário Vendedor:</strong> {usuarioVendedor?.nome}
+          </p>
+          <p>
+            <strong>Usuário Comprador:</strong> {usuarioComprador?.nome}
+          </p>
+          <p>
+            <strong>Valor:</strong> R$ {oferta.preco}
+          </p>
+          <p>
+            <strong>Quantidade de Milhas:</strong> {oferta.qtdMilhas}
+          </p>
           <div className="mt-3">
-            <button className="btn btn-success me-2" onClick={confirmarOferta} disabled={!!error}>
+            <button
+              className="btn btn-success me-2"
+              onClick={confirmarOferta}
+              disabled={!!error}
+            >
               Confirmar
             </button>
             <button className="btn btn-danger" onClick={recusarOferta}>
