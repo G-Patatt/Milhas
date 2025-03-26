@@ -3,12 +3,12 @@
 import { useState, useEffect } from "react";
 import "../css/Home.css";
 import { useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react"
-import "../css/Home.css"
 
-import FaqSection from "../pages/FaqSection"
+import "../css/Home.css";
 
-import PipelineSection from "../pages/PipelineSection.js"
+import FaqSection from "../pages/FaqSection";
+
+import PipelineSection from "../pages/PipelineSection.js";
 
 export default function Home() {
   const [trendingMiles, setTrendingMiles] = useState([
@@ -23,7 +23,6 @@ export default function Home() {
   const criarNovaOferta = () => {
     navigate("/ofertas");
   };
-  ])
 
   // Simulate price changes
   useEffect(() => {
@@ -63,17 +62,12 @@ export default function Home() {
                   ofertas e maximize o valor dos seus programas de fidelidade.
                 </p>
                 <div className="hero-buttons">
-                  <button
-                    className="btn btn-primary btn-lg"
-                    onClick={criarNovaOferta}
-                  >
+                  <button className="btn btn-primary btn-lg">
                     Começar a negociar
                   </button>
                   <button className="btn btn-outline btn-lg">
                     Ver cotações
                   </button>
-                  <button className="btn btn-primary btn-lg">Começar a negociar</button>
-                  <button className="btn btn-outline btn-lg">Ver cotações</button>
                 </div>
               </div>
               <div className="market-preview">
@@ -424,7 +418,6 @@ export default function Home() {
             </div>
           </div>
         </section>
-
 
         {/* Testimonials */}
         <section className="testimonials-section">
