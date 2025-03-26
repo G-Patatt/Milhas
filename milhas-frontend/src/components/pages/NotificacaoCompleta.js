@@ -16,6 +16,9 @@ function NotificacaoCompleta() {
   const notificacaoRef = useRef(null) // Referência para o componente de notificação
   const dropdownRef = useRef(null) // Referência para o dropdown
 
+  // Verificar se o usuário está logado
+  const usuarioLogado = !!JSON.parse(localStorage.getItem("usuario") || "null")
+
   // Função para alternar a exibição do dropdown de notificações
   const toggleDropdown = () => {
     if (mostrarDropdown) {
@@ -93,6 +96,11 @@ function NotificacaoCompleta() {
     } else {
       return `${data.getDate().toString().padStart(2, "0")}/${(data.getMonth() + 1).toString().padStart(2, "0")}/${data.getFullYear()} às ${data.getHours().toString().padStart(2, "0")}:${data.getMinutes().toString().padStart(2, "0")}`
     }
+  }
+
+  // Se o usuário não estiver logado, não renderiza o componente
+  if (!usuarioLogado) {
+    return null
   }
 
   return (
