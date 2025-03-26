@@ -3,8 +3,8 @@
 import { useState, useEffect, useRef } from "react"
 import { useLocation, useNavigate, Link } from "react-router-dom"
 import "./menu.css"
-// Importando o componente de notificação
-import NotificacaoIcon from "./components/pages/NotificacaoIcone"
+// Importando o novo componente de notificação
+import NotificacaoCompleta from "./components/pages/NotificacaoCompleta"
 import LogoutModal from "./components/pages/LogoutModal"
 import "font-awesome/css/font-awesome.min.css"
 
@@ -138,8 +138,8 @@ function Menu() {
         </ul>
 
         <div className="menu-actions">
-          {/* Sempre exibir o ícone de notificação para teste */}
-          <NotificacaoIcon />
+          {/* Usando o novo componente de notificação */}
+          <NotificacaoCompleta />
 
           {isLoggedIn && (
             <div className="user-menu-container" ref={userMenuRef}>

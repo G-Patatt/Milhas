@@ -1,0 +1,297 @@
+/* Container principal */
+.notificacao-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin-right: 15px;
+}
+
+/* Container para o ícone e o botão */
+.notificacao-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+/* Ícone de notificação */
+.notificacao-icone {
+  position: relative;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  transition: transform 0.2s ease;
+}
+
+.notificacao-icone:hover {
+  transform: scale(1.1);
+}
+
+.notificacao-icone:active {
+  transform: scale(0.95);
+}
+
+/* Badge de contagem */
+.notificacao-badge {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  background-color: #e74c3c;
+  color: white;
+  border-radius: 50%;
+  width: 14px;
+  height: 14px;
+  font-size: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  transition: transform 0.2s ease;
+}
+
+.notificacao-icone:hover .notificacao-badge {
+  transform: scale(1.1);
+}
+
+/* Botão "Ler todos" */
+.ler-todos-botao {
+  background-color: #3498db;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 5px 10px;
+  margin-left: 10px;
+  cursor: pointer;
+  position: relative;
+  font-size: 12px;
+  font-weight: bold;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.ler-todos-botao:hover {
+  background-color: #2980b9;
+  transform: translateY(-2px);
+}
+
+.ler-todos-botao:active {
+  transform: translateY(0);
+}
+
+/* Badge no botão "Ler todos" */
+.ler-todos-badge {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background-color: #e74c3c;
+  color: white;
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  transition: transform 0.2s ease;
+}
+
+.ler-todos-botao:hover .ler-todos-badge {
+  transform: scale(1.1);
+}
+
+/* Dropdown de notificações */
+.notificacao-dropdown {
+  position: absolute;
+  top: 45px;
+  right: 0;
+  width: 320px;
+  max-height: 400px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  opacity: 0;
+  transform: translateY(-10px);
+  animation: dropdown-fade-in 0.3s ease forwards;
+  transform-origin: top right;
+}
+
+@keyframes dropdown-fade-in {
+  0% {
+    opacity: 0;
+    transform: translateY(-10px) scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.dropdown-closing {
+  animation: dropdown-fade-out 0.3s ease forwards;
+}
+
+@keyframes dropdown-fade-out {
+  0% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-10px) scale(0.95);
+  }
+}
+
+/* Cabeçalho do dropdown */
+.notificacao-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  border-bottom: 1px solid #eee;
+  animation: fade-in 0.4s ease;
+}
+
+.notificacao-titulo {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+/* Botão "Marcar todas como lidas" no dropdown */
+.marcar-lidas-botao {
+  background: none;
+  border: none;
+  color: #3498db;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.marcar-lidas-botao:hover {
+  color: #2980b9;
+  text-decoration: underline;
+}
+
+/* Lista de notificações */
+.notificacao-lista {
+  overflow-y: auto;
+  max-height: 350px;
+}
+
+/* Item de notificação */
+.notificacao-item {
+  padding: 12px 15px;
+  border-bottom: 1px solid #eee;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  animation: item-fade-in 0.5s ease both;
+}
+
+.notificacao-item:nth-child(1) {
+  animation-delay: 0.05s;
+}
+.notificacao-item:nth-child(2) {
+  animation-delay: 0.1s;
+}
+.notificacao-item:nth-child(3) {
+  animation-delay: 0.15s;
+}
+.notificacao-item:nth-child(4) {
+  animation-delay: 0.2s;
+}
+.notificacao-item:nth-child(5) {
+  animation-delay: 0.25s;
+}
+
+@keyframes item-fade-in {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.notificacao-item:hover {
+  background-color: #f9f9f9;
+  transform: translateX(3px);
+}
+
+.notificacao-item.nao-lida {
+  background-color: #f0f7ff;
+}
+
+.notificacao-item.nao-lida:hover {
+  background-color: #e1f0fa;
+}
+
+/* Conteúdo da notificação */
+.notificacao-conteudo {
+  flex: 1;
+}
+
+.notificacao-mensagem {
+  margin: 0 0 5px 0;
+  font-size: 14px;
+  color: #333;
+}
+
+.notificacao-tempo {
+  font-size: 12px;
+  color: #888;
+}
+
+/* Indicador de não lida */
+.indicador-nao-lida {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #3498db;
+  margin-left: 10px;
+  transition: transform 0.2s ease;
+}
+
+.notificacao-item:hover .indicador-nao-lida {
+  transform: scale(1.2);
+}
+
+/* Mensagem de nenhuma notificação */
+.sem-notificacoes {
+  padding: 20px;
+  text-align: center;
+  color: #888;
+  animation: fade-in 0.5s ease;
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* Responsividade */
+@media (max-width: 480px) {
+  .notificacao-dropdown {
+    width: 280px;
+    right: -70px;
+  }
+}
+
