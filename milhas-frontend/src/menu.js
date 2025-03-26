@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from "react"
 import { useLocation, useNavigate, Link } from "react-router-dom"
 import "./menu.css"
+// Importando o componente de notificação
 import NotificacaoIcon from "./components/pages/NotificacaoIcone"
 import LogoutModal from "./components/pages/LogoutModal"
 import "font-awesome/css/font-awesome.min.css"
@@ -137,36 +138,36 @@ function Menu() {
         </ul>
 
         <div className="menu-actions">
+          {/* Sempre exibir o ícone de notificação para teste */}
+          <NotificacaoIcon />
+
           {isLoggedIn && (
-            <>
-              <NotificacaoIcon />
-              <div className="user-menu-container" ref={userMenuRef}>
-                <button onClick={toggleUserMenu} className="user-icon-button">
-                  <i className="fa fa-user-circle-o"></i>
-                </button>
-                {userMenuOpen && (
-                  <div className="user-dropdown-menu">
-                    <div className="user-info">
-                      <span className="user-name">{usuario.nome || "Usuário"}</span>
-                      <span className="user-email">{usuario.email || ""}</span>
-                    </div>
-                    <ul className="user-menu-items">
-                      <li>
-                        <Link to={perfilLink} className="user-menu-item">
-                          <i className="fa fa-user"></i> Meu Perfil
-                        </Link>
-                      </li>
-                      <li className="menu-divider"></li>
-                      <li>
-                        <a href="#" onClick={handleLogoutClick} className="user-menu-item logout-item">
-                          <i className="fa fa-sign-out"></i> Logout
-                        </a>
-                      </li>
-                    </ul>
+            <div className="user-menu-container" ref={userMenuRef}>
+              <button onClick={toggleUserMenu} className="user-icon-button">
+                <i className="fa fa-user-circle-o"></i>
+              </button>
+              {userMenuOpen && (
+                <div className="user-dropdown-menu">
+                  <div className="user-info">
+                    <span className="user-name">{usuario.nome || "Usuário"}</span>
+                    <span className="user-email">{usuario.email || ""}</span>
                   </div>
-                )}
-              </div>
-            </>
+                  <ul className="user-menu-items">
+                    <li>
+                      <Link to={perfilLink} className="user-menu-item">
+                        <i className="fa fa-user"></i> Meu Perfil
+                      </Link>
+                    </li>
+                    <li className="menu-divider"></li>
+                    <li>
+                      <a href="#" onClick={handleLogoutClick} className="user-menu-item logout-item">
+                        <i className="fa fa-sign-out"></i> Logout
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              )}
+            </div>
           )}
           <div className="auth-button-container">
             {!isLoggedIn && (
