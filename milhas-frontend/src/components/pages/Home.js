@@ -14,21 +14,29 @@ export default function Home() {
   return (
     <div className="miles-exchange">
       <main>
-        {/* Hero Section */}
-        <section className="hero-section">
+        {/* Hero Section - Enhanced with gradient background */}
+        <section className="hero-section enhanced">
+          <div className="hero-background">
+            <div className="hero-shape shape-1"></div>
+            <div className="hero-shape shape-2"></div>
+            <div className="hero-shape shape-3"></div>
+          </div>
           <div className="container">
             <div className="hero-content">
-              <div className="badge">Novo no Brasil</div>
+              <div className="badge animated">Novo no Brasil</div>
               <h1 className="hero-title">Compre e venda milhas como ações na bolsa</h1>
               <p className="hero-description">
                 Negocie milhas aéreas em tempo real, encontre as melhores ofertas e maximize o valor dos seus programas
                 de fidelidade.
               </p>
               <div className="hero-buttons">
-                <button className="btn btn-primary btn-lg" onClick={() => handleNavigation("/ofertas")}>
+                <button className="btn btn-primary btn-lg pulse" onClick={() => handleNavigation("/ofertas")}>
                   Começar a negociar
                 </button>
-                <button className="btn btn-outline btn-lg" onClick={() => handleNavigation("/processo-detalhado")}>
+                <button
+                  className="btn btn-outline btn-lg hover-effect"
+                  onClick={() => handleNavigation("/processo-detalhado")}
+                >
                   Saiba mais
                 </button>
               </div>
@@ -42,8 +50,8 @@ export default function Home() {
         {/* FAQ Section - Nova seção adicionada logo após o Pipeline */}
         <FaqSection />
 
-        {/* Features Section */}
-        <section className="features-section">
+        {/* Features Section - Enhanced with card hover effects */}
+        <section className="features-section enhanced">
           <div className="container">
             <div className="section-header">
               <h2 className="section-title">Por que negociar na MilesExchange?</h2>
@@ -53,7 +61,7 @@ export default function Home() {
             </div>
 
             <div className="features-grid">
-              <div className="feature-card">
+              <div className="feature-card hover-lift">
                 <div className="feature-icon">
                   <svg
                     viewBox="0 0 24 24"
@@ -75,7 +83,7 @@ export default function Home() {
                 </p>
               </div>
 
-              <div className="feature-card">
+              <div className="feature-card hover-lift">
                 <div className="feature-icon">
                   <svg
                     viewBox="0 0 24 24"
@@ -99,7 +107,7 @@ export default function Home() {
                 </p>
               </div>
 
-              <div className="feature-card">
+              <div className="feature-card hover-lift">
                 <div className="feature-icon">
                   <svg
                     viewBox="0 0 24 24"
@@ -123,8 +131,11 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Testimonials */}
-        <section className="testimonials-section">
+        {/* Testimonials - Enhanced with better cards */}
+        <section className="testimonials-section enhanced">
+          <div className="testimonial-background">
+            <div className="testimonial-shape"></div>
+          </div>
           <div className="container">
             <div className="section-header">
               <h2 className="section-title">O que nossos usuários dizem</h2>
@@ -134,7 +145,7 @@ export default function Home() {
             </div>
 
             <div className="testimonials-grid">
-              <div className="testimonial-card">
+              <div className="testimonial-card enhanced">
                 <div className="testimonial-header">
                   <div className="testimonial-avatar"></div>
                   <div>
@@ -146,9 +157,16 @@ export default function Home() {
                   "Consegui vender minhas milhas por um preço muito melhor do que nas plataformas tradicionais. O
                   processo foi rápido e seguro."
                 </p>
+                <div className="testimonial-rating">
+                  <span>★</span>
+                  <span>★</span>
+                  <span>★</span>
+                  <span>★</span>
+                  <span>★</span>
+                </div>
               </div>
 
-              <div className="testimonial-card">
+              <div className="testimonial-card enhanced">
                 <div className="testimonial-header">
                   <div className="testimonial-avatar"></div>
                   <div>
@@ -160,9 +178,16 @@ export default function Home() {
                   "Descobri uma nova forma de investimento! Compro milhas quando estão em baixa e revendo quando
                   valorizam. A plataforma é excelente."
                 </p>
+                <div className="testimonial-rating">
+                  <span>★</span>
+                  <span>★</span>
+                  <span>★</span>
+                  <span>★</span>
+                  <span>★</span>
+                </div>
               </div>
 
-              <div className="testimonial-card">
+              <div className="testimonial-card enhanced">
                 <div className="testimonial-header">
                   <div className="testimonial-avatar"></div>
                   <div>
@@ -174,13 +199,21 @@ export default function Home() {
                   "Uso a MilesExchange para gerenciar as milhas da minha empresa. A transparência nos preços e a
                   facilidade de negociação são incomparáveis."
                 </p>
+                <div className="testimonial-rating">
+                  <span>★</span>
+                  <span>★</span>
+                  <span>★</span>
+                  <span>★</span>
+                  <span>★</span>
+                </div>
               </div>
             </div>
           </div>
         </section>
 
-        {/* CTA Section */}
-        <section className="cta-section">
+        {/* CTA Section - Enhanced with gradient background */}
+        <section className="cta-section enhanced">
+          <div className="cta-background"></div>
           <div className="container">
             <div className="cta-grid">
               <div className="cta-content">
@@ -190,10 +223,13 @@ export default function Home() {
                 </p>
               </div>
               <div className="cta-buttons">
-                <button className="btn btn-secondary btn-lg" onClick={() => handleNavigation("/processo-detalhado")}>
+                <button
+                  className="btn btn-secondary btn-lg hover-effect"
+                  onClick={() => handleNavigation("/processo-detalhado")}
+                >
                   Saiba mais
                 </button>
-                <button className="btn btn-white btn-lg" onClick={() => handleNavigation("/ofertas")}>
+                <button className="btn btn-white btn-lg pulse" onClick={() => handleNavigation("/ofertas")}>
                   Criar conta grátis
                 </button>
               </div>
@@ -202,8 +238,8 @@ export default function Home() {
         </section>
       </main>
 
-      {/* Footer */}
-      <footer className="footer">
+      {/* Footer - Enhanced with better spacing */}
+      <footer className="footer enhanced">
         <div className="container">
           <div className="footer-grid">
             <div className="footer-about">
@@ -305,7 +341,7 @@ export default function Home() {
           <div className="footer-bottom">
             <p className="copyright">&copy; {new Date().getFullYear()} MilesExchange. Todos os direitos reservados.</p>
             <div className="social-links">
-              <a href="#" className="social-link">
+              <a href="#" className="social-link hover-effect">
                 <span className="sr-only">Facebook</span>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -321,7 +357,7 @@ export default function Home() {
                   <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
                 </svg>
               </a>
-              <a href="#" className="social-link">
+              <a href="#" className="social-link hover-effect">
                 <span className="sr-only">Twitter</span>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -337,7 +373,7 @@ export default function Home() {
                   <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"></path>
                 </svg>
               </a>
-              <a href="#" className="social-link">
+              <a href="#" className="social-link hover-effect">
                 <span className="sr-only">Instagram</span>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -355,7 +391,7 @@ export default function Home() {
                   <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
                 </svg>
               </a>
-              <a href="#" className="social-link">
+              <a href="#" className="social-link hover-effect">
                 <span className="sr-only">LinkedIn</span>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
