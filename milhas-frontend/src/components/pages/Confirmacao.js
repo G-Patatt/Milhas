@@ -12,16 +12,21 @@ function Confirmacao() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const currentUsuarioId = JSON.parse(localStorage.getItem("usuario"))?.id;
+  // Verifique se há um token armazenado
+  const token = localStorage.getItem("token");
 
-  if (!currentUsuarioId) {
-    navigate("/login");
-  }
+
+
 
   useEffect(() => {
+    if (!currentUsuarioId || !token) {
+      navigate("/login");
+      return;
+    }
     const buscarOferta = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5001/api/ofertas/${ofertaId}`
+          `http://localhost:5000/api/ofertas/${ofertaId}`
         );
         const ofertaData = response.data;
         setOferta(ofertaData);
@@ -53,7 +58,7 @@ function Confirmacao() {
   const buscarUsuariosPorId = async (id) => {
     try {
       const response = await axios.get(
-        `http://localhost:5001/api/usuarios/${id}`
+        `http://localhost:5000/api/usuarios/${id}`
       );
       return response.data;
     } catch (error) {
@@ -70,7 +75,7 @@ function Confirmacao() {
 
     try {
       const response = await axios.post(
-        "http://localhost:5001/api/ofertas/confirmarOferta",
+        "http://localhost:5000/api/ofertas/confirmarOferta",
         { ofertaId, currentUsuarioId }
       );
       if (response.data && response.data.negociacaoId) {
