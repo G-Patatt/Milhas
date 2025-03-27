@@ -1,122 +1,127 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from "react"
-import { useParams, Link } from "react-router-dom"
-import axios from "axios"
-import "../css/PerfilUsuario.css"
+import { useState, useEffect } from "react";
+import { useParams, Link } from "react-router-dom";
+import axios from "axios";
+import "../css/PerfilUsuario.css";
 
 const PerfilUsuario = () => {
-  const { id } = useParams()
-  const [usuario, setUsuario] = useState(null)
-  const [loading, setLoading] = useState(true)
-  const [activeTab, setActiveTab] = useState("perfil")
-  const [negociacoes, setNegociacoes] = useState([])
-  const [loadingNegociacoes, setLoadingNegociacoes] = useState(false)
-  const [feedbackNegociacoes, setFeedbackNegociacoes] = useState("")
+  const { id } = useParams();
+  const [usuario, setUsuario] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [activeTab, setActiveTab] = useState("perfil");
+  const [negociacoes, setNegociacoes] = useState([]);
+  const [loadingNegociacoes, setLoadingNegociacoes] = useState(false);
+  const [feedbackNegociacoes, setFeedbackNegociacoes] = useState("");
 
   // Filtros
-  const [filtroStatus, setFiltroStatus] = useState("todas")
-  const [filtroTipo, setFiltroTipo] = useState("todas")
+  const [filtroStatus, setFiltroStatus] = useState("todas");
+  const [filtroTipo, setFiltroTipo] = useState("todas");
 
   useEffect(() => {
     // Busca de dados do usuário
-    const usuarioLocal = JSON.parse(localStorage.getItem("usuario") || "null")
+    const usuarioLocal = JSON.parse(localStorage.getItem("usuario") || "null");
 
     if (usuarioLocal && usuarioLocal.id === Number.parseInt(id)) {
-      setUsuario(usuarioLocal)
-      setLoading(false)
+      setUsuario(usuarioLocal);
+      setLoading(false);
     } else {
       // Em um cenário real, você faria uma chamada à API aqui
-      const token = localStorage.getItem("token")
+      const token = localStorage.getItem("token");
       if (!token) {
-        setLoading(false)
-        return
+        setLoading(false);
+        return;
       }
 
       axios
-        .get(`http://localhost:5000/api/usuarios/${id}`, {
+        .get(`http://localhost:5001/api/usuarios/${id}`, {
           headers: { Authorization: `Bearer ${token}` },
         })
         .then((response) => {
           if (response.status === 200) {
-            setUsuario(response.data)
+            setUsuario(response.data);
           }
         })
         .catch((error) => {
-          console.error("Erro ao buscar usuário:", error)
+          console.error("Erro ao buscar usuário:", error);
         })
         .finally(() => {
-          setLoading(false)
-        })
+          setLoading(false);
+        });
     }
-  }, [id])
+  }, [id]);
 
   // Carregar negociações quando a aba for selecionada
   useEffect(() => {
     if (activeTab === "negociacoes" && usuario) {
-      carregarNegociacoes()
+      carregarNegociacoes();
     }
-  }, [activeTab, usuario])
+  }, [activeTab, usuario]);
 
   // Função para carregar as negociações do usuário
   const carregarNegociacoes = () => {
-    const token = localStorage.getItem("token")
-    if (!token) return
+    const token = localStorage.getItem("token");
+    if (!token) return;
 
-    setLoadingNegociacoes(true)
-    setFeedbackNegociacoes("")
+    setLoadingNegociacoes(true);
+    setFeedbackNegociacoes("");
 
     axios
-      .get("http://localhost:5000/api/negociacao/usuario", {
+      .get("http://localhost:5001/api/negociacao/usuario", {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((response) => {
         if (response.status === 200) {
-          setNegociacoes(response.data)
+          setNegociacoes(response.data);
         } else {
-          setFeedbackNegociacoes("Nenhuma negociação encontrada")
+          setFeedbackNegociacoes("Nenhuma negociação encontrada");
         }
       })
       .catch((error) => {
-        setFeedbackNegociacoes("Erro ao carregar as negociações.")
-        console.error(error)
+        setFeedbackNegociacoes("Erro ao carregar as negociações.");
+        console.error(error);
       })
       .finally(() => {
-        setLoadingNegociacoes(false)
-      })
-  }
+        setLoadingNegociacoes(false);
+      });
+  };
 
   // Função para filtrar negociações
   const negociacoesFiltradas = () => {
     return negociacoes.filter((negociacao) => {
       // Filtro por status
       if (filtroStatus !== "todas") {
-        const statusNegociacao = negociacao.oferta.confirmada ? "confirmadas" : "pendentes"
-        if (filtroStatus !== statusNegociacao) return false
+        const statusNegociacao = negociacao.oferta.confirmada
+          ? "confirmadas"
+          : "pendentes";
+        if (filtroStatus !== statusNegociacao) return false;
       }
 
       // Filtro por tipo (comprador/vendedor)
       if (filtroTipo !== "todas") {
-        const tipoNegociacao = negociacao.negociacao.usuarioIdComprador === usuario.id ? "comprador" : "vendedor"
-        if (filtroTipo !== tipoNegociacao) return false
+        const tipoNegociacao =
+          negociacao.negociacao.usuarioIdComprador === usuario.id
+            ? "comprador"
+            : "vendedor";
+        if (filtroTipo !== tipoNegociacao) return false;
       }
 
-      return true
-    })
-  }
+      return true;
+    });
+  };
 
   // Função para formatar o preço
   const formatarPreco = (preco) => {
     return Number.parseFloat(preco).toLocaleString("pt-BR", {
       style: "currency",
       currency: "BRL",
-    })
-  }
+    });
+  };
 
   // Função para formatar a quantidade de milhas
   const formatarMilhas = (milhas) => {
-    return Number.parseInt(milhas).toLocaleString("pt-BR")
-  }
+    return Number.parseInt(milhas).toLocaleString("pt-BR");
+  };
 
   if (loading) {
     return (
@@ -126,7 +131,7 @@ const PerfilUsuario = () => {
           <span>Carregando perfil...</span>
         </div>
       </div>
-    )
+    );
   }
 
   if (!usuario) {
@@ -137,10 +142,10 @@ const PerfilUsuario = () => {
           <span>Usuário não encontrado</span>
         </div>
       </div>
-    )
+    );
   }
 
-  const negociacoesExibidas = negociacoesFiltradas()
+  const negociacoesExibidas = negociacoesFiltradas();
 
   return (
     <div className="perfil-container">
@@ -189,11 +194,15 @@ const PerfilUsuario = () => {
               </div>
               <div className="perfil-info-item">
                 <span className="info-label">Telefone:</span>
-                <span className="info-value">{usuario.telefone || "Não informado"}</span>
+                <span className="info-value">
+                  {usuario.telefone || "Não informado"}
+                </span>
               </div>
               <div className="perfil-info-item">
                 <span className="info-label">Data de Cadastro:</span>
-                <span className="info-value">{usuario.dataCadastro || "Não informado"}</span>
+                <span className="info-value">
+                  {usuario.dataCadastro || "Não informado"}
+                </span>
               </div>
             </div>
 
@@ -256,26 +265,47 @@ const PerfilUsuario = () => {
             ) : negociacoes.length > 0 ? (
               <>
                 <div className="negociacoes-contador">
-                  Exibindo {negociacoesExibidas.length} de {negociacoes.length} negociações
+                  Exibindo {negociacoesExibidas.length} de {negociacoes.length}{" "}
+                  negociações
                 </div>
 
                 <div className="negociacoes-compact-list">
                   {negociacoesExibidas.map((negociacao) => (
-                    <div key={negociacao.negociacao.negociacaoId} className="negociacao-compact-card">
+                    <div
+                      key={negociacao.negociacao.negociacaoId}
+                      className="negociacao-compact-card"
+                    >
                       <div className="negociacao-compact-header">
                         <div className="negociacao-compact-id">
-                          #{negociacao.negociacao.negociacaoId.toString().padStart(4, "0")}
+                          #
+                          {negociacao.negociacao.negociacaoId
+                            .toString()
+                            .padStart(4, "0")}
                         </div>
                         <div className="negociacao-compact-badges">
                           <span
-                            className={`negociacao-badge-small ${negociacao.oferta.confirmada ? "status-confirmada" : "status-pendente"}`}
+                            className={`negociacao-badge-small ${
+                              negociacao.oferta.confirmada
+                                ? "status-confirmada"
+                                : "status-pendente"
+                            }`}
                           >
-                            {negociacao.oferta.confirmada ? "Confirmada" : "Pendente"}
+                            {negociacao.oferta.confirmada
+                              ? "Confirmada"
+                              : "Pendente"}
                           </span>
                           <span
-                            className={`negociacao-badge-small ${negociacao.negociacao.usuarioIdComprador === usuario.id ? "tipo-comprador" : "tipo-vendedor"}`}
+                            className={`negociacao-badge-small ${
+                              negociacao.negociacao.usuarioIdComprador ===
+                              usuario.id
+                                ? "tipo-comprador"
+                                : "tipo-vendedor"
+                            }`}
                           >
-                            {negociacao.negociacao.usuarioIdComprador === usuario.id ? "Comprador" : "Vendedor"}
+                            {negociacao.negociacao.usuarioIdComprador ===
+                            usuario.id
+                              ? "Comprador"
+                              : "Vendedor"}
                           </span>
                         </div>
                       </div>
@@ -295,11 +325,15 @@ const PerfilUsuario = () => {
                         <div className="negociacao-compact-col">
                           <div className="negociacao-compact-item">
                             <i className="fa fa-money-bill"></i>
-                            <span>{formatarPreco(negociacao.oferta.preco)}</span>
+                            <span>
+                              {formatarPreco(negociacao.oferta.preco)}
+                            </span>
                           </div>
                           <div className="negociacao-compact-item">
                             <span className="milhas-icon-small">M</span>
-                            <span>{formatarMilhas(negociacao.oferta.qtdMilhas)}</span>
+                            <span>
+                              {formatarMilhas(negociacao.oferta.qtdMilhas)}
+                            </span>
                           </div>
                         </div>
 
@@ -327,8 +361,7 @@ const PerfilUsuario = () => {
         )}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default PerfilUsuario
-
+export default PerfilUsuario;

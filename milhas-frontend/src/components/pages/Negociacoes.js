@@ -25,7 +25,7 @@ function NegociacoesUsuario() {
 
     setLoading(true);
     axios
-      .get("http://localhost:5000/api/negociacao/usuario", {
+      .get("http://localhost:5001/api/negociacao/usuario", {
         headers: { Authorization: `Bearer ${token}` }, // Envia o token com a requisição
       })
       .then((response) => {
