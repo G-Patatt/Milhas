@@ -8,7 +8,7 @@ function ReservaLimite() {
     setLoading(true);
     try {
       const response = await fetch(
-        "http://localhost:5000/api/mercadopago/preference",
+        "http://localhost:5001/api/mercadopago/preference",
         {
           method: "POST",
           headers: {
