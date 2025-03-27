@@ -21,7 +21,7 @@ function ReservaLimite() {
   const criarPreference = async () => {
     try {
       const response = await fetch(
-        "http://localhost:5000/api/mercadopago/preference",
+        "http://localhost:5001/api/mercadopago/preference",
         {
           method: "POST",
           headers: {
@@ -51,7 +51,7 @@ function ReservaLimite() {
   //   setMessage('');
 
   //   try {
-  //     const response = await fetch('http://localhost:5000/api/mercadopago/token', {
+  //     const response = await fetch('http://localhost:5001/api/mercadopago/token', {
   //       method: 'POST',  // Certifique-se de usar 'POST'
   //       headers: { 'Content-Type': 'application/json' },
   //       body: JSON.stringify({
