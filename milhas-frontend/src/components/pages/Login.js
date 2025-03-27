@@ -1,66 +1,66 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { useNavigate } from "react-router-dom"
-import { useAuth } from "./AuthContext"
-import axios from "axios"
-import "../css/Login.css"
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "./AuthContext";
+import axios from "axios";
+import "../css/Login.css";
 
 // Componente para o botão de login no menu
 export function LoginButton() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const handleLoginClick = (e) => {
-    e.preventDefault()
-    navigate("/login")
-  }
+    e.preventDefault();
+    navigate("/login");
+  };
 
   return (
     <a href="#" onClick={handleLoginClick} className="auth-button">
       <i className="fa fa-sign-in"></i>
       <span>Login</span>
     </a>
-  )
+  );
 }
 
 // Componente principal de login
 function Login() {
-  const auth = useAuth()
-  const { login } = auth
-  const navigate = useNavigate()
+  const auth = useAuth();
+  const { login } = auth;
+  const navigate = useNavigate();
 
-  const [email, setEmail] = useState("")
-  const [senha, setSenha] = useState("")
-  const [feedback, setFeedback] = useState("")
-  const [isLoading, setIsLoading] = useState(false)
+  const [email, setEmail] = useState("");
+  const [senha, setSenha] = useState("");
+  const [feedback, setFeedback] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleLogin = async (e) => {
-    e.preventDefault()
-    setIsLoading(true)
-    setFeedback("")
+    e.preventDefault();
+    setIsLoading(true);
+    setFeedback("");
 
     try {
-      console.log("Enviando dados de login:", { email, senha })
+      console.log("Enviando dados de login:", { email, senha });
 
-      const response = await axios.post("http://localhost:5000/api/login", {
+      const response = await axios.post("http://localhost:5001/api/login", {
         email,
         senha,
-      })
+      });
 
       if (response.status === 200) {
         // Após o login bem-sucedido
-        localStorage.setItem("usuario", JSON.stringify(response.data.usuario))
-        localStorage.setItem("token", response.data.token) // Armazena o token no localStorage
-        login(response.data.usuario) // Atualiza o estado do contexto
-        navigate("/") // Redireciona para a página principal
+        localStorage.setItem("usuario", JSON.stringify(response.data.usuario));
+        localStorage.setItem("token", response.data.token); // Armazena o token no localStorage
+        login(response.data.usuario); // Atualiza o estado do contexto
+        navigate("/"); // Redireciona para a página principal
       }
     } catch (error) {
-      setFeedback("Erro ao fazer login. Verifique suas credenciais.")
-      console.error(error)
+      setFeedback("Erro ao fazer login. Verifique suas credenciais.");
+      console.error(error);
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }
+  };
 
   return (
     <div className="login-container">
@@ -84,7 +84,9 @@ function Login() {
             <h1>MilesExchange</h1>
           </div>
           <h2>Acesse sua conta</h2>
-          <p className="login-subtitle">Entre para negociar milhas e aproveitar as melhores ofertas</p>
+          <p className="login-subtitle">
+            Entre para negociar milhas e aproveitar as melhores ofertas
+          </p>
         </div>
 
         {feedback && <div className="login-alert">{feedback}</div>}
@@ -144,8 +146,7 @@ function Login() {
         </div>
       </div>
     </div>
-  )
+  );
 }
 
-export default Login
-
+export default Login;
