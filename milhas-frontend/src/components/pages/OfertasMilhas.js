@@ -22,7 +22,7 @@ function OfertasMilhas() {
     // Buscar ofertas
     setLoading(true);
     axios
-      .get("http://localhost:5000/api/ofertas")
+      .get("http://localhost:5001/api/ofertas")
       .then((response) => {
         if (response.data.length === 0) {
           setFeedback("Nenhuma oferta disponível no momento.");
@@ -244,7 +244,6 @@ function OfertasMilhas() {
                   <span className="">
                     <i className="fa fa-user icon-margin-right"></i>
                     {oferta.usuario.nome}
-                    {oferta.usuario.id}
                   </span>
                   <span>
                     <AvaliationContainer
