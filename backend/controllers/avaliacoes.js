@@ -4,9 +4,9 @@ const Usuario = require("../models/Usuario");
 const postAvaliation = async (req, res) => {
   try {
     const { ratedUser } = req.params;
-    const { rating } = req.body;
+    const { rating, ratingUser, comment } = req.body;
 
-    if (!ratedUser || !rating) {
+    if (!ratedUser || !rating || !ratingUser) {
       return res.status(401).json({ error: "Dados inválidos" });
     }
 
@@ -19,6 +19,8 @@ const postAvaliation = async (req, res) => {
     const response = await Avaliacoes.create({
       ratedUser,
       rating,
+      ratingUser,
+      comment,
     });
 
     if (!response) {
