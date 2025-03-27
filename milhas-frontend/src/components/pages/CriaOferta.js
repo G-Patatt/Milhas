@@ -1,17 +1,17 @@
-"use client"
+"use client";
 
-import { useState, useRef, useEffect } from "react"
-import axios from "axios"
-import { useNavigate } from "react-router-dom"
-import "../css/CriaOferta.css"
+import { useState, useRef, useEffect } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import "../css/CriaOferta.css";
 
 // Componente de Autocomplete para aeroportos
 const AeroportoAutocomplete = ({ id, label, value, onChange, placeholder }) => {
-  const [inputValue, setInputValue] = useState("")
-  const [showDropdown, setShowDropdown] = useState(false)
-  const [filteredAeroportos, setFilteredAeroportos] = useState([])
-  const dropdownRef = useRef(null)
-  const inputRef = useRef(null)
+  const [inputValue, setInputValue] = useState("");
+  const [showDropdown, setShowDropdown] = useState(false);
+  const [filteredAeroportos, setFilteredAeroportos] = useState([]);
+  const dropdownRef = useRef(null);
+  const inputRef = useRef(null);
 
   // Lista de aeroportos principais do Brasil e do mundo
   const aeroportos = [
@@ -158,19 +158,19 @@ const AeroportoAutocomplete = ({ id, label, value, onChange, placeholder }) => {
     { codigo: "SJU", nome: "San Juan (SJU)" },
     { codigo: "NAS", nome: "Nassau (NAS)" },
     { codigo: "HAV", nome: "Havana (HAV)" },
-  ]
+  ];
 
   // Inicializar o valor do input com o nome do aeroporto selecionado
   useEffect(() => {
     if (value) {
-      const aeroporto = aeroportos.find((a) => a.codigo === value)
+      const aeroporto = aeroportos.find((a) => a.codigo === value);
       if (aeroporto) {
-        setInputValue(aeroporto.nome)
+        setInputValue(aeroporto.nome);
       }
     } else {
-      setInputValue("")
+      setInputValue("");
     }
-  }, [value])
+  }, [value]);
 
   // Fechar o dropdown quando clicar fora
   useEffect(() => {
@@ -181,54 +181,54 @@ const AeroportoAutocomplete = ({ id, label, value, onChange, placeholder }) => {
         inputRef.current &&
         !inputRef.current.contains(event.target)
       ) {
-        setShowDropdown(false)
+        setShowDropdown(false);
       }
-    }
+    };
 
-    document.addEventListener("mousedown", handleClickOutside)
+    document.addEventListener("mousedown", handleClickOutside);
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside)
-    }
-  }, [])
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   const handleInputChange = (e) => {
-    const value = e.target.value
-    setInputValue(value)
+    const value = e.target.value;
+    setInputValue(value);
 
     // Filtrar aeroportos com base no input
     if (value.trim() === "") {
-      setFilteredAeroportos([])
+      setFilteredAeroportos([]);
     } else {
       const filtered = aeroportos.filter(
         (aeroporto) =>
           aeroporto.nome.toLowerCase().includes(value.toLowerCase()) ||
-          aeroporto.codigo.toLowerCase().includes(value.toLowerCase()),
-      )
-      setFilteredAeroportos(filtered)
+          aeroporto.codigo.toLowerCase().includes(value.toLowerCase())
+      );
+      setFilteredAeroportos(filtered);
     }
 
-    setShowDropdown(true)
-  }
+    setShowDropdown(true);
+  };
 
   const handleSelectAeroporto = (aeroporto) => {
-    setInputValue(aeroporto.nome)
-    onChange(aeroporto.codigo)
-    setShowDropdown(false)
-  }
+    setInputValue(aeroporto.nome);
+    onChange(aeroporto.codigo);
+    setShowDropdown(false);
+  };
 
   const handleFocus = () => {
     if (inputValue.trim() !== "") {
       const filtered = aeroportos.filter(
         (aeroporto) =>
           aeroporto.nome.toLowerCase().includes(inputValue.toLowerCase()) ||
-          aeroporto.codigo.toLowerCase().includes(inputValue.toLowerCase()),
-      )
-      setFilteredAeroportos(filtered)
+          aeroporto.codigo.toLowerCase().includes(inputValue.toLowerCase())
+      );
+      setFilteredAeroportos(filtered);
     } else {
-      setFilteredAeroportos(aeroportos.slice(0, 5)) // Mostrar os 5 primeiros quando vazio
+      setFilteredAeroportos(aeroportos.slice(0, 5)); // Mostrar os 5 primeiros quando vazio
     }
-    setShowDropdown(true)
-  }
+    setShowDropdown(true);
+  };
 
   return (
     <div className="form-group autocomplete-container">
@@ -256,52 +256,54 @@ const AeroportoAutocomplete = ({ id, label, value, onChange, placeholder }) => {
               className={aeroporto.codigo === value ? "selected" : ""}
             >
               <span className="aeroporto-codigo">{aeroporto.codigo}</span>
-              <span className="aeroporto-nome">{aeroporto.nome.replace(` (${aeroporto.codigo})`, "")}</span>
+              <span className="aeroporto-nome">
+                {aeroporto.nome.replace(` (${aeroporto.codigo})`, "")}
+              </span>
             </li>
           ))}
         </ul>
       )}
       <input type="hidden" name={id} value={value || ""} />
     </div>
-  )
-}
+  );
+};
 
 function CriarOferta() {
-  const [preco, setPreco] = useState("")
-  const [qtdMilhas, setQtdMilhas] = useState("")
-  const [ciaAerea, setCiaAerea] = useState("")
-  const [compraOuVenda, setCompraOuVenda] = useState("")
-  const [feedback, setFeedback] = useState("")
-  const [origem, setOrigem] = useState("")
-  const [destino, setDestino] = useState("")
-  const [aceito, setAceito] = useState(false)
-  const [loading, setLoading] = useState(false)
-  const navigate = useNavigate()
+  const [preco, setPreco] = useState("");
+  const [qtdMilhas, setQtdMilhas] = useState("");
+  const [ciaAerea, setCiaAerea] = useState("");
+  const [compraOuVenda, setCompraOuVenda] = useState("");
+  const [feedback, setFeedback] = useState("");
+  const [origem, setOrigem] = useState("");
+  const [destino, setDestino] = useState("");
+  const [aceito, setAceito] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   // Recuperar o usuarioId do token armazenado no localStorage
-  const token = localStorage.getItem("token")
+  const token = localStorage.getItem("token");
 
   if (!token) {
-    navigate("/login") // Se não houver token, redireciona para login
+    navigate("/login"); // Se não houver token, redireciona para login
   }
 
-  const usuarioId = JSON.parse(localStorage.getItem("usuario"))?.id
+  const usuarioId = JSON.parse(localStorage.getItem("usuario"))?.id;
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
 
     if (!usuarioId) {
-      setFeedback("Usuário não autenticado")
-      return
+      setFeedback("Usuário não autenticado");
+      return;
     }
 
     if (compraOuVenda === "compra" && !aceito) {
-      setFeedback("Você precisa aceitar os termos e condições")
-      return
+      setFeedback("Você precisa aceitar os termos e condições");
+      return;
     }
 
-    setLoading(true)
-    setFeedback("")
+    setLoading(true);
+    setFeedback("");
 
     try {
       const ofertaData = {
@@ -310,26 +312,29 @@ function CriarOferta() {
         ciaAerea,
         compraOuVenda,
         usuarioId,
-      }
+      };
 
       if (compraOuVenda === "compra") {
-        ofertaData.origem = origem
-        ofertaData.destino = destino
+        ofertaData.origem = origem;
+        ofertaData.destino = destino;
       }
 
-      const response = await axios.post("http://localhost:5000/api/ofertas/criarOferta", ofertaData)
+      const response = await axios.post(
+        "http://localhost:5001/api/ofertas/criarOferta",
+        ofertaData
+      );
 
-      setFeedback(response.data.message)
+      setFeedback(response.data.message);
       setTimeout(() => {
-        navigate("/ofertas") // Redirecionar para a página de ofertas após criar a oferta
-      }, 2000)
+        navigate("/ofertas"); // Redirecionar para a página de ofertas após criar a oferta
+      }, 2000);
     } catch (error) {
-      console.error("Erro ao criar oferta:", error)
-      setFeedback("Erro ao criar oferta. Tente novamente.")
+      console.error("Erro ao criar oferta:", error);
+      setFeedback("Erro ao criar oferta. Tente novamente.");
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   return (
     <div className="criar-oferta-container">
@@ -340,7 +345,13 @@ function CriarOferta() {
         </div>
 
         {feedback && (
-          <div className={`feedback-message ${feedback.includes("Erro") ? "error" : "success"}`}>{feedback}</div>
+          <div
+            className={`feedback-message ${
+              feedback.includes("Erro") ? "error" : "success"
+            }`}
+          >
+            {feedback}
+          </div>
         )}
 
         <form onSubmit={handleSubmit} className="criar-oferta-form">
@@ -373,7 +384,12 @@ function CriarOferta() {
           <div className="form-row">
             <div className="form-group">
               <label htmlFor="ciaAerea">Companhia Aérea</label>
-              <select id="ciaAerea" value={ciaAerea} onChange={(e) => setCiaAerea(e.target.value)} required>
+              <select
+                id="ciaAerea"
+                value={ciaAerea}
+                onChange={(e) => setCiaAerea(e.target.value)}
+                required
+              >
                 <option value="">Selecione a companhia</option>
                 <option value="LATAM">LATAM</option>
                 <option value="SMILES">SMILES (GOL)</option>
@@ -417,7 +433,13 @@ function CriarOferta() {
               </div>
 
               <div className="form-group checkbox-group">
-                <input type="checkbox" id="aceito" checked={aceito} onChange={() => setAceito(!aceito)} required />
+                <input
+                  type="checkbox"
+                  id="aceito"
+                  checked={aceito}
+                  onChange={() => setAceito(!aceito)}
+                  required
+                />
                 <label htmlFor="aceito">
                   Aceito os{" "}
                   <a href="/termos" target="_blank" rel="noreferrer">
@@ -430,7 +452,11 @@ function CriarOferta() {
           )}
 
           <div className="form-actions">
-            <button type="button" className="btn-cancelar" onClick={() => navigate("/ofertas")}>
+            <button
+              type="button"
+              className="btn-cancelar"
+              onClick={() => navigate("/ofertas")}
+            >
               Cancelar
             </button>
             <button type="submit" className="btn-criar" disabled={loading}>
@@ -446,8 +472,7 @@ function CriarOferta() {
         </form>
       </div>
     </div>
-  )
+  );
 }
 
-export default CriarOferta
-
+export default CriarOferta;
