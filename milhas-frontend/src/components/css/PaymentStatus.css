@@ -1,0 +1,163 @@
+.payment-status-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f8f9fa;
+    padding: 20px;
+  }
+  
+  .payment-status-card {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 40px;
+    max-width: 500px;
+    width: 100%;
+    text-align: center;
+    animation: fadeIn 0.5s ease-in-out;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .status-icon {
+    margin-bottom: 20px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .icon-symbol {
+    font-size: 70px;
+    line-height: 1;
+  }
+  
+  .status-icon.success {
+    color: #28a745;
+  }
+  
+  .status-icon.success .icon-symbol {
+    font-weight: bold;
+  }
+  
+  .status-icon.failure {
+    color: #dc3545;
+  }
+  
+  .status-icon.pending {
+    color: #ffc107;
+    animation: pulse 2s infinite;
+  }
+  
+  @keyframes pulse {
+    0% {
+      opacity: 0.6;
+    }
+    50% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0.6;
+    }
+  }
+  
+  .status-title {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 15px;
+    color: #333;
+  }
+  
+  .status-message {
+    font-size: 18px;
+    color: #555;
+    margin-bottom: 20px;
+    line-height: 1.5;
+  }
+  
+  .status-details {
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 25px;
+  }
+  
+  .status-details p {
+    margin: 8px 0;
+    color: #666;
+  }
+  
+  .status-actions {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+  }
+  
+  .status-button {
+    display: inline-block;
+    background-color: #0062ff;
+    color: white;
+    padding: 12px 24px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  .status-button:hover {
+    background-color: #0051d4;
+    transform: translateY(-2px);
+  }
+  
+  .status-button.secondary {
+    background-color: #e9ecef;
+    color: #495057;
+  }
+  
+  .status-button.secondary:hover {
+    background-color: #dee2e6;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 576px) {
+    .payment-status-card {
+      padding: 25px;
+    }
+  
+    .icon-symbol {
+      font-size: 50px;
+    }
+  
+    .status-title {
+      font-size: 24px;
+    }
+  
+    .status-message {
+      font-size: 16px;
+    }
+  
+    .status-button {
+      width: 100%;
+      margin-bottom: 10px;
+    }
+  
+    .status-actions {
+      flex-direction: column;
+    }
+  }
+  
+  

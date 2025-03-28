@@ -20,6 +20,11 @@ import PerfilUsuario from "./components/pages/PerfilUsuario.js" // Nova página 
 import Avaliacao from "./components/pages/Avaliacao"
 import FaqPage from "./components/pages/faq/page.js" // Importando a página de FAQ
 
+// Add the new imports for the payment status pages
+import PaymentSuccess from "./components/pages/PaymentSuccess"
+import PaymentFailure from "./components/pages/PaymentFailure"
+import PaymentPending from "./components/pages/PaymentPending"
+
 function App() {
   return (
     <AuthProvider>
@@ -42,6 +47,10 @@ function App() {
           <Route path="/processo-detalhado" element={<Processo />} />
           <Route path="/avaliacao/:negociacaoId/:usuarioId" element={<Avaliacao />} />
           <Route path="/faq" element={<FaqPage />} /> {/* Adicionando a rota para a página de FAQ */}
+          {/* Add the new routes inside the Routes component */}
+          <Route path="/success" element={<PaymentSuccess />} />
+          <Route path="/failure" element={<PaymentFailure />} />
+          <Route path="/pending" element={<PaymentPending />} />
         </Routes>
       </Router>
     </AuthProvider>

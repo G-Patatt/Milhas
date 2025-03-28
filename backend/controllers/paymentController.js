@@ -2,8 +2,9 @@ const fetch = require("node-fetch");
 const { v4: uuidv4 } = require("uuid");
 const crypto = require("crypto");
 
-const MERCADOPAGO_ACCESS_TOKEN =
-  "APP_USR-2442398020518072-030911-308a19961c239525a0b23b0f89fd77f9-22891466";
+
+
+const MERCADOPAGO_ACCESS_TOKEN = "APP_USR-4011619201675688-032713-e7e84b45fb9f913331101ace000a01f3-22891466";
 
 const criarPreference = async (req, res) => {
   const { title, quantity, price, usuarioId, role, negociacaoId } = req.body;
@@ -225,7 +226,7 @@ const capturarPagamento = async (req, res) => {
     const responseGetStatus = await getStatusPagamento(data.id);
 
     console.log("🔵 Resposta do Mercado Pago:", responseGetStatus.status);
-    if (responseGetStatus.status === "approved") {
+    if (responseGetStatus.status === "rejected") {
       //troca o status para "  'Comprador Alocou Garantias',"
 
       const usuarioId = responseGetStatus.metadata.usuario_id;

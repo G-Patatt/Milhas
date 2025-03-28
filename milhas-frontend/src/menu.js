@@ -139,7 +139,7 @@ function Menu() {
 
         <div className="menu-actions">
           {/* Usando o novo componente de notificação */}
-          <NotificacaoCompleta />
+          {/* <NotificacaoCompleta /> */}
 
           {isLoggedIn && (
             <div className="user-menu-container" ref={userMenuRef}>
