@@ -7,8 +7,8 @@ import "../css/NegociacaoDetalhe.css"; // Importando o arquivo CSS personalizado
 
 function DetalhesNegociacao() {
   const { id } = useParams(); // Acessando o id da URL
-  const location = useLocation();
   const navigate = useNavigate();
+  const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const ofertaId = queryParams.get("ofertaId");
 
@@ -447,10 +447,13 @@ function DetalhesNegociacao() {
                       >
                         <button
                           className="btn-pagar"
+                          disabled={negociacao.vendedorAvaliou}
                           onClick={redirecionarParaAvaliacao}
                         >
                           <i className="fa fa-star icon-margin-right"></i>
-                          Avaliar Vendedor
+                          {negociacao.vendedorAvaliou
+                            ? "Você já avaliou o vendedor"
+                            : "Avaliar Vendedor"}
                         </button>
                       </div>
                     </>
@@ -550,10 +553,13 @@ function DetalhesNegociacao() {
                       >
                         <button
                           className="btn-pagar"
+                          disabled={negociacao.vendedorAvaliou}
                           onClick={redirecionarParaAvaliacao}
                         >
                           <i className="fa fa-star icon-margin-right"></i>
-                          Avaliar Comprador
+                          {negociacao.vendedorAvaliou
+                            ? "Você já avaliou o comprador"
+                            : "Avaliar Comprador"}
                         </button>
                       </div>
                     </>
