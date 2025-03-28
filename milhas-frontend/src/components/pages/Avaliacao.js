@@ -1,24 +1,31 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../css/Avaliacao.css";
 
 function Avaliacao() {
   const { negociacaoId, usuarioId } = useParams();
   const navigate = useNavigate();
+
+  // States
   const [avaliacao, setAvaliacao] = useState(0);
   const [comentario, setComentario] = useState("");
   const [usuario, setUsuario] = useState(null);
+  const [negociacao, setNegociacao] = useState(null);
   const [loading, setLoading] = useState(true);
   const [enviando, setEnviando] = useState(false);
   const [feedback, setFeedback] = useState("");
-  const [negociacao, setNegociacao] = useState(null);
 
-  // Obter o usuário atual e token do localStorage
   const usuarioAtual = JSON.parse(localStorage.getItem("usuario") || "{}");
   const token = localStorage.getItem("token");
+
+  // Check roles
+  const isComprador =
+    usuarioAtual?.id && negociacao?.usuarioIdComprador === usuarioAtual.id;
+  const isVendedor =
+    usuarioAtual?.id && negociacao?.usuarioIdVendedor === usuarioAtual.id;
 
   useEffect(() => {
     if (!token) {
@@ -102,6 +109,26 @@ function Avaliacao() {
     if (avaliacao === 0) {
       setFeedback("Por favor, selecione uma avaliação de 1 a 5 estrelas.");
       return;
+    }
+    console.log(negociacao.negociacaoId, usuarioId);
+    if (isComprador) {
+      axios.put(
+        `http://localhost:5001/api/negociacao/${negociacaoId}/${usuarioId}`,
+        {
+          compradorAvaliou: true,
+        },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+    }
+
+    if (isVendedor) {
+      axios.put(
+        `http://localhost:5001/api/negociacao/${negociacaoId}/${usuarioId}`,
+        {
+          vendedorAvaliou: true,
+        },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
     }
 
     setEnviando(true);
