@@ -4,6 +4,7 @@ import { useState, useEffect } from "react"
 import { useParams, useLocation, useNavigate } from "react-router-dom"
 import axios from "axios"
 import "../css/NegociacaoDetalhe.css" // Importando o arquivo CSS personalizado
+import EnvioComprovanteForm from "./EnvioComprovanteForm" // Importando o componente de formulário
 
 function DetalhesNegociacao() {
   const { id } = useParams() // Acessando o id da URL
@@ -19,6 +20,9 @@ function DetalhesNegociacao() {
   const [loading, setLoading] = useState(true)
   const [feedback, setFeedback] = useState("")
   const [processandoPagamento, setProcessandoPagamento] = useState(false)
+  const [enviandoComprovante, setEnviandoComprovante] = useState(false)
+  const [erroFormulario, setErroFormulario] = useState("")
+  const [showConfirmModal, setShowConfirmModal] = useState(false)
 
   // Obter o usuário atual do localStorage
   const usuarioAtual = JSON.parse(localStorage.getItem("usuario") || "{}")
@@ -178,6 +182,95 @@ function DetalhesNegociacao() {
     }
   }
 
+  // Função para enviar o comprovante e código de reserva
+  const enviarComprovante = async ({ codigoReserva, comprovante }) => {
+    if (!negociacao) return
+
+    setEnviandoComprovante(true)
+    setErroFormulario("")
+
+    try {
+      // Criar um FormData para enviar o arquivo
+      const formData = new FormData()
+      formData.append("comprovante", comprovante)
+      formData.append("codigoReserva", codigoReserva)
+      formData.append("negociacaoId", negociacao.negociacaoId)
+
+      // Simulando o envio do comprovante
+      // Na implementação real, você enviaria para o backend
+      // const response = await axios.post(
+      //   `http://localhost:5001/api/negociacao/${negociacao.negociacaoId}/comprovante`,
+      //   formData,
+      //   { headers: { Authorization: `Bearer ${token}`, "Content-Type": "multipart/form-data" } }
+      // );
+
+      // Simulando um atraso para demonstração
+      await new Promise((resolve) => setTimeout(resolve, 1000))
+
+      // Atualizar o status da negociação
+      const novoStatus = "Esperando comprador confirmar o recebimento da passagem no e-mail"
+      await atualizarStatusNegociacao(negociacao.negociacaoId, novoStatus)
+
+      // Atualizar o estado local
+      setNegociacao({
+        ...negociacao,
+        status: novoStatus,
+        codigoReserva: codigoReserva,
+        // Na implementação real, você armazenaria a URL do comprovante retornada pelo backend
+        comprovanteUrl: URL.createObjectURL(comprovante),
+      })
+
+      setFeedback("Comprovante enviado com sucesso!")
+
+      // Esconder o feedback após alguns segundos
+      setTimeout(() => {
+        setFeedback("")
+      }, 3000)
+    } catch (error) {
+      console.error("Erro ao enviar comprovante:", error)
+      setErroFormulario("Erro ao enviar o comprovante. Tente novamente.")
+    } finally {
+      setEnviandoComprovante(false)
+    }
+  }
+
+  // Função para mostrar a modal de confirmação
+  const mostrarModalConfirmacao = () => {
+    setShowConfirmModal(true)
+  }
+
+  // Função para confirmar o recebimento do e-mail
+  const confirmarRecebimentoEmail = async () => {
+    if (!negociacao) return
+
+    setProcessandoPagamento(true)
+    setShowConfirmModal(false)
+
+    try {
+      // Atualizar o status da negociação
+      const novoStatus = "Finalizada parcialmente, aguardando 24h para evitar cancelamento de passagem"
+      await atualizarStatusNegociacao(negociacao.negociacaoId, novoStatus)
+
+      // Atualizar o estado local
+      setNegociacao({
+        ...negociacao,
+        status: novoStatus,
+      })
+
+      setFeedback("Recebimento confirmado com sucesso!")
+
+      // Esconder o feedback após alguns segundos
+      setTimeout(() => {
+        setFeedback("")
+      }, 3000)
+    } catch (error) {
+      console.error("Erro ao confirmar recebimento:", error)
+      setFeedback("Erro ao confirmar recebimento. Tente novamente.")
+    } finally {
+      setProcessandoPagamento(false)
+    }
+  }
+
   // Função para formatar o preço
   const formatarPreco = (preco) => {
     return Number.parseFloat(preco).toLocaleString("pt-BR", {
@@ -196,7 +289,7 @@ function DetalhesNegociacao() {
     if (!status) return "status-pendente"
 
     const statusLower = status.toLowerCase()
-    if (statusLower.includes("confirmad") || statusLower.includes("concluíd")) {
+    if (statusLower.includes("confirmad") || statusLower.includes("concluíd") || statusLower.includes("finalizada")) {
       return "status-confirmada"
     } else if (statusLower.includes("pag")) {
       return "status-pagamento"
@@ -215,6 +308,24 @@ function DetalhesNegociacao() {
   const compradorGerouLink = () => {
     if (!negociacao || !negociacao.status) return false
     return negociacao.status.toLowerCase().includes("comprador gerou o link")
+  }
+
+  // Função para verificar se o status é "Vendedor alocou garantias"
+  const vendedorAlocouGarantias = () => {
+    if (!negociacao || !negociacao.status) return false
+    return negociacao.status.toLowerCase().includes("vendedor alocou garantias")
+  }
+
+  // Função para verificar se o status é "Esperando comprador confirmar o recebimento"
+  const esperandoConfirmacaoComprador = () => {
+    if (!negociacao || !negociacao.status) return false
+    return negociacao.status.toLowerCase().includes("esperando comprador confirmar")
+  }
+
+  // Função para verificar se a negociação está finalizada parcialmente
+  const negociacaoFinalizadaParcialmente = () => {
+    if (!negociacao || !negociacao.status) return false
+    return negociacao.status.toLowerCase().includes("finalizada parcialmente")
   }
 
   return (
@@ -365,11 +476,107 @@ function DetalhesNegociacao() {
                 <div className="negociacao-detalhe-actions">
                   <h3 className="negociacao-detalhe-section-title">Ações Disponíveis</h3>
 
-                  {negociacao.status?.toLowerCase().includes("vendedor alocou garantias") ? (
+                  {esperandoConfirmacaoComprador() ? (
+                    <>
+                      <div className="negociacao-detalhe-status-info">
+                        <i className="fa fa-info-circle icon-margin-right"></i>
+                        <span>
+                          O vendedor enviou o código da reserva e o comprovante da passagem. Por favor, verifique seu
+                          e-mail e confirme o recebimento.
+                        </span>
+                      </div>
+                      {negociacao.codigoReserva && (
+                        <div className="negociacao-detalhe-info-item reserva-info">
+                          <i className="fa fa-ticket-alt negociacao-detalhe-icon"></i>
+                          <div>
+                            <span className="negociacao-detalhe-label">Código da Reserva</span>
+                            <span className="negociacao-detalhe-valor">{negociacao.codigoReserva}</span>
+                          </div>
+                        </div>
+                      )}
+                      {negociacao.comprovanteUrl && (
+                        <div className="negociacao-detalhe-comprovante">
+                          <a
+                            href={negociacao.comprovanteUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="btn-comprovante"
+                          >
+                            <i className="fa fa-file-pdf icon-margin-right"></i>
+                            Ver Comprovante
+                          </a>
+                        </div>
+                      )}
+                      <div className="negociacao-detalhe-buttons" style={{ marginTop: "1rem" }}>
+                        <button className="btn-pagar" onClick={mostrarModalConfirmacao} disabled={processandoPagamento}>
+                          {processandoPagamento ? (
+                            <>
+                              <div className="spinner-small"></div>
+                              <span>Processando...</span>
+                            </>
+                          ) : (
+                            <>
+                              <i className="fa fa-check-circle icon-margin-right"></i>
+                              Confirmar recebimento do e-mail da CIA AÉREA
+                            </>
+                          )}
+                        </button>
+                      </div>
+                    </>
+                  ) : negociacaoFinalizadaParcialmente() ? (
+                    <>
+                      <div className="negociacao-detalhe-status-info">
+                        <i className="fa fa-check-circle icon-margin-right"></i>
+                        <span>
+                          Você confirmou o recebimento da passagem. A negociação está aguardando o período de 24h para
+                          evitar cancelamentos.
+                        </span>
+                      </div>
+                      <div className="negociacao-detalhe-info-item reserva-info">
+                        <i className="fa fa-ticket-alt negociacao-detalhe-icon"></i>
+                        <div>
+                          <span className="negociacao-detalhe-label">Código da Reserva</span>
+                          <span className="negociacao-detalhe-valor">{negociacao.codigoReserva}</span>
+                        </div>
+                      </div>
+                      {negociacao.comprovanteUrl && (
+                        <div className="negociacao-detalhe-comprovante">
+                          <a
+                            href={negociacao.comprovanteUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="btn-comprovante"
+                          >
+                            <i className="fa fa-file-pdf icon-margin-right"></i>
+                            Ver Comprovante
+                          </a>
+                        </div>
+                      )}
+                      <div className="negociacao-detalhe-buttons" style={{ marginTop: "1rem" }}>
+                        <button className="btn-pagar" onClick={redirecionarParaAvaliacao}>
+                          <i className="fa fa-star icon-margin-right"></i>
+                          Avaliar Vendedor
+                        </button>
+                      </div>
+                    </>
+                  ) : negociacao.status?.toLowerCase().includes("vendedor alocou garantias") ? (
                     <>
                       <div className="negociacao-detalhe-status-info">
                         <i className="fa fa-check-circle icon-margin-right"></i>
                         <span>O vendedor já alocou as garantias. A negociação foi concluída com sucesso!</span>
+                      </div>
+                      <div className="negociacao-detalhe-buttons" style={{ marginTop: "1rem" }}>
+                        <button className="btn-pagar" onClick={redirecionarParaAvaliacao}>
+                          <i className="fa fa-star icon-margin-right"></i>
+                          Avaliar Vendedor
+                        </button>
+                      </div>
+                    </>
+                  ) : negociacao.status?.toLowerCase().includes("negociação concluída") ? (
+                    <>
+                      <div className="negociacao-detalhe-status-info">
+                        <i className="fa fa-check-circle icon-margin-right"></i>
+                        <span>A negociação foi concluída com sucesso! Você pode avaliar o vendedor agora.</span>
                       </div>
                       <div className="negociacao-detalhe-buttons" style={{ marginTop: "1rem" }}>
                         <button className="btn-pagar" onClick={redirecionarParaAvaliacao}>
@@ -440,18 +647,88 @@ function DetalhesNegociacao() {
                 <div className="negociacao-detalhe-actions">
                   <h3 className="negociacao-detalhe-section-title">Ações Disponíveis</h3>
 
-                  {negociacao.status?.toLowerCase().includes("vendedor alocou garantias") ? (
+                  {esperandoConfirmacaoComprador() ? (
+                    <>
+                      <div className="negociacao-detalhe-status-info">
+                        <i className="fa fa-info-circle icon-margin-right"></i>
+                        <span>
+                          Você enviou o código da reserva e o comprovante da passagem. Aguarde o comprador confirmar o
+                          recebimento.
+                        </span>
+                      </div>
+                      <div className="negociacao-detalhe-info-item reserva-info">
+                        <i className="fa fa-ticket-alt negociacao-detalhe-icon"></i>
+                        <div>
+                          <span className="negociacao-detalhe-label">Código da Reserva</span>
+                          <span className="negociacao-detalhe-valor">{negociacao.codigoReserva}</span>
+                        </div>
+                      </div>
+                      {negociacao.comprovanteUrl && (
+                        <div className="negociacao-detalhe-comprovante">
+                          <a
+                            href={negociacao.comprovanteUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="btn-comprovante"
+                          >
+                            <i className="fa fa-file-pdf icon-margin-right"></i>
+                            Ver Comprovante
+                          </a>
+                        </div>
+                      )}
+                    </>
+                  ) : negociacaoFinalizadaParcialmente() ? (
                     <>
                       <div className="negociacao-detalhe-status-info">
                         <i className="fa fa-check-circle icon-margin-right"></i>
-                        <span>Você já alocou as garantias. A negociação foi concluída com sucesso!</span>
+                        <span>
+                          O comprador confirmou o recebimento da passagem. A negociação está aguardando o período de 24h
+                          para evitar cancelamentos.
+                        </span>
                       </div>
+                      <div className="negociacao-detalhe-info-item reserva-info">
+                        <i className="fa fa-ticket-alt negociacao-detalhe-icon"></i>
+                        <div>
+                          <span className="negociacao-detalhe-label">Código da Reserva</span>
+                          <span className="negociacao-detalhe-valor">{negociacao.codigoReserva}</span>
+                        </div>
+                      </div>
+                      {negociacao.comprovanteUrl && (
+                        <div className="negociacao-detalhe-comprovante">
+                          <a
+                            href={negociacao.comprovanteUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="btn-comprovante"
+                          >
+                            <i className="fa fa-file-pdf icon-margin-right"></i>
+                            Ver Comprovante
+                          </a>
+                        </div>
+                      )}
                       <div className="negociacao-detalhe-buttons" style={{ marginTop: "1rem" }}>
                         <button className="btn-pagar" onClick={redirecionarParaAvaliacao}>
                           <i className="fa fa-star icon-margin-right"></i>
                           Avaliar Comprador
                         </button>
                       </div>
+                    </>
+                  ) : vendedorAlocouGarantias() ? (
+                    <>
+                      <div className="negociacao-detalhe-status-info">
+                        <i className="fa fa-check-circle icon-margin-right"></i>
+                        <span>
+                          Você já alocou as garantias. Agora é necessário enviar o código da reserva e o comprovante da
+                          passagem.
+                        </span>
+                      </div>
+
+                      {/* Aqui está o componente EnvioComprovanteForm */}
+                      <EnvioComprovanteForm
+                        onSubmit={enviarComprovante}
+                        isLoading={enviandoComprovante}
+                        errorMessage={erroFormulario}
+                      />
                     </>
                   ) : negociacao.status?.toLowerCase().includes("comprador alocou garantias") ||
                     negociacao.status?.toLowerCase().includes("aguardando vendedor") ||
@@ -534,6 +811,36 @@ function DetalhesNegociacao() {
             <i className="fa fa-arrow-left icon-margin-right"></i>
             Voltar para Negociações
           </button>
+        </div>
+      )}
+
+      {/* Modal de confirmação */}
+      {showConfirmModal && (
+        <div className="negociacao-detalhe-modal-overlay">
+          <div className="negociacao-detalhe-modal">
+            <div className="negociacao-detalhe-modal-header">
+              <h3>Confirmar Recebimento</h3>
+              <button className="negociacao-detalhe-modal-close" onClick={() => setShowConfirmModal(false)}>
+                <i className="fa fa-times"></i>
+              </button>
+            </div>
+            <div className="negociacao-detalhe-modal-body">
+              <p>Você confirma que recebeu o e-mail da companhia aérea com os detalhes da passagem?</p>
+              <p className="negociacao-detalhe-modal-warning">
+                <i className="fa fa-exclamation-triangle icon-margin-right"></i>
+                Ao confirmar, você declara que verificou todos os detalhes da passagem e que está de acordo com o
+                combinado.
+              </p>
+            </div>
+            <div className="negociacao-detalhe-modal-footer">
+              <button className="negociacao-detalhe-modal-btn-cancelar" onClick={() => setShowConfirmModal(false)}>
+                Cancelar
+              </button>
+              <button className="negociacao-detalhe-modal-btn-confirmar" onClick={confirmarRecebimentoEmail}>
+                Confirmar Recebimento
+              </button>
+            </div>
+          </div>
         </div>
       )}
     </div>
