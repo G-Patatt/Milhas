@@ -226,7 +226,7 @@ const capturarPagamento = async (req, res) => {
     const responseGetStatus = await getStatusPagamento(data.id);
 
     console.log("🔵 Resposta do Mercado Pago:", responseGetStatus.status);
-    if (responseGetStatus.status === "rejected") {
+    if (responseGetStatus.status === "approved") {
       //troca o status para "  'Comprador Alocou Garantias',"
 
       const usuarioId = responseGetStatus.metadata.usuario_id;
