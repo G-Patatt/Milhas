@@ -4,19 +4,19 @@ import { Link } from "react-router-dom"
 
 function PipelineSection() {
   return (
-    <section className="pipeline-section">
+    <section className="home-pipeline-section">
       <div className="container">
-        <div className="pipeline-header">
+        <div className="home-pipeline-header">
           <h2>Como funciona a negociação de milhas</h2>
           <p>Entenda o processo completo de uma negociação segura na MilesExchange</p>
         </div>
 
-        <div className="pipeline-container">
+        <div className="home-pipeline-container">
           {/* Etapa 1 */}
-          <div className="pipeline-step">
-            <div className="pipeline-step-number">1</div>
-            <div className="pipeline-step-content">
-              <div className="pipeline-icon">
+          <div className="home-pipeline-step">
+            <div className="home-pipeline-step-number">1</div>
+            <div className="home-pipeline-step-content">
+              <div className="home-pipeline-icon">
                 <i className="fa fa-user-plus"></i>
               </div>
               <h3>Cadastro</h3>
@@ -25,15 +25,15 @@ function PipelineSection() {
           </div>
 
           {/* Seta */}
-          <div className="pipeline-arrow">
+          <div className="home-pipeline-arrow">
             <i className="fa fa-long-arrow-right"></i>
           </div>
 
           {/* Etapa 2 */}
-          <div className="pipeline-step">
-            <div className="pipeline-step-number">2</div>
-            <div className="pipeline-step-content">
-              <div className="pipeline-icon">
+          <div className="home-pipeline-step">
+            <div className="home-pipeline-step-number">2</div>
+            <div className="home-pipeline-step-content">
+              <div className="home-pipeline-icon">
                 <i className="fa fa-edit"></i>
               </div>
               <h3>Criar ou Buscar Oferta</h3>
@@ -42,15 +42,15 @@ function PipelineSection() {
           </div>
 
           {/* Seta */}
-          <div className="pipeline-arrow">
+          <div className="home-pipeline-arrow">
             <i className="fa fa-long-arrow-right"></i>
           </div>
 
           {/* Etapa 3 */}
-          <div className="pipeline-step">
-            <div className="pipeline-step-number">3</div>
-            <div className="pipeline-step-content">
-              <div className="pipeline-icon">
+          <div className="home-pipeline-step">
+            <div className="home-pipeline-step-number">3</div>
+            <div className="home-pipeline-step-content">
+              <div className="home-pipeline-icon">
                 <i className="fa fa-handshake-o"></i>
               </div>
               <h3>Iniciar Negociação</h3>
@@ -59,15 +59,15 @@ function PipelineSection() {
           </div>
 
           {/* Seta */}
-          <div className="pipeline-arrow">
+          <div className="home-pipeline-arrow">
             <i className="fa fa-long-arrow-right"></i>
           </div>
 
           {/* Etapa 4 */}
-          <div className="pipeline-step">
-            <div className="pipeline-step-number">4</div>
-            <div className="pipeline-step-content">
-              <div className="pipeline-icon">
+          <div className="home-pipeline-step">
+            <div className="home-pipeline-step-number">4</div>
+            <div className="home-pipeline-step-content">
+              <div className="home-pipeline-icon">
                 <i className="fa fa-shield"></i>
               </div>
               <h3>Alocar Garantias</h3>
@@ -76,15 +76,15 @@ function PipelineSection() {
           </div>
 
           {/* Seta */}
-          <div className="pipeline-arrow">
+          <div className="home-pipeline-arrow">
             <i className="fa fa-long-arrow-right"></i>
           </div>
 
           {/* Etapa 5 */}
-          <div className="pipeline-step">
-            <div className="pipeline-step-number">5</div>
-            <div className="pipeline-step-content">
-              <div className="pipeline-icon">
+          <div className="home-pipeline-step">
+            <div className="home-pipeline-step-number">5</div>
+            <div className="home-pipeline-step-content">
+              <div className="home-pipeline-icon">
                 <i className="fa fa-plane"></i>
               </div>
               <h3>Emissão da Passagem</h3>
@@ -93,15 +93,15 @@ function PipelineSection() {
           </div>
 
           {/* Seta */}
-          <div className="pipeline-arrow">
+          <div className="home-pipeline-arrow">
             <i className="fa fa-long-arrow-right"></i>
           </div>
 
           {/* Etapa 6 */}
-          <div className="pipeline-step">
-            <div className="pipeline-step-number">6</div>
-            <div className="pipeline-step-content">
-              <div className="pipeline-icon">
+          <div className="home-pipeline-step">
+            <div className="home-pipeline-step-number">6</div>
+            <div className="home-pipeline-step-content">
+              <div className="home-pipeline-icon">
                 <i className="fa fa-check-circle"></i>
               </div>
               <h3>Confirmação e Pagamento</h3>
@@ -110,12 +110,12 @@ function PipelineSection() {
           </div>
         </div>
 
-        <div className="pipeline-footer">
-          <div className="pipeline-security-badge">
+        <div className="home-pipeline-footer">
+          <div className="home-pipeline-security-badge">
             <i className="fa fa-lock"></i>
             <span>Todas as transações são protegidas por garantias de ambas as partes</span>
           </div>
-          <div className="pipeline-more-info">
+          <div className="home-pipeline-more-info">
             <Link to="/processo-detalhado" className="btn-entenda-processo">
               Entenda o processo em detalhes
               <svg

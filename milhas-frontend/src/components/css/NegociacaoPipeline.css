@@ -1,0 +1,221 @@
+/* Estilos para o pipeline de status - versão estilosa */
+.negociacao-pipeline {
+    position: relative;
+    display: flex;
+    align-items: flex-start; /* Alterado para alinhar ao topo */
+    justify-content: space-between;
+    margin-bottom: 2rem;
+    padding: 2.5rem 2rem 3.5rem; /* Aumentado o padding inferior */
+    background: linear-gradient(to right, #f9fafb, #f3f4f6, #f9fafb);
+    border-radius: 1rem;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.02);
+    overflow: hidden;
+    width: 100%;
+    transition: all 0.3s ease;
+  }
+  
+  /* Linha de fundo com gradiente suave - movida para baixo */
+  .negociacao-pipeline::before {
+    content: "";
+    position: absolute;
+    top: calc(40px + 1.5rem); /* Posicionada abaixo dos círculos */
+    left: 0;
+    right: 0;
+    height: 6px;
+    background: linear-gradient(to right, #e5e7eb, #d1d5db, #e5e7eb);
+    border-radius: 6px;
+    z-index: 1;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Linha de progresso com gradiente - movida para baixo */
+  .negociacao-pipeline::after {
+    content: "";
+    position: absolute;
+    top: calc(40px + 1.5rem); /* Posicionada abaixo dos círculos */
+    left: 0;
+    height: 6px;
+    background: linear-gradient(to right, #10b981, #34d399);
+    border-radius: 6px;
+    z-index: 2;
+    transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 1px 3px rgba(16, 185, 129, 0.3);
+  }
+  
+  /* Estilos para diferentes estágios de progresso com animação */
+  .negociacao-pipeline.stage-1::after {
+    width: 0%;
+  }
+  .negociacao-pipeline.stage-2::after {
+    width: 20%;
+  }
+  .negociacao-pipeline.stage-3::after {
+    width: 40%;
+  }
+  .negociacao-pipeline.stage-4::after {
+    width: 60%;
+  }
+  .negociacao-pipeline.stage-5::after {
+    width: 80%;
+  }
+  .negociacao-pipeline.stage-6::after {
+    width: 100%;
+  }
+  
+  .pipeline-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    min-width: 80px;
+    z-index: 3;
+    transition: transform 0.3s ease;
+  }
+  
+  .pipeline-step:hover {
+    transform: translateY(-3px);
+  }
+  
+  .pipeline-step-number {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(145deg, #e6e7ee, #ffffff);
+    color: #6b7280;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.9rem;
+    transition: all 0.4s ease;
+    position: relative;
+    border: 2px solid #ffffff;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06), inset 0 2px 4px
+      rgba(255, 255, 255, 0.3);
+  }
+  
+  /* Efeito de brilho ao redor do círculo ativo */
+  .pipeline-step.active .pipeline-step-number::before {
+    content: "";
+    position: absolute;
+    top: -4px;
+    left: -4px;
+    right: -4px;
+    bottom: -4px;
+    background: rgba(16, 185, 129, 0.15);
+    border-radius: 50%;
+    z-index: -1;
+    animation: pulse 2s infinite;
+  }
+  
+  @keyframes pulse {
+    0% {
+      transform: scale(1);
+      opacity: 1;
+    }
+    50% {
+      transform: scale(1.05);
+      opacity: 0.8;
+    }
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+  
+  /* Estilo para etapas ativas */
+  .pipeline-step.active .pipeline-step-number {
+    background: linear-gradient(145deg, #0ca678, #10b981);
+    color: white;
+    border: 2px solid #ffffff;
+    box-shadow: 0 4px 6px -1px rgba(16, 185, 129, 0.4), 0 2px 4px -1px rgba(16, 185, 129, 0.2);
+  }
+  
+  /* Estilo para etapa atual */
+  .pipeline-step.current .pipeline-step-number {
+    background: linear-gradient(145deg, #2563eb, #3b82f6);
+    color: white;
+    border: 2px solid #ffffff;
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.2), 0 4px 6px -1px rgba(59, 130, 246, 0.4), 0 2px 4px -1px
+      rgba(59, 130, 246, 0.2);
+    transform: scale(1.1);
+  }
+  
+  /* Ajustar o espaçamento e alinhamento */
+  .pipeline-step-label {
+    margin-top: 0.9rem;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: #6b7280;
+    text-align: center;
+    width: 100%;
+    max-width: 120px; /* Limitando a largura para textos mais longos */
+    transition: all 0.3s ease;
+    letter-spacing: 0.01em;
+    line-height: 1.3;
+  }
+  
+  .pipeline-step.active .pipeline-step-label {
+    color: #111827;
+    font-weight: 600;
+  }
+  
+  .pipeline-step.current .pipeline-step-label {
+    color: #3b82f6;
+    font-weight: 700;
+  }
+  
+  /* Responsividade para o pipeline */
+  @media (max-width: 768px) {
+    .negociacao-pipeline {
+      padding: 2rem 1.5rem 3rem;
+    }
+  
+    .pipeline-step {
+      min-width: 70px;
+    }
+  
+    .pipeline-step-number {
+      width: 36px;
+      height: 36px;
+      font-size: 0.8rem;
+    }
+  
+    .pipeline-step-label {
+      font-size: 0.75rem;
+      max-width: 100px;
+    }
+  
+    .negociacao-pipeline::before,
+    .negociacao-pipeline::after {
+      top: calc(36px + 1.5rem);
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .negociacao-pipeline {
+      padding: 1.75rem 1rem 2.5rem;
+    }
+  
+    .pipeline-step {
+      min-width: 60px;
+    }
+  
+    .pipeline-step-number {
+      width: 32px;
+      height: 32px;
+      font-size: 0.75rem;
+    }
+  
+    .pipeline-step-label {
+      font-size: 0.65rem;
+      max-width: 80px;
+    }
+  
+    .negociacao-pipeline::before,
+    .negociacao-pipeline::after {
+      top: calc(32px + 1.25rem);
+    }
+  }
+  
+  

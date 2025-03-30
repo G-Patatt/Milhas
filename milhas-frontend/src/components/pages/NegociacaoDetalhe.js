@@ -5,6 +5,7 @@ import { useParams, useLocation, useNavigate } from "react-router-dom"
 import axios from "axios"
 import "../css/NegociacaoDetalhe.css" // Importando o arquivo CSS personalizado
 import EnvioComprovanteForm from "./EnvioComprovanteForm" // Importando o componente de formulário
+import NegociacaoPipeline from "./NegociacaoPipeline" // Importando o componente de pipeline
 
 function DetalhesNegociacao() {
   const { id } = useParams() // Acessando o id da URL
@@ -328,6 +329,29 @@ function DetalhesNegociacao() {
     return negociacao.status.toLowerCase().includes("finalizada parcialmente")
   }
 
+  // Função para determinar o estágio atual do pipeline
+  const getEstagioPipeline = () => {
+    if (!negociacao || !negociacao.status) return 1
+
+    const status = negociacao.status.toLowerCase()
+
+    if (status.includes("comprador gerou o link") || status.includes("aguardando comprador")) {
+      return 1 // Pagamento
+    } else if (status.includes("vendedor gerou o link") || status.includes("aguardando vendedor")) {
+      return 2 // Garantias
+    } else if (status.includes("vendedor alocou garantias")) {
+      return 3 // Emissão
+    } else if (status.includes("esperando comprador confirmar")) {
+      return 4 // Confirmação
+    } else if (status.includes("finalizada parcialmente")) {
+      return 5 // Finalização
+    } else if (status.includes("concluída")) {
+      return 6 // Concluída
+    } else {
+      return 1 // Padrão: Pagamento
+    }
+  }
+
   return (
     <div className="negociacao-detalhe-container">
       <div className="negociacao-detalhe-header">
@@ -352,6 +376,9 @@ function DetalhesNegociacao() {
         </div>
       ) : negociacao && oferta ? (
         <div className="negociacao-detalhe-content">
+          {/* Pipeline de status - usando o componente separado */}
+          <NegociacaoPipeline currentStage={getEstagioPipeline()} />
+
           {/* Card principal com informações da negociação */}
           <div className="negociacao-detalhe-card">
             <div className="negociacao-detalhe-card-header">

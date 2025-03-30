@@ -16,25 +16,25 @@
 }
 
 /* Seção de Pipeline */
-.pipeline-section {
+.home-pipeline-section {
   padding: 4rem 0;
   background-color: var(--muted);
   background-image: linear-gradient(135deg, rgba(37, 99, 235, 0.05) 0%, rgba(255, 255, 255, 0) 100%);
 }
 
-.pipeline-header {
+.home-pipeline-header {
   text-align: center;
   margin-bottom: 3rem;
 }
 
-.pipeline-header h2 {
+.home-pipeline-header h2 {
   font-size: 2.25rem;
   font-weight: 700;
   margin-bottom: 0.5rem;
   color: var(--foreground);
 }
 
-.pipeline-header p {
+.home-pipeline-header p {
   font-size: 1.125rem;
   color: var(--muted-foreground);
   max-width: 600px;
@@ -42,7 +42,7 @@
 }
 
 /* Container do Pipeline */
-.pipeline-container {
+.home-pipeline-container {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -53,14 +53,14 @@
 }
 
 /* Etapas do Pipeline */
-.pipeline-step {
+.home-pipeline-step {
   position: relative;
   width: 200px;
   margin: 0 0.5rem 2rem;
   text-align: center;
 }
 
-.pipeline-step-number {
+.home-pipeline-step-number {
   position: absolute;
   top: -15px;
   left: 50%;
@@ -78,7 +78,7 @@
   z-index: 2;
 }
 
-.pipeline-step-content {
+.home-pipeline-step-content {
   background-color: var(--background);
   border-radius: 0.75rem;
   box-shadow: var(--card-shadow);
@@ -87,12 +87,12 @@
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.pipeline-step:hover .pipeline-step-content {
+.home-pipeline-step:hover .home-pipeline-step-content {
   transform: translateY(-5px);
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
 }
 
-.pipeline-icon {
+.home-pipeline-icon {
   width: 60px;
   height: 60px;
   background-color: rgba(37, 99, 235, 0.1);
@@ -105,21 +105,21 @@
   font-size: 1.5rem;
 }
 
-.pipeline-step h3 {
+.home-pipeline-step h3 {
   font-size: 1.125rem;
   font-weight: 600;
   margin-bottom: 0.75rem;
   color: var(--foreground);
 }
 
-.pipeline-step p {
+.home-pipeline-step p {
   font-size: 0.875rem;
   color: var(--muted-foreground);
   line-height: 1.5;
 }
 
 /* Setas entre etapas */
-.pipeline-arrow {
+.home-pipeline-arrow {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -129,12 +129,12 @@
 }
 
 /* Rodapé do Pipeline */
-.pipeline-footer {
+.home-pipeline-footer {
   text-align: center;
   margin-top: 1rem;
 }
 
-.pipeline-security-badge {
+.home-pipeline-security-badge {
   display: inline-flex;
   align-items: center;
   padding: 0.75rem 1.5rem;
@@ -144,60 +144,60 @@
   font-weight: 500;
 }
 
-.pipeline-security-badge i {
+.home-pipeline-security-badge i {
   margin-right: 0.5rem;
   font-size: 1.25rem;
 }
 
 /* Responsividade */
 @media (max-width: 1200px) {
-  .pipeline-container {
+  .home-pipeline-container {
     max-width: 900px;
   }
 
-  .pipeline-step {
+  .home-pipeline-step {
     width: 180px;
   }
 
-  .pipeline-arrow {
+  .home-pipeline-arrow {
     transform: rotate(0deg);
   }
 }
 
 @media (max-width: 992px) {
-  .pipeline-container {
+  .home-pipeline-container {
     flex-direction: column;
     align-items: center;
     max-width: 600px;
   }
 
-  .pipeline-step {
+  .home-pipeline-step {
     width: 100%;
     max-width: 300px;
     margin-bottom: 3rem;
   }
 
-  .pipeline-arrow {
+  .home-pipeline-arrow {
     transform: rotate(90deg);
     margin: -1rem 0;
   }
 }
 
 @media (max-width: 640px) {
-  .pipeline-header h2 {
+  .home-pipeline-header h2 {
     font-size: 1.75rem;
   }
 
-  .pipeline-header p {
+  .home-pipeline-header p {
     font-size: 1rem;
   }
 
-  .pipeline-step {
+  .home-pipeline-step {
     max-width: 250px;
   }
 }
 
-.pipeline-more-info {
+.home-pipeline-more-info {
   display: flex;
   justify-content: center;
   margin-top: 2rem;
