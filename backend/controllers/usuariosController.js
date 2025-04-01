@@ -52,7 +52,7 @@ const cadastrar = async (req, res) => {
     // Verificar se o usuário já existe
     const usuarioExistente = await Usuario.findOne({ where: { email } });
     if (usuarioExistente) {
-      return res.status(400).json({ error: "Usuário já existe" });
+      return res.status(400).json({ error: "E-mail já cadastrado" });
     }
 
     // Hash da senha

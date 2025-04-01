@@ -112,7 +112,7 @@ const atualizarStatusNegociacao = async (req, res) => {
       'Comprador Notificado',
       'Vendedor Notificado',
       'Verificando Interesse Vendedor',   
-      'Comprador Alocou Garantias',      
+      'Comprador Alocou Garantias, aguardando vendedor alocar garantias',      
       'Comprador gerou o link mas ainda não pagou',
       'Vendedor gerou o link mas ainda não pagou',
       'Vendedor Alocou Garantias',
