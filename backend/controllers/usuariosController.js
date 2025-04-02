@@ -44,15 +44,15 @@ const obterNotificacoes = async (req, res) => {
 
 const cadastrar = async (req, res) => {
   try {
-    const { nome, email, senha } = req.body;
+    const { nome, email, senha, telefone } = req.body;
 
     // Log para verificar se os dados foram recebidos corretamente
-    console.log("Dados recebidos:", { nome, email, senha });
+    console.log("Dados recebidos:", { nome, email, senha, telefone });
 
     // Verificar se o usuário já existe
     const usuarioExistente = await Usuario.findOne({ where: { email } });
     if (usuarioExistente) {
-      return res.status(400).json({ error: "Usuário já existe" });
+      return res.status(400).json({ error: "E-mail já cadastrado" });
     }
 
     // Hash da senha
@@ -63,6 +63,7 @@ const cadastrar = async (req, res) => {
       nome,
       email,
       senha: senhaHash,
+      telefone,
     });
 
     return res

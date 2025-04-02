@@ -22,13 +22,17 @@ const Usuario = sequelize.define(
       type: DataTypes.STRING,
       allowNull: false,
     },
+    telefone: {
+      type: DataTypes.STRING(20), // Suporta formatos como (51) 99949-9280
+      allowNull: true,
+    },
     milhas: {
       type: DataTypes.INTEGER,
-      defaultValue: 0, // Milhas iniciais
+      defaultValue: 0,
     },
     notificacoes: {
       type: DataTypes.INTEGER,
-      defaultValue: 0, // Notificações iniciais
+      defaultValue: 0,
     },
     avaliacao: {
       type: DataTypes.FLOAT,
@@ -47,8 +51,8 @@ const Usuario = sequelize.define(
   },
   {
     tableName: "usuarios",
-    timestamps: true, // Ativa a criação e atualização automáticas de createdAt e updatedAt
+    timestamps: true,
   }
 );
 
-module.exports = Usuario; // Certifique-se de que o modelo está sendo exportado corretamente
+module.exports = Usuario;

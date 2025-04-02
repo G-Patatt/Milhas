@@ -1,122 +1,330 @@
-import React, { useState } from "react";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
+"use client"
 
-function Cadastro() {
-  const navigate = useNavigate();
+import { useState } from "react"
+import { useNavigate } from "react-router-dom"
+import axios from "axios"
+import "../css/CriaUsuario.css"
 
-  const [nome, setNome] = useState("");
-  const [email, setEmail] = useState("");
-  const [senha, setSenha] = useState("");
-  const [confirmarSenha, setConfirmarSenha] = useState("");
-  const [feedback, setFeedback] = useState("");
-  const [sucesso, setSucesso] = useState("");
+const CriaUsuario = () => {
+  const navigate = useNavigate()
+  const [formData, setFormData] = useState({
+    nome: "",
+    email: "",
+    senha: "",
+    telefone: ""
+  })
+  const [errors, setErrors] = useState({})
+  const [isLoading, setIsLoading] = useState(false)
+  const [apiError, setApiError] = useState("")
+  const [passwordStrength, setPasswordStrength] = useState({
+    score: 0,
+    label: "",
+  })
 
-  const handleCadastro = async (e) => {
-    e.preventDefault();
+  const handleChange = (e) => {
+    const { name, value } = e.target
+    setFormData({
+      ...formData,
+      [name]: value,
+    })
 
-    if (senha !== confirmarSenha) {
-      console.log(senha, confirmarSenha);
-      setFeedback("As senhas não coincidem.");
-      setSucesso("");
-      return;
+    // Limpa o erro do campo quando o usuário começa a digitar
+    if (errors[name]) {
+      setErrors({
+        ...errors,
+        [name]: "",
+      })
     }
 
-    try {
-      const response = await axios.post(
-        "http://localhost:5001/api/usuarios/cadastrar",
-        {
-          nome,
-          email,
-          senha,
-        }
-      );
+    // Atualiza a força da senha se o campo for senha
+    if (name === "senha") {
+      checkPasswordStrength(value)
+    }
+  }
 
-      if (response.status === 201) {
-        setSucesso(
-          "Cadastro realizado com sucesso! Você pode fazer login agora."
-        );
-        setFeedback(""); // Limpar qualquer mensagem de erro anterior
-        setTimeout(() => {
-          navigate("/login"); // Redireciona para a página de login após o sucesso
-        }, 2000);
+  const checkPasswordStrength = (password) => {
+    // Verifica se a senha está vazia
+    if (!password) {
+      setPasswordStrength({ score: 0, label: "" })
+      return
+    }
+
+    // Conta o número de dígitos na senha
+    const digitCount = (password.match(/\d/g) || []).length
+
+    // Conta o número de letras na senha
+    const letterCount = (password.match(/[a-zA-Z]/g) || []).length
+
+    // Verifica se a senha atende aos requisitos (6 números e 2 letras)
+    if (digitCount === 6 && letterCount === 2) {
+      setPasswordStrength({ score: 3, label: "Forte" })
+    } else if (digitCount >= 4 && letterCount >= 1) {
+      setPasswordStrength({ score: 2, label: "Média" })
+    } else {
+      setPasswordStrength({ score: 1, label: "Fraca" })
+    }
+  }
+
+  const validateField = (name, value) => {
+    switch (name) {
+      case "nome":
+        return value.trim() ? "" : "Nome é obrigatório"
+
+      case "email":
+        if (!value.trim()) return "Email é obrigatório"
+        return /\S+@\S+\.\S+/.test(value) ? "" : "Email inválido"
+
+      case "telefone":
+        if (!value.trim()) return "Telefone é obrigatório"
+        const phoneDigits = value.replace(/\D/g, "")
+        return phoneDigits.length === 11 ? "" : "Telefone deve ter 11 dígitos (DDD + número)"
+
+      case "senha":
+        if (!value) return "Senha é obrigatória"
+        if (value.length < 8) return "A senha deve ter pelo menos 8 caracteres"
+
+        const digitCount = (value.match(/\d/g) || []).length
+        const letterCount = (value.match(/[a-zA-Z]/g) || []).length
+
+        if (digitCount !== 6) return "A senha deve conter exatamente 6 números"
+        if (letterCount !== 2) return "A senha deve conter exatamente 2 letras"
+
+        return ""
+
+      case "confirmarSenha":
+        return value === formData.senha ? "" : "As senhas não coincidem"
+
+      default:
+        return ""
+    }
+  }
+
+  const handleBlur = (e) => {
+    const { name, value } = e.target
+    const errorMessage = validateField(name, value)
+
+    setErrors((prev) => ({
+      ...prev,
+      [name]: errorMessage,
+    }))
+
+    // Formata o telefone corretamente ao sair do campo
+    if (name === "telefone" && value) {
+      formatPhoneOnBlur(value)
+    }
+  }
+
+  const formatPhoneOnBlur = (value) => {
+    // Remove todos os caracteres não numéricos
+    const digits = value.replace(/\D/g, "")
+
+    // Garante que temos exatamente 11 dígitos
+    if (digits.length === 11) {
+      // Formata como (XX) XXXXX-XXXX
+      const formattedPhone = `(${digits.substring(0, 2)}) ${digits.substring(2, 7)}-${digits.substring(7, 11)}`
+
+      setFormData((prev) => ({
+        ...prev,
+        telefone: formattedPhone,
+      }))
+    }
+  }
+
+  const validateForm = () => {
+    const newErrors = {}
+
+    // Valida cada campo
+    Object.keys(formData).forEach((field) => {
+      const errorMessage = validateField(field, formData[field])
+      if (errorMessage) {
+        newErrors[field] = errorMessage
       }
-    } catch (error) {
-      console.error(error);
-      setFeedback("Erro ao cadastrar. Tente novamente.");
-      setSucesso("");
+    })
+
+    setErrors(newErrors)
+    return Object.keys(newErrors).length === 0
+  }
+
+  const handlePhoneInput = (e) => {
+    let value = e.target.value
+    value = value.replace(/\D/g, "") // Remove todos os caracteres não numéricos
+
+    if (value.length <= 11) {
+      let formattedValue = value
+
+      // Formata o telefone como (XX) XXXXX-XXXX
+      if (value.length > 2) {
+        formattedValue = `(${value.substring(0, 2)}) ${value.substring(2)}`
+      }
+      if (value.length > 7) {
+        formattedValue = `(${value.substring(0, 2)}) ${value.substring(2, 7)}-${value.substring(7)}`
+      }
+
+      setFormData({
+        ...formData,
+        telefone: formattedValue,
+      })
     }
-  };
+  }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+
+    if (validateForm()) {
+      setIsLoading(true)
+      setApiError("")
+
+      try {
+
+        const response = await axios.post("http://localhost:5001/api/usuarios/cadastrar", formData)
+
+        // Redireciona para a página de login após o cadastro bem-sucedido
+        navigate("/login", {
+          state: { message: "Cadastro realizado com sucesso! Faça login para continuar." },
+        })
+      } catch (error) {
+        console.log(error)
+        console.error("Erro ao criar usuário:", error)
+        setApiError(error.response?.data?.error || "Ocorreu um erro ao criar sua conta. Por favor, tente novamente.")
+      } finally {
+        setIsLoading(false)
+      }
+    }
+  }
+
+  // Função para obter a cor da barra de força da senha
+  const getPasswordStrengthColor = () => {
+    if (passwordStrength.label === "Fraca") return "#e74c3c"
+    if (passwordStrength.label === "Média") return "#f39c12"
+    if (passwordStrength.label === "Forte") return "#2ecc71"
+    return "#e0e0e0"
+  }
+
+  // Função para obter a largura da barra de força da senha
+  const getPasswordStrengthWidth = () => {
+    if (passwordStrength.label === "") return "0%"
+    if (passwordStrength.label === "Fraca") return "33%"
+    if (passwordStrength.label === "Média") return "66%"
+    if (passwordStrength.label === "Forte") return "100%"
+    return "0%"
+  }
 
   return (
-    <div className="container mt-5">
-      <h2>Cadastro</h2>
-      {feedback && <div className="alert alert-danger">{feedback}</div>}
-      {sucesso && <div className="alert alert-success">{sucesso}</div>}
+    <div className="cria-usuario-container">
+      <div className="cria-usuario-card">
+        <h2 className="cria-usuario-titulo">Criar Conta</h2>
 
-      <form onSubmit={handleCadastro}>
-        <div className="mb-3">
-          <label htmlFor="nome" className="form-label">
-            Nome
-          </label>
-          <input
-            type="text"
-            id="nome"
-            className="form-control"
-            value={nome}
-            onChange={(e) => setNome(e.target.value)}
-            required
-          />
-        </div>
+        {apiError && <div className="cria-usuario-erro-api">{apiError}</div>}
 
-        <div className="mb-3">
-          <label htmlFor="email" className="form-label">
-            Email
-          </label>
-          <input
-            type="email"
-            id="email"
-            className="form-control"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-        </div>
+        <form onSubmit={handleSubmit} className="cria-usuario-form">
+          <div className="form-group">
+            <label htmlFor="nome">Nome completo</label>
+            <input
+              type="text"
+              id="nome"
+              name="nome"
+              value={formData.nome}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              placeholder="Digite seu nome completo"
+              className={errors.nome ? "input-error" : ""}
+            />
+            {errors.nome && <span className="error-message">{errors.nome}</span>}
+          </div>
 
-        <div className="mb-3">
-          <label htmlFor="senha" className="form-label">
-            Senha
-          </label>
-          <input
-            type="password"
-            id="senha"
-            className="form-control"
-            value={senha}
-            onChange={(e) => setSenha(e.target.value)}
-            required
-          />
-        </div>
+          <div className="form-group">
+            <label htmlFor="email">E-mail</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              placeholder="Digite seu e-mail"
+              className={errors.email ? "input-error" : ""}
+            />
+            {errors.email && <span className="error-message">{errors.email}</span>}
+          </div>
 
-        <div className="mb-3">
-          <label htmlFor="confirmarSenha" className="form-label">
-            Confirmar Senha
-          </label>
-          <input
-            type="password"
-            id="confirmarSenha"
-            className="form-control"
-            value={confirmarSenha}
-            onChange={(e) => setConfirmarSenha(e.target.value)}
-            required
-          />
-        </div>
+          <div className="form-group">
+            <label htmlFor="telefone">Telefone</label>
+            <input
+              type="text"
+              id="telefone"
+              name="telefone"
+              value={formData.telefone}
+              onChange={handlePhoneInput}
+              onBlur={handleBlur}
+              placeholder="(11) 99999-9999"
+              className={errors.telefone ? "input-error" : ""}
+            />
+            {errors.telefone && <span className="error-message">{errors.telefone}</span>}
+          </div>
 
-        <button type="submit" className="btn btn-primary">
-          Cadastrar
-        </button>
-      </form>
+          <div className="form-row">
+            <div className="form-group">
+              <label htmlFor="senha">Senha</label>
+              <input
+                type="password"
+                id="senha"
+                name="senha"
+                value={formData.senha}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                placeholder="Digite sua senha"
+                className={errors.senha ? "input-error" : ""}
+              />
+              <div className="password-requirements">A senha deve conter exatamente 6 números e 2 letras</div>
+              {formData.senha && (
+                <div className="password-strength-wrapper">
+                  <div className="password-strength-container">
+                    <div
+                      className="password-strength-bar"
+                      style={{
+                        width: getPasswordStrengthWidth(),
+                        backgroundColor: getPasswordStrengthColor(),
+                      }}
+                    ></div>
+                  </div>
+                  <span className="password-strength-text" style={{ color: getPasswordStrengthColor() }}>
+                    {passwordStrength.label}
+                  </span>
+                </div>
+              )}
+              {errors.senha && <span className="error-message">{errors.senha}</span>}
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="confirmarSenha">Confirmar senha</label>
+              <input
+                type="password"
+                id="confirmarSenha"
+                name="confirmarSenha"
+                value={formData.confirmarSenha}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                placeholder="Confirme sua senha"
+                className={errors.confirmarSenha ? "input-error" : ""}
+              />
+              {errors.confirmarSenha && <span className="error-message">{errors.confirmarSenha}</span>}
+            </div>
+          </div>
+
+          <div className="form-actions">
+            <button type="submit" className="btn-criar-conta" disabled={isLoading}>
+              {isLoading ? "Criando conta..." : "Criar conta"}
+            </button>
+          </div>
+
+          <div className="login-link">
+            Já tem uma conta? <a href="/login">Faça login</a>
+          </div>
+        </form>
+      </div>
     </div>
-  );
+  )
 }
 
-export default Cadastro;
+export default CriaUsuario
+
