@@ -1,27 +1,33 @@
-const transport = require("nodemailer").createTransport({
-  host: "smtp.office365.com",
-  port: 587,
-  secure: false,
+const nodemailer = require("nodemailer");
+
+const transport = nodemailer.createTransport({
+  host: "smtp.gmail.com",
+  port: 465,
+  secure: true, // true para o SSL
   auth: {
-    user: "rubinhobahia@hotmail.com",
-    pass: process.env.EMAIL_PASSWORD,
+    user: "nealwoltz@gmail.com", // seu endereço de e-mail do Yahoo
+    pass: "hkjx ejaa rfew hftq", // sua senha ou senha de aplicativo
   },
+});
+
+transport.verify(function (error, success) {
+  if (error) {
+    console.log(error, "erro");
+    return;
+  }
 });
 
 const sendEmail = async (email, subject, message) => {
   try {
     const info = await transport.sendMail({
-      from: "Miles Exchange <rubinhobahia@hotmail.com>",
+      from: '"Miles Exchange" <rubinhobahia@hotmail.com',
       to: email,
       subject,
-      html: message,
       text: message,
+      html: message,
     });
     return info;
-  } catch (error) {
-    console.error("Error sending email:", error);
-    throw error;
-  }
+  } catch (error) {}
 };
 
 module.exports = { sendEmail };
