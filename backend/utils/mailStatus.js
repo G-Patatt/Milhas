@@ -21,4 +21,4 @@ const statusMessages = {
   },
 };
 
-module.exports = statusMessages;
+module.exports = { statusMessages };

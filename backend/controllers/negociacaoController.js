@@ -4,7 +4,7 @@ const Garantia = require("../models/Garantia"); // Importando o modelo Garantia
 const Oferta = require("../models/Oferta");
 const { Op } = require("sequelize"); // Importar Op do Sequelize
 const { sendEmail } = require("../mail");
-const { statusMessages } = require("../utils/mailStatus");
+
 const Usuario = require("../models/Usuario");
 
 const statusMessages = {
