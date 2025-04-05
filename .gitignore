@@ -5,7 +5,7 @@ node_modules/
 npm-debug.log
 
 # Ignorar a pasta de build ou dist (se houver)
-build/
+
 dist/
 
 # Ignorar arquivos de configuração do editor (por exemplo, VSCode)
