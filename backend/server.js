@@ -20,6 +20,7 @@ const port = 5001;
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+console.log("🚀 Deploy automático funcionando!");
 
 // Executar a limpeza de índices antes de iniciar o servidor
 cleanIndexes()
