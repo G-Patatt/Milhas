@@ -5,6 +5,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "../css/OfertasMilhas.css"; // Importando o arquivo CSS personalizado
 import AvaliationContainer from "../avaliationContainer";
+const API = process.env.REACT_APP_API_BASE;
 
 function OfertasMilhas() {
   const [ofertas, setOfertas] = useState([]);
@@ -22,7 +23,7 @@ function OfertasMilhas() {
     // Buscar ofertas
     setLoading(true);
     axios
-      .get("http://localhost:5001/api/ofertas")
+      .get(`${API}/api/ofertas`)
       .then((response) => {
         if (response.data.length === 0) {
           setFeedback("Nenhuma oferta disponível no momento.");

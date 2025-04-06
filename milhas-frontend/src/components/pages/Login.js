@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "./AuthContext";
 import axios from "axios";
 import "../css/Login.css";
+const API = process.env.REACT_APP_API_BASE;
 
 // Componente para o botão de login no menu
 export function LoginButton() {
@@ -42,7 +43,7 @@ function Login() {
     try {
       console.log("Enviando dados de login:", { email, senha });
 
-      const response = await axios.post("http://localhost:5001/api/login", {
+      const response = await axios.post(`${API}/api/login`, {
         email,
         senha,
       });

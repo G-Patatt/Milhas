@@ -4,6 +4,7 @@ import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import axios from "axios"
 import "../css/CriaUsuario.css"
+const API = process.env.REACT_APP_API_BASE;
 
 const CriaUsuario = () => {
   const navigate = useNavigate()
@@ -176,7 +177,7 @@ const CriaUsuario = () => {
 
       try {
 
-        const response = await axios.post("http://localhost:5001/api/usuarios/cadastrar", formData)
+        const response = await axios.post(`${API}/api/usuarios/cadastrar`, formData)
 
         // Redireciona para a página de login após o cadastro bem-sucedido
         navigate("/login", {

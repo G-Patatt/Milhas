@@ -1,5 +1,8 @@
 "use client";
 
+
+
+
 import { useState, useEffect } from "react";
 import { useParams, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -8,6 +11,7 @@ import EnvioComprovanteForm from "./EnvioComprovanteForm"; // Importando o compo
 import NegociacaoPipeline from "./NegociacaoPipeline"; // Importando o componente de pipeline
 
 function DetalhesNegociacao() {
+  const API = process.env.REACT_APP_API_BASE;
   const { id } = useParams(); // Acessando o id da URL
   const location = useLocation();
   const navigate = useNavigate();
@@ -40,7 +44,7 @@ function DetalhesNegociacao() {
       try {
         // Buscar dados da negociação
         const negociacaoResponse = await axios.get(
-          `http://localhost:5001/api/negociacao/${id}?ofertaId=${ofertaId}`,
+          `${API}/api/negociacao/${id}?ofertaId=${ofertaId}`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -56,7 +60,7 @@ function DetalhesNegociacao() {
 
         // Buscar dados da oferta
         const ofertaResponse = await axios.get(
-          `http://localhost:5001/api/ofertas/${dadosNegociacao.negociacao.ofertaId}`,
+          `${API}/api/ofertas/${dadosNegociacao.negociacao.ofertaId}`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -64,12 +68,12 @@ function DetalhesNegociacao() {
 
         // Buscar dados dos usuários
         const compradorResponse = await axios.get(
-          `http://localhost:5001/api/usuarios/${dadosNegociacao.negociacao.usuarioIdComprador}`,
+          `${API}/api/usuarios/${dadosNegociacao.negociacao.usuarioIdComprador}`,
           { headers: { Authorization: `Bearer ${token}` } }
         );
 
         const vendedorResponse = await axios.get(
-          `http://localhost:5001/api/usuarios/${dadosNegociacao.negociacao.usuarioIdVendedor}`,
+          `${API}/api/usuarios/${dadosNegociacao.negociacao.usuarioIdVendedor}`,
           { headers: { Authorization: `Bearer ${token}` } }
         );
 
@@ -100,7 +104,7 @@ function DetalhesNegociacao() {
   const atualizarStatusNegociacao = async (negociacaoId, novoStatus) => {
     try {
       const response = await axios.put(
-        `http://localhost:5001/api/negociacao/${negociacaoId}/status`,
+        `${API}/api/negociacao/${negociacaoId}/status`,
         { status: novoStatus },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -150,7 +154,7 @@ function DetalhesNegociacao() {
     setProcessandoPagamento(true);
     try {
       const response = await axios.post(
-        "http://localhost:5001/api/mercadopago/preference",
+        `${API}/api/mercadopago/preference`,
         {
           title: `Milhas ${oferta.ciaAerea}`,
           quantity: oferta.qtdMilhas,
@@ -224,7 +228,7 @@ function DetalhesNegociacao() {
       // Simulando o envio do comprovante
       // Na implementação real, você enviaria para o backend
       // const response = await axios.post(
-      //   `http://localhost:5001/api/negociacao/${negociacao.negociacaoId}/comprovante`,
+      //   `${API}/api/negociacao/${negociacao.negociacaoId}/comprovante`,
       //   formData,
       //   { headers: { Authorization: `Bearer ${token}`, "Content-Type": "multipart/form-data" } }
       // );

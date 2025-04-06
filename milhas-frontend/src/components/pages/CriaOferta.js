@@ -4,6 +4,7 @@ import { useState, useRef, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "../css/CriaOferta.css";
+const API = process.env.REACT_APP_API_BASE;
 
 // Componente de Autocomplete para aeroportos
 const AeroportoAutocomplete = ({ id, label, value, onChange, placeholder }) => {
@@ -320,7 +321,7 @@ function CriarOferta() {
       }
 
       const response = await axios.post(
-        "http://localhost:5001/api/ofertas/criarOferta",
+        `${API}/api/ofertas/criarOferta`,
         ofertaData
       );
 

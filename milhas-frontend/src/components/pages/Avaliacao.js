@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../css/Avaliacao.css";
+const API = process.env.REACT_APP_API_BASE;
 
 function Avaliacao() {
   const { negociacaoId, usuarioId } = useParams();
@@ -31,7 +32,7 @@ function Avaliacao() {
       try {
         // Buscar dados do usuário a ser avaliado
         const usuarioResponse = await axios
-          .get(`http://localhost:5001/api/usuarios/${usuarioId}`, {
+          .get(`${API}/api/usuarios/${usuarioId}`, {
             headers: { Authorization: `Bearer ${token}` },
           })
           .catch(() => {
@@ -47,7 +48,7 @@ function Avaliacao() {
 
         // Buscar dados da negociação
         const negociacaoResponse = await axios
-          .get(`http://localhost:5001/api/negociacao/${negociacaoId}`, {
+          .get(`${API}/api/negociacao/${negociacaoId}`, {
             headers: { Authorization: `Bearer ${token}` },
           })
           .catch(() => {
@@ -108,7 +109,7 @@ function Avaliacao() {
     try {
       await axios
         .post(
-          `http://localhost:5001/api/avaliacoes/${usuarioId}`,
+          `${API}/api/avaliacoes/${usuarioId}`,
           {
             ratingUser: usuarioAtual.id,
             rating: avaliacao,

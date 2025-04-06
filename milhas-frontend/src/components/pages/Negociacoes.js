@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../css/Negociacoes.css"; // Importando o arquivo CSS personalizado
+const API = process.env.REACT_APP_API_BASE;
 
 function NegociacoesUsuario() {
   const [negociacoes, setNegociacoes] = useState([]);
@@ -25,7 +26,7 @@ function NegociacoesUsuario() {
 
     setLoading(true);
     axios
-      .get("http://localhost:5001/api/negociacao/usuario", {
+      .get(`${API}/api/negociacao/usuario`, {
         headers: { Authorization: `Bearer ${token}` }, // Envia o token com a requisição
       })
       .then((response) => {

@@ -247,7 +247,7 @@ const capturarPagamento = async (req, res) => {
         if (negociacaoId) {
           try {
             const response = await fetch(
-              `http://localhost:5001/api/negociacao/${negociacaoId}/status`,
+              `${API}/api/negociacao/${negociacaoId}/status`,
               {
                 method: "PUT",
                 headers: {

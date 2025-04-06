@@ -5,6 +5,8 @@ import { useParams, useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import axios from "axios";
 import "../css/Confirmacao.css";
+const API = process.env.REACT_APP_API_BASE;
+
 
 function Confirmacao() {
   const { ofertaId } = useParams();
@@ -25,7 +27,7 @@ function Confirmacao() {
     const buscarOferta = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5001/api/ofertas/${ofertaId}`
+          `${API}/api/ofertas/${ofertaId}`
         );
         const ofertaData = response.data;
         setOferta(ofertaData);
@@ -57,7 +59,7 @@ function Confirmacao() {
   const buscarUsuariosPorId = async (id) => {
     try {
       const response = await axios.get(
-        `http://localhost:5001/api/usuarios/${id}`
+        `${API}/api/usuarios/${id}`
       );
       return response.data;
     } catch (error) {
@@ -74,7 +76,7 @@ function Confirmacao() {
 
     try {
       const response = await axios.post(
-        "http://localhost:5001/api/ofertas/confirmarOferta",
+        `${API}/api/ofertas/confirmarOferta`,
         {
           ofertaId,
           currentUsuarioId,

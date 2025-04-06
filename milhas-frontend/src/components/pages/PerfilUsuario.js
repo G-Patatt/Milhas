@@ -4,6 +4,8 @@ import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import axios from "axios";
 import "../css/PerfilUsuario.css";
+const API = process.env.REACT_APP_API_BASE;
+
 
 const PerfilUsuario = () => {
   const { id } = useParams();
@@ -34,7 +36,7 @@ const PerfilUsuario = () => {
       }
 
       axios
-        .get(`http://localhost:5001/api/usuarios/${id}`, {
+        .get(`${API}/api/usuarios/${id}`, {
           headers: { Authorization: `Bearer ${token}` },
         })
         .then((response) => {
@@ -67,7 +69,7 @@ const PerfilUsuario = () => {
     setFeedbackNegociacoes("");
 
     axios
-      .get("http://localhost:5001/api/negociacao/usuario", {
+      .get(`${API}/api/negociacao/usuario`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((response) => {

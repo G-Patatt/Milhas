@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+const API = process.env.REACT_APP_API_BASE;
 
 function ReservaLimite() {
   //card test
@@ -21,7 +22,7 @@ function ReservaLimite() {
   const criarPreference = async () => {
     try {
       const response = await fetch(
-        "http://localhost:5001/api/mercadopago/preference",
+        `${API}/api/mercadopago/preference`,
         {
           method: "POST",
           headers: {
@@ -51,7 +52,7 @@ function ReservaLimite() {
   //   setMessage('');
 
   //   try {
-  //     const response = await fetch('http://localhost:5001/api/mercadopago/token', {
+  //     const response = await fetch('${API}/api/mercadopago/token', {
   //       method: 'POST',  // Certifique-se de usar 'POST'
   //       headers: { 'Content-Type': 'application/json' },
   //       body: JSON.stringify({
