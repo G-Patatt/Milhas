@@ -1,21 +1,29 @@
 #!/bin/bash
 
-echo "🔄 Atualizando código do Git..."
-cd ~/Milhas
-git pull origin main
+echo "📥 Atualizando repositório..."
+cd ~/Milhas || exit 1
+git reset --hard HEAD
+git pull origin main || exit 1
 
 echo "📦 Instalando dependências do backend..."
-cd ~/Milhas/backend
-npm install
+cd ~/Milhas/backend || exit 1
+npm install --omit=dev || echo "⚠️ Ignorando falhas no npm install"
 
-echo "🔁 Reiniciando backend com PM2..."
-pm2 restart backend || pm2 start server.js --name backend
+echo "🔁 Reiniciando backend com nohup..."
+fuser -k 5001/tcp || true
+nohup node server.js > backend.log 2>&1 &
 
 echo "📦 Instalando dependências do frontend..."
-cd ~/Milhas/milhas-frontend
-npm install
+cd ~/Milhas/milhas-frontend || exit 1
+npm install --omit=dev || echo "⚠️ Ignorando falhas no npm install"
 
-echo "⚙️ Gerando build do frontend..."
+echo "⚙️ Buildando frontend..."
 npm run build
 
-echo "✅ Deploy finalizado com sucesso!"
+echo "🌐 Subindo frontend com serve..."
+fuser -k 3000/tcp || true
+nohup npx serve -s build -l 3000 > frontend.log 2>&1 &
+
+echo "✅ Deploy completo!"
+echo "🔗 Frontend: http://<seu-ip>:3000"
+echo "🛠️ Backend: http://<seu-ip>:5001"
