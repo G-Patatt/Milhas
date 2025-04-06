@@ -22,6 +22,7 @@ function OfertasMilhas() {
   useEffect(() => {
     // Buscar ofertas
     setLoading(true);
+    console.log("Deploy")
     axios
       .get(`${API}/api/ofertas`)
       .then((response) => {
