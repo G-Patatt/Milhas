@@ -10,6 +10,7 @@ export default function Home() {
   const handleNavigation = (path) => {
     navigate(path)
   }
+  console.log("🚀 Testando CI/CD com deploy.sh");
 
   return (
     <div className="miles-exchange">
