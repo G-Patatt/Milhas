@@ -1,5 +1,6 @@
 const nodemailer = require("nodemailer");
 const AWS = require("aws-sdk");
+require('dotenv').config(); // para carregar o .env
 
 // Configura a AWS (credenciais devem estar nas variáveis de ambiente)
 AWS.config.update({
