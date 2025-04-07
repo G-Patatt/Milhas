@@ -15,7 +15,7 @@ async function cleanIndexes() {
     const [results] = await sequelize.query("SHOW INDEX FROM usuarios");
 
     // Lista de índices que queremos manter
-    const indicesImportantes = ["PRIMARY", "email"];
+    const indicesImportantes = ["PRIMARY", "email"]; 
 
     for (const row of results) {
       const indexName = row.Key_name;
