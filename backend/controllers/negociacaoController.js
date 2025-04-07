@@ -4,6 +4,7 @@ const Garantia = require("../models/Garantia"); // Importando o modelo Garantia
 const Oferta = require("../models/Oferta");
 const { Op } = require("sequelize"); // Importar Op do Sequelize
 const { sendEmail } = require("../mail");
+const jwt = require("jsonwebtoken");
 
 const Usuario = require("../models/Usuario");
 
@@ -130,6 +131,18 @@ const buscarNegociacaoPorId = async (req, res) => {
     if (!negociacao) {
       return res.status(404).json({ error: "Negociação não encontrada." });
     }
+    const bearerToken = req.headers.authorization?.split(" ")[1];
+    const tokenDecoded = jwt.verify(bearerToken, "secret-key");
+
+    const isNegotiationParticipant =
+      negociacao.usuarioIdComprador === tokenDecoded.id ||
+      negociacao.usuarioIdVendedor === tokenDecoded.id;
+
+    if (!isNegotiationParticipant) {
+      return res
+        .status(401)
+        .json({ error: "Usuário não participa da negociação" });
+    }
 
     // Agora, chamamos a função que obtém a garantia relacionada à negociação e oferta
     const garantia = await Garantia.findOne({
@@ -222,6 +235,20 @@ const atualizarStatusNegociacao = async (req, res) => {
     if (!negociacao) {
       return res.status(404).json({ error: "Negociação não encontrada" });
     }
+    const bearerToken = req.headers.authorization?.split(" ")[1];
+    const tokenDecoded = jwt.verify(bearerToken, "secret-key");
+
+    const isNegotiationParticipant =
+      negociacao.usuarioIdComprador === tokenDecoded.id ||
+      negociacao.usuarioIdVendedor === tokenDecoded.id;
+
+    if (!isNegotiationParticipant) {
+      return res
+        .status(401)
+        .json({ error: "Usuário não participa da negociação" });
+    }
+
+    const url = `http://3.14.134.241:5001/negociacoes/${negociacao.negociacaoId}?ofertaId=${negociacao.ofertaId}`;
 
     if (statusMessages[status]) {
       let destinatarios = [];
@@ -248,7 +275,7 @@ const atualizarStatusNegociacao = async (req, res) => {
           await sendEmail(
             usuario.email,
             statusMessages[status].subject,
-            statusMessages[status].message
+            statusMessages[status].message + " - " + url
           );
         }
       }
