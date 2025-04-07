@@ -231,6 +231,11 @@ function NegociacoesUsuario() {
                     {getTipoUsuario(negociacao)}
                   </span>
                 </div>
+                <p className="negociacao-papel">
+                  Você está atuando como{" "}
+                  <strong>{getTipoUsuario(negociacao).toLowerCase()}</strong> nesta negociação.
+                </p>
+
                 <h3 className="negociacao-titulo">
                   Negociação #
                   {negociacao.negociacao.negociacaoId

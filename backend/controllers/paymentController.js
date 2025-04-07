@@ -238,7 +238,7 @@ const capturarPagamento = async (req, res) => {
           "Comprador Alocou Garantias, aguardando vendedor alocar garantias";
       } else if (role === "vendedor") {
         console.log(`✅ Vendedor (${usuarioId}) alocou garantias.`);
-        novoStatus = "Vendedor Alocou Garantias";
+        novoStatus = "Vendedor Alocou Garantias"; 
       }
 
       if (novoStatus && responseGetStatus.metadata) {
@@ -247,7 +247,7 @@ const capturarPagamento = async (req, res) => {
         if (negociacaoId) {
           try {
             const response = await fetch(
-              `${API}/api/negociacao/${negociacaoId}/status`,
+              `http://localhost:5001/api/negociacao/${negociacaoId}/status`,
               {
                 method: "PUT",
                 headers: {

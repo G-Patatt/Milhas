@@ -248,7 +248,7 @@ const atualizarStatusNegociacao = async (req, res) => {
         .json({ error: "Usuário não participa da negociação" });
     }
 
-    const url = `http://3.14.134.241:5001/negociacoes/${negociacao.negociacaoId}?ofertaId=${negociacao.ofertaId}`;
+    const url = `http://localhost:5001/negociacoes/${negociacao.negociacaoId}?ofertaId=${negociacao.ofertaId}`;
 
     if (statusMessages[status]) {
       let destinatarios = [];
