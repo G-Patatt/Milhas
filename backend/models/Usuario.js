@@ -48,6 +48,14 @@ const Usuario = sequelize.define(
       defaultValue: 0,
       allowNull: true,
     },
+    email_verification_token: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    email_verificado: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+    },
   },
   {
     tableName: "usuarios",

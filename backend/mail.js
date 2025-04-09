@@ -25,7 +25,7 @@ transport.verify(function (error, success) {
 const sendEmail = async (email, subject, message) => {
   try {
     
-console.log('Cheguei no mandar email' + message);
+
     const info = await transport.sendMail({
       from: '"MilhasExchange" <no-reply@milhasexchange.com>',
       to: email,

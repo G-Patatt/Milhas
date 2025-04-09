@@ -1,0 +1,302 @@
+.verifica-email-page {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    padding: 20px;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  .verifica-email-container {
+    width: 100%;
+    max-width: 600px;
+    position: relative;
+  }
+  
+  .verifica-email-card {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    padding: 40px;
+    position: relative;
+    z-index: 1;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+  }
+  
+  .verifica-email-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+  }
+  
+  .verifica-email-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 30px;
+  }
+  
+  .verifica-email-icon {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    position: relative;
+  }
+  
+  .loading-spinner {
+    width: 80px;
+    height: 80px;
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    border-radius: 50%;
+    border-top: 4px solid #3498db;
+    animation: spin 1s linear infinite;
+  }
+  
+  .success-icon {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, #43cea2 0%, #185a9d 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 40px;
+    animation: scale-in 0.5s ease-out;
+  }
+  
+  .error-icon {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, #ff9966 0%, #ff5e62 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 40px;
+    animation: scale-in 0.5s ease-out;
+  }
+  
+  .verifica-email-title {
+    font-size: 28px;
+    font-weight: 700;
+    color: #333;
+    text-align: center;
+    margin: 0;
+  }
+  
+  .verifica-email-content {
+    margin-bottom: 30px;
+  }
+  
+  .verifica-email-message {
+    text-align: center;
+  }
+  
+  .verifica-email-message p {
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 10px;
+  }
+  
+  .verifica-email-subtitle {
+    font-size: 16px;
+    color: #666;
+    margin-top: 10px;
+  }
+  
+  .verifica-email-actions {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+  }
+  
+  .verifica-email-button {
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
+    outline: none;
+  }
+  
+  .primary-button {
+    background: linear-gradient(135deg, #6e8efb 0%, #4a6cf7 100%);
+    color: white;
+    box-shadow: 0 4px 15px rgba(74, 108, 247, 0.3);
+  }
+  
+  .primary-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(74, 108, 247, 0.4);
+  }
+  
+  .secondary-button {
+    background: transparent;
+    color: #4a6cf7;
+    border: 2px solid #4a6cf7;
+  }
+  
+  .secondary-button:hover {
+    background: rgba(74, 108, 247, 0.1);
+  }
+  
+  /* Confetti animation */
+  .confetti-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    pointer-events: none;
+  }
+  
+  .confetti {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: #f0f;
+    opacity: 0.7;
+    animation: confetti-fall 5s ease-out infinite;
+  }
+  
+  .confetti:nth-child(1) {
+    left: 10%;
+    background: #f0f;
+    animation-delay: 0s;
+  }
+  
+  .confetti:nth-child(2) {
+    left: 20%;
+    background: #0ff;
+    animation-delay: 0.5s;
+  }
+  
+  .confetti:nth-child(3) {
+    left: 30%;
+    background: #ff0;
+    animation-delay: 1s;
+  }
+  
+  .confetti:nth-child(4) {
+    left: 40%;
+    background: #f00;
+    animation-delay: 1.5s;
+  }
+  
+  .confetti:nth-child(5) {
+    left: 50%;
+    background: #0f0;
+    animation-delay: 2s;
+  }
+  
+  .confetti:nth-child(6) {
+    left: 60%;
+    background: #00f;
+    animation-delay: 2.5s;
+  }
+  
+  .confetti:nth-child(7) {
+    left: 70%;
+    background: #f0f;
+    animation-delay: 3s;
+  }
+  
+  .confetti:nth-child(8) {
+    left: 80%;
+    background: #0ff;
+    animation-delay: 3.5s;
+  }
+  
+  .confetti:nth-child(9) {
+    left: 90%;
+    background: #ff0;
+    animation-delay: 4s;
+  }
+  
+  .confetti:nth-child(10) {
+    left: 100%;
+    background: #f00;
+    animation-delay: 4.5s;
+  }
+  
+  /* Animations */
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  
+  @keyframes scale-in {
+    0% {
+      transform: scale(0);
+    }
+    70% {
+      transform: scale(1.1);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+  
+  @keyframes confetti-fall {
+    0% {
+      top: -10%;
+      transform: rotate(0deg);
+    }
+    100% {
+      top: 100%;
+      transform: rotate(360deg);
+    }
+  }
+  
+  /* Responsive styles */
+  @media (max-width: 768px) {
+    .verifica-email-card {
+      padding: 30px 20px;
+    }
+  
+    .verifica-email-title {
+      font-size: 24px;
+    }
+  
+    .verifica-email-message p {
+      font-size: 16px;
+    }
+  
+    .verifica-email-subtitle {
+      font-size: 14px;
+    }
+  
+    .verifica-email-button {
+      padding: 10px 20px;
+      font-size: 14px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .verifica-email-actions {
+      flex-direction: column;
+      gap: 10px;
+    }
+  
+    .verifica-email-button {
+      width: 100%;
+    }
+  }
+  

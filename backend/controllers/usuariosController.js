@@ -2,12 +2,18 @@
 
 const Usuario = require("../models/Usuario");
 const bcrypt = require("bcryptjs");
+const crypto = require("crypto");
+const { sendEmail } = require("../mail.js"); // ou o caminho correto do seu mail.js
+require('dotenv').config();
+
+
+
 
 const buscarUsuarioPorId = async (req, res) => {
   try {
     const usuarioId = req.params.id;
     const usuario = await Usuario.findByPk(usuarioId, {
-      attributes: ["id", "nome", "email", "qtdAvaliacoes", "avaliacao"], // Pegando apenas os dados necessários
+      attributes: ["id", "nome", "email", "qtdAvaliacoes", "avaliacao","email_verificado"], // Pegando apenas os dados necessários
     });
 
     if (!usuario) {
@@ -46,32 +52,68 @@ const cadastrar = async (req, res) => {
   try {
     const { nome, email, senha, telefone } = req.body;
 
-    // Log para verificar se os dados foram recebidos corretamente
-    console.log("Dados recebidos:", { nome, email, senha, telefone });
-
-    // Verificar se o usuário já existe
     const usuarioExistente = await Usuario.findOne({ where: { email } });
     if (usuarioExistente) {
       return res.status(400).json({ error: "E-mail já cadastrado" });
     }
 
-    // Hash da senha
     const senhaHash = await bcrypt.hash(senha, 10);
 
-    // Criar um novo usuário
+    // Gera token de verificação
+    const emailToken = crypto.randomBytes(32).toString("hex");
+
+    // Cria usuário com token
     const usuario = await Usuario.create({
       nome,
       email,
-      senha: senhaHash,
       telefone,
+      senha: senhaHash,
+      email_verification_token: emailToken,
+      email_verificado: false,
     });
 
-    return res
-      .status(201)
-      .json({ message: "Usuário criado com sucesso!", usuario });
+    // Cria link de verificação
+    const baseUrl = process.env.APP_BASE_URL || "http://localhost:3000";
+    const link = `${baseUrl}/verificar-email/${emailToken}`;;
+
+    // Envia o e-mail
+    await sendEmail(
+      email,
+      "Confirme seu e-mail - MilhasExchange",
+      `<p>Olá ${nome},</p>
+       <p>Obrigado por se cadastrar na MilhasExchange!</p>
+       <p>Para ativar sua conta, clique no link abaixo:</p>
+       <a href="${link}">${link}</a>
+       <p>Se você não solicitou isso, apenas ignore este e-mail.</p>`
+    );
+
+    return res.status(201).json({ message: "Usuário criado! Verifique seu e-mail para ativar a conta." });
+
   } catch (error) {
-    console.error(error);
+    console.error("Erro ao cadastrar:", error);
     return res.status(500).json({ error: "Erro ao cadastrar usuário" });
+  }
+};
+const confirmarEmail = async (req, res) => {
+  const { token } = req.params;
+
+  try {
+    const usuario = await Usuario.findOne({
+      where: { email_verification_token: token },
+    });
+
+    if (!usuario) {
+      return res.status(400).json({ error: "Token inválido ou expirado." });
+    }
+
+    usuario.email_verificado = true;
+    usuario.email_verification_token = null;
+    await usuario.save();
+
+    return res.status(200).json({ success: true, usuarioId: usuario.id });
+  } catch (error) {
+    console.error("Erro ao confirmar e-mail:", error);
+    return res.status(500).json({ error: "Erro ao confirmar e-mail." });
   }
 };
 
@@ -79,4 +121,6 @@ module.exports = {
   cadastrar,
   obterNotificacoes,
   buscarUsuarioPorId,
+ confirmarEmail 
+
 };

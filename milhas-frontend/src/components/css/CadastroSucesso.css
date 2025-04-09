@@ -1,0 +1,141 @@
+.cadastro-sucesso-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+    background-color: #f8f9fa;
+  }
+  
+  .cadastro-sucesso-card {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 40px;
+    max-width: 600px;
+    width: 100%;
+    text-align: center;
+  }
+  
+  .cadastro-sucesso-icon {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 20px;
+    background-color: #4caf50;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .cadastro-sucesso-icon svg {
+    width: 40px;
+    height: 40px;
+    color: white;
+  }
+  
+  .cadastro-sucesso-titulo {
+    color: #333;
+    font-size: 28px;
+    margin-bottom: 20px;
+  }
+  
+  .cadastro-sucesso-mensagem {
+    margin-bottom: 30px;
+    font-size: 16px;
+    line-height: 1.6;
+    color: #555;
+  }
+  
+  .cadastro-sucesso-email {
+    font-weight: bold;
+    font-size: 18px;
+    color: #2196f3;
+    margin: 10px 0;
+    padding: 10px;
+    background-color: #f0f8ff;
+    border-radius: 4px;
+    display: inline-block;
+  }
+  
+  .cadastro-sucesso-dicas {
+    background-color: #fff8e1;
+    border-left: 4px solid #ffc107;
+    padding: 15px;
+    margin-bottom: 30px;
+    text-align: left;
+    border-radius: 4px;
+  }
+  
+  .cadastro-sucesso-dicas h3 {
+    margin-top: 0;
+    color: #f57c00;
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+  
+  .cadastro-sucesso-dicas ul {
+    margin: 0;
+    padding-left: 20px;
+  }
+  
+  .cadastro-sucesso-dicas li {
+    margin-bottom: 5px;
+    color: #666;
+  }
+  
+  .cadastro-sucesso-botoes {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+  }
+  
+  .btn-ir-login,
+  .btn-voltar-home {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .btn-ir-login {
+    background-color: #2196f3;
+    color: white;
+  }
+  
+  .btn-ir-login:hover {
+    background-color: #1976d2;
+  }
+  
+  .btn-voltar-home {
+    background-color: #e0e0e0;
+    color: #333;
+  }
+  
+  .btn-voltar-home:hover {
+    background-color: #d5d5d5;
+  }
+  
+  @media (max-width: 600px) {
+    .cadastro-sucesso-card {
+      padding: 30px 20px;
+    }
+  
+    .cadastro-sucesso-titulo {
+      font-size: 24px;
+    }
+  
+    .cadastro-sucesso-botoes {
+      flex-direction: column;
+    }
+  
+    .btn-ir-login,
+    .btn-voltar-home {
+      width: 100%;
+    }
+  }
+  

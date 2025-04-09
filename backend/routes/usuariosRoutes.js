@@ -6,4 +6,5 @@ const usuariosController = require('../controllers/usuariosController');
 router.post('/cadastrar', usuariosController.cadastrar);
 router.get('/:id/notificacoes', usuariosController.obterNotificacoes);
 router.get('/:id', usuariosController.buscarUsuarioPorId);
+router.get("/verificar-email/:token", usuariosController.confirmarEmail);
 module.exports = router;

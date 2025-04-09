@@ -4,6 +4,7 @@ import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import axios from "axios"
 import "../css/CriaUsuario.css"
+
 const API = process.env.REACT_APP_API_BASE;
 
 const CriaUsuario = () => {
@@ -11,8 +12,9 @@ const CriaUsuario = () => {
   const [formData, setFormData] = useState({
     nome: "",
     email: "",
+    telefone: "",
     senha: "",
-    telefone: ""
+    confirmarSenha: "",
   })
   const [errors, setErrors] = useState({})
   const [isLoading, setIsLoading] = useState(false)
@@ -176,17 +178,30 @@ const CriaUsuario = () => {
       setApiError("")
 
       try {
+        // Preparar dados para envio
+        const userData = {
+          nome: formData.nome,
+          email: formData.email,
+          telefone: formData.telefone,
+          senha: formData.senha,
+        }
 
-        const response = await axios.post(`${API}/api/usuarios/cadastrar`, formData)
+        // Enviar requisição para o backend
+        const response = await axios.post(`${API}/api/usuarios/cadastrar`, userData)
 
-        // Redireciona para a página de login após o cadastro bem-sucedido
-        navigate("/login", {
-          state: { message: "Cadastro realizado com sucesso! Faça login para continuar." },
+        // Redirecionar para a página de sucesso com o e-mail como parâmetro
+        navigate("/cadastro-sucesso", {
+          state: {
+            email: formData.email,
+            nome: formData.nome,
+          },
         })
       } catch (error) {
-        console.log(error)
         console.error("Erro ao criar usuário:", error)
-        setApiError(error.response?.data?.error || "Ocorreu um erro ao criar sua conta. Por favor, tente novamente.")
+        // 🔍 Adicione isso para inspecionar melhor:
+  console.log("Erro detalhes:", error.response?.data);
+
+        setApiError(error.response?.data?.message || "Ocorreu um erro ao criar sua conta. Por favor, tente novamente.")
       } finally {
         setIsLoading(false)
       }
@@ -328,4 +343,3 @@ const CriaUsuario = () => {
 }
 
 export default CriaUsuario
-
