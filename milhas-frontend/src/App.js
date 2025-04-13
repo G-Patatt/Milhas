@@ -20,7 +20,10 @@ import Processo from "./components/pages/ProcessoDetalhado.js"
 import PerfilUsuario from "./components/pages/PerfilUsuario.js" // Nova página de perfil do usuário
 import Avaliacao from "./components/pages/Avaliacao"
 import FaqPage from "./components/pages/faq/page.js" // Importando a página de FAQ
-import VerificaEmail from "./components/pages/VerificaEmail.js";
+import VerificaEmail from "./components/pages/VerificaEmail.js"
+import EsqueciSenha from "./components/pages/EsqueciSenha.js" // Importando a página de recuperação de senha
+// Adicionar a importação do componente RedefinirSenha
+import RedefinirSenha from "./components/pages/RedefinirSenha.js"
 
 // Add the new imports for the payment status pages
 import PaymentSuccess from "./components/pages/PaymentSuccess"
@@ -55,7 +58,9 @@ function App() {
           <Route path="/failure" element={<PaymentFailure />} />
           <Route path="/pending" element={<PaymentPending />} />
           <Route path="/verificar-email/:token" element={<VerificaEmail />} />
-
+          <Route path="/esqueci-senha" element={<EsqueciSenha />} /> {/* Nova rota para recuperação de senha */}
+          {/* Adicionar a nova rota dentro do componente Routes */}
+          <Route path="/redefinir-senha/:token" element={<RedefinirSenha />} />
         </Routes>
       </Router>
     </AuthProvider>
@@ -63,3 +68,4 @@ function App() {
 }
 
 export default App
+  

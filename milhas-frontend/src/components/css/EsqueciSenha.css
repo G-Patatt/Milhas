@@ -1,4 +1,4 @@
-.login-container {
+.esqueci-senha-container {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -8,7 +8,7 @@
   background-image: linear-gradient(135deg, rgba(37, 99, 235, 0.1) 0%, rgba(255, 255, 255, 0) 100%);
 }
 
-.login-card {
+.esqueci-senha-card {
   width: 100%;
   max-width: 450px;
   background-color: white;
@@ -17,12 +17,12 @@
   overflow: hidden;
 }
 
-.login-header {
+.esqueci-senha-header {
   padding: 2rem 2rem 1.5rem;
   text-align: center;
 }
 
-.login-logo {
+.esqueci-senha-logo {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -30,53 +30,109 @@
   margin-bottom: 1.5rem;
 }
 
-.login-logo svg {
+.esqueci-senha-logo svg {
   color: var(--primary, #2563eb);
 }
 
-.login-logo h1 {
+.esqueci-senha-logo h1 {
   font-size: 1.5rem;
   font-weight: 700;
   color: var(--primary, #2563eb);
   margin: 0;
 }
 
-.login-header h2 {
+.esqueci-senha-header h2 {
   font-size: 1.5rem;
   font-weight: 600;
   margin: 0 0 0.5rem;
   color: var(--foreground, #111827);
 }
 
-.login-subtitle {
+.esqueci-senha-subtitle {
   color: var(--muted-foreground, #6b7280);
   font-size: 0.875rem;
   margin: 0;
 }
 
+/* Adicionar estilos específicos para a mensagem de alerta */
 .login-alert {
+  padding: 0.75rem 1rem;
+  border-radius: 0.375rem;
+  font-size: 0.875rem;
+  display: flex;
+  align-items: center;
+  background-color: #fee2e2;
+  color: #b91c1c;
+  margin-bottom: 1rem;
+}
+
+.login-alert i {
+  margin-right: 0.5rem;
+}
+
+.esqueci-senha-alert {
   margin: 0 2rem 1rem;
   padding: 0.75rem 1rem;
   border-radius: 0.375rem;
-  background-color: #fee2e2;
-  color: #b91c1c;
   font-size: 0.875rem;
   display: flex;
   align-items: center;
   gap: 0.5rem;
 }
 
-.login-alert::before {
-  content: "\f071";
-  font-family: "FontAwesome";
+.esqueci-senha-alert.error {
+  background-color: #fee2e2;
+  color: #b91c1c;
 }
 
-.login-form {
+.esqueci-senha-alert.success {
+  background-color: #d1fae5;
+  color: #065f46;
+}
+
+/* Aplicar os mesmos estilos de formulário para manter consistência */
+
+.form-group {
+  margin-bottom: 1.5rem;
+  position: relative;
+}
+
+.form-group label {
+  display: inline-block;
+  font-size: 0.875rem;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  color: var(--foreground, #111827);
+  padding-left: 0.25rem;
+}
+
+.input-wrapper {
+  position: relative;
+}
+
+.esqueci-senha-form input {
+  width: 100%;
+  padding: 0.875rem 1rem;
+  border: 1px solid var(--border, #e5e7eb);
+  border-radius: 0.5rem;
+  font-size: 0.95rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  background-color: #f9fafb;
+}
+
+.esqueci-senha-form input:focus {
+  outline: none;
+  border-color: var(--primary, #2563eb);
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
+  background-color: white;
+}
+
+.esqueci-senha-form {
   padding: 1.5rem 2rem 1.5rem;
 }
 
 /* Sobrescrever alguns estilos do Bootstrap para manter a aparência consistente */
-.login-form .form-control {
+.esqueci-senha-form .form-control {
   padding: 0.875rem 1rem;
   font-size: 0.95rem;
   background-color: #f9fafb;
@@ -84,13 +140,13 @@
   border-radius: 0.5rem;
 }
 
-.login-form .form-control:focus {
+.esqueci-senha-form .form-control:focus {
   border-color: var(--primary, #2563eb);
   box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
   background-color: white;
 }
 
-.login-form .btn-primary {
+.esqueci-senha-form .btn-primary {
   padding: 0.875rem 1.5rem;
   font-weight: 500;
   background-color: var(--primary, #2563eb);
@@ -98,21 +154,15 @@
   transition: background-color 0.2s, transform 0.1s;
 }
 
-.login-form .btn-primary:hover {
+.esqueci-senha-form .btn-primary:hover {
   background-color: var(--primary-hover, #1d4ed8);
   border-color: var(--primary-hover, #1d4ed8);
 }
 
-.login-form .btn-primary:active {
+.esqueci-senha-form .btn-primary:active {
   transform: translateY(1px);
 }
 
-.form-group {
-  margin-bottom: 1.5rem;
-  position: relative;
-}
-
-/* Estilos específicos para os labels e inputs do formulário */
 .form-label {
   display: block;
   font-size: 0.875rem;
@@ -140,56 +190,11 @@
   background-color: white;
 }
 
-.login-form .form-group label {
-  display: block;
-  font-size: 0.875rem;
-  font-weight: 500;
-  margin-bottom: 0.5rem;
-  color: var(--foreground, #111827);
-
-  text-align: left;
-  margin-left: -26px;
-}
-
-.input-wrapper {
-  position: relative;
-}
-
-.login-form .input-wrapper input {
-  width: 100%;
-  padding: 0.875rem 1rem;
-  border: 1px solid var(--border, #e5e7eb);
-  border-radius: 0.5rem;
-  font-size: 0.95rem;
-  transition: border-color 0.2s, box-shadow 0.2s;
-  background-color: #f9fafb;
-}
-
-.login-form input:focus {
-  outline: none;
-  border-color: var(--primary, #2563eb);
-  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
-  background-color: white;
-}
-
-.forgot-password-link {
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 0.75rem;
-}
-
-.forgot-password-link a {
-  font-size: 0.8rem;
-  color: var(--primary, #2563eb);
-  text-decoration: none;
-  transition: color 0.2s;
-}
-
 .form-actions {
   margin-top: 2rem;
 }
 
-.login-button {
+.esqueci-senha-button {
   width: 100%;
   display: flex;
   align-items: center;
@@ -206,33 +211,51 @@
   transition: background-color 0.2s, transform 0.1s;
 }
 
-.login-button:hover {
+.esqueci-senha-button:hover {
   background-color: var(--primary-hover, #1d4ed8);
 }
 
-.login-button:active {
+.esqueci-senha-button:active {
   transform: translateY(1px);
 }
 
-.login-button:disabled {
-  opacity: 0.7;
-  cursor: not-allowed;
+.esqueci-senha-confirmation {
+  padding: 1rem 2rem 2rem;
+  text-align: center;
 }
 
-.login-footer {
+.confirmation-icon {
+  font-size: 3rem;
+  color: var(--primary, #2563eb);
+  margin-bottom: 1rem;
+}
+
+.esqueci-senha-confirmation h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: var(--foreground, #111827);
+}
+
+.esqueci-senha-confirmation p {
+  color: var(--foreground, #111827);
+  margin-bottom: 0.75rem;
+}
+
+.confirmation-note {
+  font-size: 0.875rem;
+  color: var(--muted-foreground, #6b7280);
+  font-style: italic;
+}
+
+.esqueci-senha-footer {
   padding: 1.5rem 2rem;
   background-color: var(--muted, #f3f4f6);
   text-align: center;
   border-top: 1px solid var(--border, #e5e7eb);
 }
 
-.login-footer p {
-  margin: 0 0 0.5rem;
-  font-size: 0.875rem;
-  color: var(--muted-foreground, #6b7280);
-}
-
-.register-link {
+.back-to-login {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
@@ -242,7 +265,7 @@
   transition: color 0.2s;
 }
 
-.register-link:hover {
+.back-to-login:hover {
   color: var(--primary-hover, #1d4ed8);
   text-decoration: underline;
 }

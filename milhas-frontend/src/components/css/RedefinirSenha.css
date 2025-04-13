@@ -1,0 +1,284 @@
+.redefinir-senha-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 2rem;
+  background-color: var(--muted, #f3f4f6);
+  background-image: linear-gradient(135deg, rgba(37, 99, 235, 0.1) 0%, rgba(255, 255, 255, 0) 100%);
+}
+
+.redefinir-senha-card {
+  width: 100%;
+  max-width: 450px;
+  background-color: white;
+  border-radius: 0.75rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+}
+
+.redefinir-senha-header {
+  padding: 2rem 2rem 1.5rem;
+  text-align: center;
+}
+
+.redefinir-senha-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.redefinir-senha-logo svg {
+  color: var(--primary, #2563eb);
+}
+
+.redefinir-senha-logo h1 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--primary, #2563eb);
+  margin: 0;
+}
+
+.redefinir-senha-header h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0 0 0.5rem;
+  color: var(--foreground, #111827);
+}
+
+.redefinir-senha-subtitle {
+  color: var(--muted-foreground, #6b7280);
+  font-size: 0.875rem;
+  margin: 0;
+}
+
+/* Alerta de feedback */
+.login-alert {
+  margin: 0 2rem 1rem;
+  padding: 0.75rem 1rem;
+  border-radius: 0.375rem;
+  background-color: #fee2e2;
+  color: #b91c1c;
+  font-size: 0.875rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.login-alert.success {
+  background-color: #d1fae5;
+  color: #065f46;
+}
+
+/* Remover esta linha que causa o ícone duplicado */
+/* .login-alert::before {
+  content: "\f071";
+  font-family: "FontAwesome";
+} */
+
+.login-alert i {
+  margin-right: 0.5rem;
+}
+
+/* Formulário */
+.redefinir-senha-form {
+  padding: 0 2rem 1.5rem;
+}
+
+.redefinir-senha-form .form-control {
+  padding: 0.875rem 1rem;
+  font-size: 0.95rem;
+  background-color: #f9fafb;
+  border: 1px solid var(--border, #e5e7eb);
+  border-radius: 0.5rem;
+}
+
+.redefinir-senha-form .form-control:focus {
+  border-color: var(--primary, #2563eb);
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
+  background-color: white;
+}
+
+.redefinir-senha-form .form-text {
+  font-size: 0.75rem;
+  color: var(--muted-foreground, #6b7280);
+}
+
+.redefinir-senha-form .btn-primary {
+  padding: 0.875rem 1.5rem;
+  font-weight: 500;
+  background-color: var(--primary, #2563eb);
+  border-color: var(--primary, #2563eb);
+  transition: background-color 0.2s, transform 0.1s;
+}
+
+.redefinir-senha-form .btn-primary:hover {
+  background-color: var(--primary-hover, #1d4ed8);
+  border-color: var(--primary-hover, #1d4ed8);
+}
+
+.redefinir-senha-form .btn-primary:active {
+  transform: translateY(1px);
+}
+
+.form-label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  color: var(--foreground, #111827);
+  padding-left: 0;
+  text-align: left;
+}
+
+/* Estilos para a barra de força de senha */
+.senha-forca-container {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 1.5rem;
+}
+
+.senha-forca-barra {
+  width: 100%;
+  height: 8px;
+  background-color: #e5e7eb;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.senha-forca-progresso {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.3s ease, background-color 0.3s ease;
+}
+
+.senha-forca-texto-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 4px;
+}
+
+.senha-forca-texto-container span {
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+/* Rodapé */
+.redefinir-senha-footer {
+  padding: 1.5rem 2rem;
+  background-color: var(--muted, #f3f4f6);
+  text-align: center;
+  border-top: 1px solid var(--border, #e5e7eb);
+}
+
+/* Container para os links na tela de erro */
+.links-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.back-to-login {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--primary, #2563eb);
+  font-weight: 500;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.back-to-login:hover {
+  color: var(--primary-hover, #1d4ed8);
+  text-decoration: underline;
+}
+
+.mt-3 {
+  margin-top: 1rem;
+}
+
+/* Tela de erro de token */
+.redefinir-senha-error-container {
+  padding: 2rem;
+  text-align: center;
+}
+
+.redefinir-senha-error-icon {
+  font-size: 3rem;
+  color: var(--warning, #f59e0b);
+  margin-bottom: 1rem;
+}
+
+.redefinir-senha-error-container p {
+  margin-bottom: 1rem;
+  color: var(--foreground, #111827);
+}
+
+.redefinir-senha-error-help {
+  font-size: 0.875rem;
+  color: var(--muted-foreground, #6b7280);
+}
+
+.btn-solicitar-novo {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.5rem;
+  background-color: var(--primary, #2563eb);
+  color: white;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: background-color 0.2s;
+}
+
+.btn-solicitar-novo:hover {
+  background-color: var(--primary-hover, #1d4ed8);
+  color: white;
+}
+
+/* Tela de sucesso */
+.redefinir-senha-success-container {
+  padding: 2rem;
+  text-align: center;
+}
+
+.redefinir-senha-success-icon {
+  font-size: 3rem;
+  color: var(--positive, #10b981);
+  margin-bottom: 1rem;
+}
+
+.redefinir-senha-success-container h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: var(--foreground, #111827);
+}
+
+.redefinir-senha-success-container p {
+  color: var(--muted-foreground, #6b7280);
+  margin-bottom: 1rem;
+}
+
+.btn-ir-para-login {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.5rem;
+  background-color: var(--primary, #2563eb);
+  color: white;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: background-color 0.2s;
+}
+
+.btn-ir-para-login:hover {
+  background-color: var(--primary-hover, #1d4ed8);
+  color: white;
+}
